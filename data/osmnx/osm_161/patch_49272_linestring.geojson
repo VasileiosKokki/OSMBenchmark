@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_49272_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 1003526445, "ele": null, "man_made": null, "natural": "coastline", "source": null, "leaf_type": null, "landuse": null, "type": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.687661, 38.7556576 ], [ 23.6876073, 38.7556408 ], [ 23.68761, 38.7556178 ], [ 23.6876449, 38.755599 ], [ 23.6876959, 38.7556178 ], [ 23.6877307, 38.7556304 ], [ 23.6877817, 38.7556199 ], [ 23.6878219, 38.7556304 ], [ 23.6877978, 38.7556534 ], [ 23.68772, 38.7556576 ], [ 23.687661, 38.7556576 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 1003526446, "ele": null, "man_made": null, "natural": "coastline", "source": null, "leaf_type": null, "landuse": null, "type": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.686035, 38.7540896 ], [ 23.6860049, 38.7540875 ], [ 23.6859885, 38.7540939 ], [ 23.6859803, 38.7540854 ], [ 23.6859954, 38.7540683 ], [ 23.6860072, 38.7540609 ], [ 23.6860159, 38.7540555 ], [ 23.6860268, 38.7540406 ], [ 23.6860348, 38.7540302 ], [ 23.6860391, 38.7540245 ], [ 23.6860665, 38.7540224 ], [ 23.6860816, 38.7540448 ], [ 23.6860816, 38.7540619 ], [ 23.6860706, 38.7540822 ], [ 23.6860597, 38.7540886 ], [ 23.686035, 38.7540896 ] ] } }
+]
+}

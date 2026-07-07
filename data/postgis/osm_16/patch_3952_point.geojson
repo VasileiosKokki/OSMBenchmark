@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "patch_3952_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 10581252887, "name": null, "label": "shop:health_food", "shop": "health_food", "amenity": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.7179853, 38.000534299982057 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9513106249, "name": null, "label": "amenity:place_of_worship", "shop": null, "amenity": "place_of_worship", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.7185857, 37.980175999979195 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3190052864, "name": "Μουσείο Σικυώνας", "label": "tourism:museum", "shop": null, "amenity": null, "tourism": "museum" }, "geometry": { "type": "Point", "coordinates": [ 22.7137726, 37.984483899979807 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4237609181, "name": null, "label": "amenity:parking", "shop": null, "amenity": "parking", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.7136428, 37.98417709997976 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3190052860, "name": null, "label": "amenity:place_of_worship", "shop": null, "amenity": "place_of_worship", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.725332, 37.981117499979334 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9143411159, "name": "REVOIL", "label": "amenity:fuel", "shop": null, "amenity": "fuel", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.7367373, 37.996147699981442 ] } }
+]
+}

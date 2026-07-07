@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_19932_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 356504918, "admin_level": null, "boat": null, "boundary": null, "ele": "2160", "highway": null, "int_name": null, "intermittent": null, "leaf_type": null, "lit": null, "name": null, "name:bg": null, "name:el": null, "name:mk": null, "natural": "peak", "source": null, "summit": null, "waterway": null, "wikidata": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7462625, 40.3135446 ] } },
+{ "type": "Feature", "properties": { "@type": "node", "@id": 356504956, "admin_level": null, "boat": null, "boundary": null, "ele": "2178", "highway": null, "int_name": null, "intermittent": null, "leaf_type": null, "lit": null, "name": "Maja Pelzës", "name:bg": null, "name:el": null, "name:mk": null, "natural": "peak", "source": null, "summit": null, "waterway": null, "wikidata": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7331304, 40.3071959 ] } },
+{ "type": "Feature", "properties": { "@type": "node", "@id": 698044493, "admin_level": null, "boat": null, "boundary": null, "ele": "2140", "highway": null, "int_name": null, "intermittent": null, "leaf_type": null, "lit": null, "name": null, "name:bg": null, "name:el": null, "name:mk": null, "natural": "peak", "source": "OpenCycleMap", "summit": null, "waterway": null, "wikidata": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7322116, 40.3017687 ] } }
+]
+}

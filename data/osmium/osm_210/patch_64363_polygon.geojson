@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_64363_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 1228715800, "addr:postcode": null, "fixme:name:tr": null, "ford": null, "highway": null, "intermittent": null, "landuse": "residential", "lit": null, "name": null, "name:el": null, "name:en": null, "name:ru": null, "name:tr": null, "place": null, "source": null, "waterway": null, "wikidata": null, "wikipedia": null, "label": "landuse:residential" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 26.4038389, 41.450018 ], [ 26.404092, 41.4494185 ], [ 26.4038327, 41.4492074 ], [ 26.4033675, 41.4491035 ], [ 26.403716, 41.4485589 ], [ 26.4040906, 41.4484463 ], [ 26.4040998, 41.4472873 ], [ 26.4041073, 41.4463233 ], [ 26.4034733, 41.4463906 ], [ 26.4030206, 41.4464995 ], [ 26.403032, 41.4463433 ], [ 26.4030726, 41.4458723 ], [ 26.4024137, 41.4461052 ], [ 26.401664670809474, 41.446458290326255 ], [ 26.401664670809474, 41.450009165111886 ], [ 26.401690785144275, 41.450054528176508 ], [ 26.403271479236693, 41.450054528176508 ], [ 26.4032901, 41.449854 ], [ 26.403520627048866, 41.450054528176508 ], [ 26.403663733529807, 41.450054528176508 ], [ 26.4038389, 41.450018 ] ] ] } }
+]
+}

@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_23873_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 845118493, "addr:postcode": null, "amenity": null, "ele": null, "ford": null, "highway": null, "intermittent": "yes", "landuse": null, "leaf_type": null, "lit": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:ru": null, "name:tr": null, "natural": null, "old_ref": null, "place": null, "population": null, "source": null, "surface": null, "water": null, "waterway": "stream", "wikidata": null, "wikipedia": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.2140056, 41.2091317 ], [ 26.214289814816471, 41.209204793796751 ] ] } },
+{ "type": "Feature", "properties": { "@type": "way", "@id": 845118494, "addr:postcode": null, "amenity": null, "ele": null, "ford": null, "highway": null, "intermittent": null, "landuse": null, "leaf_type": null, "lit": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:ru": null, "name:tr": null, "natural": null, "old_ref": null, "place": null, "population": null, "source": null, "surface": null, "water": null, "waterway": "stream", "wikidata": null, "wikipedia": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.2069096, 41.2125345 ], [ 26.2077046, 41.2128471 ], [ 26.2084635, 41.2130918 ], [ 26.2092547, 41.2131826 ], [ 26.2095295, 41.2132141 ], [ 26.2103788, 41.2134316 ], [ 26.2113725, 41.2138394 ], [ 26.2120049, 41.2143423 ], [ 26.2127277, 41.2147908 ], [ 26.213324, 41.2152258 ], [ 26.2140828, 41.2155248 ], [ 26.214289814816471, 41.2158128679336 ] ] } }
+]
+}

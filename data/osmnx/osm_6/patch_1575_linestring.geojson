@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_1575_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 550868503, "ele": null, "natural": null, "name": null, "waterway": "stream", "alt_name": null, "castle_type": null, "historic": null, "name:el": null, "name:en": null, "source": null, "wikidata": null, "leaf_type": null, "boundary": null, "leisure": null, "protect_class": null, "protection_title": null, "type": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 21.647903, 38.7325502 ], [ 21.6482363, 38.7326327 ], [ 21.648504377389369, 38.732675561947779 ] ] } }
+]
+}

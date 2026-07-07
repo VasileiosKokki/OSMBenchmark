@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_37104_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 347260309, "ele": "1612", "natural": "peak", "waterway": null, "width": null, "leaf_type": null, "source": null, "boundary": null, "leisure": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "wikidata": null, "wikipedia": null, "intermittent": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.9282132, 39.7049515 ] } }
+]
+}

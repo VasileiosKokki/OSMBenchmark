@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_55328_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 5327981543, "addr:postcode": null, "admin_level": null, "boundary": null, "bridge": null, "cables": null, "circuits": null, "communication": null, "ele": "474", "highway": null, "historic": null, "landuse": null, "lanes": null, "layer": null, "leaf_type": null, "leisure": null, "lit": null, "man_made": null, "name": "Ασπρούλα", "name:el": "Ασπρούλα", "name:en": "Asproula", "name:ru": null, "name:tr": null, "natural": "peak", "note": null, "old_ref": null, "opening_hours": null, "operator": null, "operator:wikidata": null, "place": null, "power": null, "protect_class": null, "protection_title": null, "source": null, "surface": null, "type": null, "voltage": null, "wikidata": null, "wikipedia": null, "wires": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 25.7403546, 41.1253851 ] } }
+]
+}

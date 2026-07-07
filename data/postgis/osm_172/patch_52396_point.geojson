@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_52396_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 429838548, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 21.8228788, 40.708362500358291 ] } }
+]
+}

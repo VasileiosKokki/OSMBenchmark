@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_40767_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8579878105, "name": "Μαυροχώρι", "label": "historic:ruins", "historic": "ruins", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 24.1245119, 41.5073911004446 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13228368315, "name": "Μαγκούλα Τέσοβου", "label": "natural:peak", "historic": null, "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 24.1251021, 41.488197900442778 ] } }
+]
+}

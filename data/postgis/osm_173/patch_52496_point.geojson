@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_52496_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 6018013068, "name": "Τάμελος", "label": "natural:cape", "natural": "cape" }, "geometry": { "type": "Point", "coordinates": [ 24.2760944, 37.522163099916114 ] } }
+]
+}

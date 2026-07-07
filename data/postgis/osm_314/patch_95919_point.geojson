@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_95919_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 7589708804, "name": "Άγιος Νικόλαος", "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.2322729, 35.130248399660744 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7589376468, "name": "Άγιος Ιωάννης", "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.238536, 35.121935099660142 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9960803179, "name": "Κάστρο Βιτσιλιάς", "label": "historic:castle", "amenity": null, "building": null, "historic": "castle" }, "geometry": { "type": "Point", "coordinates": [ 25.2342935, 35.122352899660186 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7589376467, "name": null, "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.2345905, 35.122757799660214 ] } }
+]
+}

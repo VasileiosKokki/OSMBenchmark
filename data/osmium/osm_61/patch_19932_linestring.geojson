@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_19932_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 270799613, "admin_level": null, "boat": "no", "boundary": null, "ele": null, "highway": null, "int_name": "Sarpouni", "intermittent": "yes", "leaf_type": null, "lit": null, "name": "Σαρπούνι", "name:bg": null, "name:el": null, "name:mk": null, "natural": null, "source": "20140401 ¦ Bing Aerial Imagery Zoom Level 19", "summit": null, "waterway": "stream", "wikidata": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 20.7486713, 40.3103615 ], [ 20.7484996, 40.3095761 ], [ 20.7476413, 40.3086598 ], [ 20.7469546, 40.3074817 ], [ 20.746783, 40.3066962 ], [ 20.746783, 40.3060417 ], [ 20.745753, 40.3049944 ], [ 20.7455814, 40.3043398 ], [ 20.7455814, 40.3038162 ], [ 20.7450664, 40.3031616 ], [ 20.7450664, 40.302507 ], [ 20.7450664, 40.3014597 ], [ 20.746268, 40.3001505 ], [ 20.746817751565757, 40.299479627589456 ] ] } }
+]
+}

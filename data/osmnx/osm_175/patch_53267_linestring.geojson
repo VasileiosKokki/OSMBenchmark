@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_53267_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 31624422, "ele": null, "name": null, "natural": null, "boat": "no", "waterway": "stream", "leaf_type": null, "source": null, "board_type": null, "boundary": null, "information": null, "leisure": null, "tourism": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 22.2298881, 40.1828241 ], [ 22.230754, 40.1837868 ], [ 22.230537, 40.1845592 ], [ 22.2306313, 40.1854844 ], [ 22.2307125, 40.1865754 ], [ 22.2314199, 40.1878666 ], [ 22.2312483, 40.1883911 ], [ 22.2309049, 40.1893091 ], [ 22.2305616, 40.1899647 ], [ 22.230222, 40.1905368 ], [ 22.2300315, 40.1909259 ], [ 22.2296598, 40.192328 ], [ 22.229652865808465, 40.192434432764379 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 31624577, "ele": null, "name": null, "natural": null, "boat": "no", "waterway": "stream", "leaf_type": null, "source": null, "board_type": null, "boundary": null, "information": null, "leisure": null, "tourism": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 22.2559675, 40.1858995 ], [ 22.2569975, 40.1853749 ], [ 22.2580274, 40.1848503 ], [ 22.258271186972884, 40.184664096028428 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 937483472, "ele": null, "name": null, "natural": null, "boat": "no", "waterway": "stream", "leaf_type": null, "source": null, "board_type": null, "boundary": null, "information": null, "leisure": null, "tourism": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 22.254056447622812, 40.169698323595668 ], [ 22.2549506, 40.1701319 ], [ 22.2554525, 40.170423 ], [ 22.2563108, 40.1709477 ], [ 22.2568258, 40.1714724 ], [ 22.2571691, 40.1719971 ], [ 22.2578502, 40.172512 ], [ 22.2580433, 40.1734712 ], [ 22.2580274, 40.1740957 ], [ 22.258271186972884, 40.174219865675703 ] ] } }
+]
+}

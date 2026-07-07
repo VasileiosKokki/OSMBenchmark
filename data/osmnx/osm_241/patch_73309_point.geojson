@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_73309_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 9206220902, "amenity": "fuel", "brand": "CYCLON", "name": "CYCLON", "operator": "Θ ΜΑΡΤΙΔΗΣ &ΣΙΑ ΕΕ", "landuse": null, "leaf_type": null, "natural": null, "source": null, "leisure": null, "sport": null, "intermittent": null, "waterway": null, "building": null, "denomination": null, "phone": null, "religion": null, "addr:city": null, "cuisine": null, "opening_hours": null, "addr:postcode": null, "website": null, "layer": null, "tunnel": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 24.3796064, 41.0219821 ] } }
+]
+}

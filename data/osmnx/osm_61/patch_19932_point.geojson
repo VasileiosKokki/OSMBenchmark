@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_19932_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 356504918, "ele": "2160", "natural": "peak", "name": null, "source": null, "waterway": null, "boat": null, "int_name": null, "intermittent": null, "landuse": null, "leaf_type": null, "type": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7462625, 40.3135446 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 356504956, "ele": "2178", "natural": "peak", "name": "Maja Pelzës", "source": null, "waterway": null, "boat": null, "int_name": null, "intermittent": null, "landuse": null, "leaf_type": null, "type": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7331304, 40.3071959 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 698044493, "ele": "2140", "natural": "peak", "name": null, "source": "OpenCycleMap", "waterway": null, "boat": null, "int_name": null, "intermittent": null, "landuse": null, "leaf_type": null, "type": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7322116, 40.3017687 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 6468743795, "ele": null, "natural": null, "name": null, "source": null, "waterway": "waterfall", "boat": null, "int_name": null, "intermittent": null, "landuse": null, "leaf_type": null, "type": null, "label": "waterway:waterfall" }, "geometry": { "type": "Point", "coordinates": [ 20.7238349, 40.3217507 ] } }
+]
+}

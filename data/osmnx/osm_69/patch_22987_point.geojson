@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_22987_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 5422500938, "leisure": "picnic_table", "landuse": null, "boat": null, "service": null, "waterway": null, "width": null, "amenity": null, "building": null, "name": null, "religion": null, "layer": null, "tunnel": null, "intermittent": null, "leaf_cycle": null, "leaf_type": null, "label": "leisure:picnic_table" }, "geometry": { "type": "Point", "coordinates": [ 26.5246816, 41.5383489 ] } }
+]
+}

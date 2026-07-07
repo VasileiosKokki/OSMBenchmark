@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_22738_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 12579890989, "military": "range", "name": "Ε.Φ. ΛΟΦΟΥ (Λαμψάκι)", "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "water": null, "intermittent": null, "waterway": null, "building": null, "label": "military:range" }, "geometry": { "type": "Point", "coordinates": [ 25.8584653, 41.2424475 ] } }
+]
+}

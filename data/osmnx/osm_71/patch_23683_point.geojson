@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_23683_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 11373260105, "natural": "peak", "ele": "245", "source": null, "name": null, "name:el": null, "name:en": null, "surface": null, "amenity": null, "building": null, "denomination": null, "int_name": null, "religion": null, "cuisine": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 25.1706481, 36.7008968 ] } }
+]
+}

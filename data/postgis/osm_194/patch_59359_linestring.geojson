@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59359_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 424824762, "name": "Δίδυμα", "label": "sport:climbing;natural:cliff", "sport": "climbing", "natural": "cliff" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.2104277, 37.473905399909647 ], [ 23.2121276, 37.475279999909837 ] ] } }
+]
+}

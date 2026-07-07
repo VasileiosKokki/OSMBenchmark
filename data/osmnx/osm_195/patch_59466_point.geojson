@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59466_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 6906532798, "amenity": "place_of_worship", "denomination": "greek_orthodox", "name:en": "Church", "religion": "christian", "boat": null, "waterway": null, "intermittent": null, "layer": null, "tunnel": null, "natural": null, "landuse": null, "type": null, "label": "amenity:place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 23.0230281, 40.769808 ] } }
+]
+}

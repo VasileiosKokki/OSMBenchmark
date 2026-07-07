@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_69432_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 1297669581, "leaf_type": null, "natural": null, "source": null, "building": null, "water": null, "landuse": "farmland", "man_made": null, "name": null, "layer": null, "type": null, "label": "landuse:farmland" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 20.8758361, 39.1698913 ], [ 20.875999758308691, 39.169747661554034 ], [ 20.875649474231931, 39.169747661554034 ], [ 20.8758361, 39.1698913 ] ] ], [ [ [ 20.8728696, 39.1697724 ], [ 20.873325, 39.1699607 ], [ 20.8735795, 39.1700576 ], [ 20.8737095, 39.1701071 ], [ 20.8738436, 39.170161 ], [ 20.8745495, 39.1704445 ], [ 20.875224897263017, 39.169747661554034 ], [ 20.87282605252928, 39.169747661554034 ], [ 20.8728696, 39.1697724 ] ] ] ] } }
+]
+}

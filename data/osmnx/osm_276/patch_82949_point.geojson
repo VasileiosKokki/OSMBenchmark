@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_82949_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 12174980507, "ele": "257", "name": "Goritsa Neromyloi", "natural": "peak", "boat": null, "waterway": null, "wikidata": null, "name:mk": null, "old_name": null, "source": null, "landuse": null, "denomination": null, "religion": null, "leisure": null, "sport": null, "amenity": null, "building": null, "type": null, "leaf_cycle": null, "leaf_type": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 22.1935777, 41.026748 ] } }
+]
+}

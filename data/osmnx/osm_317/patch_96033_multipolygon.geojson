@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_96033_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 1361399717, "natural": "scrub", "amenity": null, "brand": null, "brand:wikidata": null, "name": null, "operator": null, "landuse": null, "addr:city": null, "description": null, "religion": null, "building": null, "denomination": null, "leaf_type": null, "payment:cash": null, "payment:credit_cards": null, "shop": null, "building:levels": null, "height": null, "man_made": null, "crop": null, "source": null, "leisure": null, "sport": null, "waterway": null, "trees": null, "width": null, "layer": null, "tunnel": null, "wetland": null, "intermittent": null, "type": null, "water": null, "label": "natural:scrub" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 23.215309, 38.2887527 ], [ 23.215294, 38.2887058 ], [ 23.2152293, 38.2886902 ], [ 23.2151098, 38.2887215 ], [ 23.2149604, 38.2887097 ], [ 23.2148509, 38.2886316 ], [ 23.2147911, 38.2886042 ], [ 23.2147762, 38.2888192 ], [ 23.214753651983077, 38.288903028092513 ], [ 23.215302796639925, 38.288903028092513 ], [ 23.215309, 38.2887527 ] ] ], [ [ [ 23.2170616, 38.2888543 ], [ 23.2171512, 38.2883893 ], [ 23.2171462, 38.2880649 ], [ 23.2171064, 38.2879789 ], [ 23.2170317, 38.2879594 ], [ 23.2166433, 38.287936 ], [ 23.2163794, 38.287932 ], [ 23.2163595, 38.2879868 ], [ 23.2163695, 38.2880845 ], [ 23.2164193, 38.2882095 ], [ 23.2164541, 38.2883697 ], [ 23.2164292, 38.2884831 ], [ 23.2163844, 38.2886238 ], [ 23.2162151, 38.2888192 ], [ 23.216118969491177, 38.288903028092513 ], [ 23.217037213703474, 38.288903028092513 ], [ 23.2170616, 38.2888543 ] ] ] ] } }
+]
+}

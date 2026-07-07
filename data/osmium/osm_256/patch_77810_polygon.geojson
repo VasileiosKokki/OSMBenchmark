@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_77810_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 135877921, "admin_level": null, "amenity": null, "boat": null, "boundary": null, "building": null, "highway": null, "int_name": null, "leaf_type": "needleleaved", "name": null, "natural": "wood", "note": null, "reg_ref": null, "religion": null, "source": "http://geodata.gov.gr/", "waterway": null, "label": "natural:wood" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.2037196, 38.5612093 ], [ 22.2040285, 38.5616035 ], [ 22.204679, 38.5618833 ], [ 22.2053132, 38.5618324 ], [ 22.2058011, 38.5619468 ], [ 22.2065166, 38.5619468 ], [ 22.2067931, 38.5617307 ], [ 22.2071996, 38.5616289 ], [ 22.2073134, 38.5613492 ], [ 22.207543795621586, 38.561256547930817 ], [ 22.207543795621586, 38.560958192886183 ], [ 22.203912255001764, 38.560958192886183 ], [ 22.2037196, 38.5612093 ] ] ] } },
+{ "type": "Feature", "properties": { "@type": "way", "@id": 547004146, "admin_level": null, "amenity": "place_of_worship", "boat": null, "boundary": null, "building": "yes", "highway": null, "int_name": null, "leaf_type": null, "name": "Υπαπαντή", "natural": null, "note": null, "reg_ref": null, "religion": "christian", "source": null, "waterway": null, "label": "building:yes;amenity:place_of_worship" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.197501, 38.5805983 ], [ 22.1976411, 38.580538 ], [ 22.197585, 38.580465 ], [ 22.1974473, 38.5805307 ], [ 22.197501, 38.5805983 ] ] ] } }
+]
+}

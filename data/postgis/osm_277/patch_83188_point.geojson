@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_83188_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 5388629529, "name": null, "label": "amenity:parking", "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 23.772141, 40.763379500364877 ] } }
+]
+}

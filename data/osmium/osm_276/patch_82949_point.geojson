@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_82949_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 12174980507, "addr:postcode": null, "amenity": null, "boat": null, "bridge": null, "building": null, "date": null, "denomination": null, "ele": "257", "ford": null, "highway": null, "landuse": null, "lanes": null, "layer": null, "leisure": null, "lit": null, "maxspeed": null, "name": "Goritsa Neromyloi", "name:bg": null, "name:el": null, "name:en": null, "name:mk": null, "natural": "peak", "old_name": null, "oneway": null, "place": null, "population": null, "reg_ref": null, "religion": null, "service": null, "smoothness": null, "source": null, "sport": null, "surface": null, "tracktype": null, "waterway": null, "wikidata": null, "wikipedia": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 22.1935777, 41.026748 ] } }
+]
+}

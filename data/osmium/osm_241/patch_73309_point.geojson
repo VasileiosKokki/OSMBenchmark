@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_73309_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 9206220902, "addr:city": null, "addr:postcode": null, "alt_name:mk": null, "amenity": "fuel", "barrier": null, "brand": "CYCLON", "bridge": null, "building": null, "crossing": null, "crossing:island": null, "crossing:markings": null, "cuisine": null, "denomination": null, "ele": null, "ford": null, "highway": null, "int_name": null, "intermittent": null, "landuse": null, "lane_markings": null, "lanes": null, "lanes:backward": null, "lanes:forward": null, "layer": null, "leaf_type": null, "leisure": null, "lit": null, "maxspeed": null, "maxweight:signed": null, "name": "CYCLON", "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:mk": null, "name:ru": null, "natural": null, "oneway": null, "opening_hours": null, "operator": "Θ ΜΑΡΤΙΔΗΣ &ΣΙΑ ΕΕ", "phone": null, "place": null, "population": null, "reg_ref": null, "religion": null, "sidewalk": null, "source": null, "source:population": null, "sport": null, "surface": null, "tracktype": null, "tunnel": null, "waterway": null, "website": null, "wikidata": null, "wikipedia": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 24.3796064, 41.0219821 ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_64466_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 9498812, "admin_level": "7", "barrier": null, "building": null, "check_date:surface": null, "generator:method": null, "generator:output:electricity": null, "generator:source": null, "generator:type": null, "highway": null, "intermittent": null, "landuse": null, "lane_markings": null, "leaf_type": null, "lit": null, "natural": "coastline", "plant:method": null, "plant:output:electricity": null, "plant:source": null, "power": null, "produce": null, "source": null, "surface": null, "tracktype": null, "trees": null, "water": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 21.56395276412746, 38.323937879723545 ], [ 21.5640566, 38.3239975 ], [ 21.564184, 38.3240532 ], [ 21.5643355, 38.3240985 ], [ 21.5644683, 38.3241479 ], [ 21.5645783, 38.3242184 ], [ 21.5646735, 38.3242931 ], [ 21.5648223, 38.3243783 ], [ 21.5650128, 38.3244678 ], [ 21.5651751, 38.3245046 ], [ 21.5653159, 38.324512 ], [ 21.5654473, 38.3244836 ], [ 21.5655304, 38.3244594 ], [ 21.5656552, 38.3244467 ], [ 21.5657946, 38.3244709 ], [ 21.565965, 38.3245498 ], [ 21.5662453, 38.3246645 ], [ 21.5664639, 38.3247434 ], [ 21.5665872, 38.3248055 ], [ 21.5667401, 38.3249149 ], [ 21.5669614, 38.3250412 ], [ 21.5671559, 38.3251064 ], [ 21.5673852, 38.3251706 ], [ 21.5675086, 38.3251937 ], [ 21.5676172, 38.3252 ], [ 21.5677553, 38.3252263 ], [ 21.5678747, 38.3253 ], [ 21.5680236, 38.3254304 ], [ 21.5682757, 38.3256419 ], [ 21.56836319492524, 38.325711834106322 ] ] } }
+]
+}

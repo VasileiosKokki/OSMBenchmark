@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"name": "patch_74988_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 4248124546, "name": "Αετός", "label": "natural:peak", "natural": "peak", "amenity": null, "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6772627, 38.357519100032889 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4248124545, "name": "Αγίου Γεωργίου", "label": "amenity:place_of_worship", "natural": null, "amenity": "place_of_worship", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.684011, 38.355298100032577 ] } },
+{ "type": "Feature", "properties": { "osm_id": 940560991, "name": "Αλαλκομενές", "label": "historic:archaeological_site", "natural": null, "amenity": null, "historic": "archaeological_site", "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6835725, 38.355431100032582 ] } },
+{ "type": "Feature", "properties": { "osm_id": 940553864, "name": "Cyclopean wall", "label": "historic:archaeological_site", "natural": null, "amenity": null, "historic": "archaeological_site", "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6815984, 38.356474400032745 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11223296582, "name": null, "label": "historic:ruins", "natural": null, "amenity": null, "historic": "ruins", "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6830998, 38.35046400003187 ] } },
+{ "type": "Feature", "properties": { "osm_id": 940137794, "name": "Πισαετός", "label": "amenity:ferry_terminal", "natural": null, "amenity": "ferry_terminal", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6847482, 38.34814310003155 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6822104988, "name": null, "label": "amenity:bench", "natural": null, "amenity": "bench", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6849847, 38.348355100031576 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6822105186, "name": null, "label": "tourism:camp_site", "natural": null, "amenity": null, "historic": null, "tourism": "camp_site", "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6850272, 38.348353100031566 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6822104986, "name": null, "label": "amenity:bar", "natural": null, "amenity": "bar", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6851365, 38.348300100031565 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6822105285, "name": null, "label": "amenity:toilets", "natural": null, "amenity": "toilets", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6851341, 38.348351300031574 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6822105286, "name": null, "label": "amenity:bench", "natural": null, "amenity": "bench", "historic": null, "tourism": null, "leisure": null }, "geometry": { "type": "Point", "coordinates": [ 20.6851126, 38.348366800031577 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3037015486, "name": null, "label": "leisure:marina", "natural": null, "amenity": null, "historic": null, "tourism": null, "leisure": "marina" }, "geometry": { "type": "Point", "coordinates": [ 20.685295, 38.348465600031574 ] } }
+]
+}

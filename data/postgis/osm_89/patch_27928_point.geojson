@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_27928_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 13265840018, "name": "Αυγό", "label": "historic:ruins", "historic": "ruins", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 24.4598094, 41.45541870043963 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9084410114, "name": "Πηγή", "label": "natural:spring", "historic": null, "natural": "spring" }, "geometry": { "type": "Point", "coordinates": [ 24.4599378, 41.45922770044001 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9049228294, "name": null, "label": "natural:hot_spring", "historic": null, "natural": "hot_spring" }, "geometry": { "type": "Point", "coordinates": [ 24.4507317, 41.465407800440602 ] } }
+]
+}

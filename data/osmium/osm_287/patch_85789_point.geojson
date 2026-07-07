@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_85789_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 8733378564, "admin_level": null, "boundary": null, "cables": null, "circuits": null, "crop": null, "ele": "457", "fixme": null, "highway": null, "landuse": null, "line_attachment": null, "lit": null, "man_made": "survey_point", "name": "Πέτρα Σταυραετού", "natural": "peak", "operator": null, "operator:wikidata": null, "power": null, "source": null, "tracktype": null, "type": null, "voltage": null, "wikidata": "Q25000121", "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 23.46926, 38.3234301 ] } }
+]
+}

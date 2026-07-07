@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_44386_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "relation", "id": 1850517, "amenity": null, "denomination": null, "religion": null, "historic": null, "name": "Εθνικό πάρκο λιμνοθαλασσών Μεσσολογγίου-Αιτωλικού", "isced:level": null, "landuse": null, "natural": null, "source": "http://geodata.gov.gr/", "archaeological_site": null, "wikidata": "Q112032638", "building": null, "leisure": null, "sport": null, "type": "multipolygon", "boat": null, "name:de": null, "name:en": null, "water": null, "boundary": "national_park", "information": "national_park", "protect_class": "6", "protection_title": "National Park", "tourism": "information", "label": "tourism:information" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 21.24756, 38.545933 ], [ 21.247958, 38.548096 ], [ 21.248452, 38.549218 ], [ 21.2476603, 38.5512321 ], [ 21.247544, 38.551528 ], [ 21.247973, 38.55287 ], [ 21.2476935, 38.5537655 ], [ 21.247002, 38.554624 ], [ 21.247862, 38.557286 ], [ 21.247825, 38.55824 ], [ 21.2456, 38.559498 ], [ 21.24546, 38.560183 ], [ 21.246016, 38.56044 ], [ 21.246697, 38.56039 ], [ 21.24717, 38.559846 ], [ 21.248328, 38.55914 ], [ 21.248454270706045, 38.559180192267178 ], [ 21.248454270706045, 38.544830487802017 ], [ 21.24756, 38.545933 ] ] ], [ [ [ 21.247041, 38.561752 ], [ 21.247529, 38.564517 ], [ 21.246995108795151, 38.565718614975879 ], [ 21.248100307294994, 38.565718614975879 ], [ 21.248404, 38.565314 ], [ 21.248454270706045, 38.565357468174781 ], [ 21.248454270706045, 38.560530442537555 ], [ 21.247041, 38.561752 ] ] ] ] } }
+]
+}

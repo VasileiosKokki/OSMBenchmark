@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "patch_71204_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 5389096793, "name": null, "label": "amenity:parking", "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 24.0891189, 40.722493000360004 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5389096815, "name": null, "label": "amenity:parking", "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 24.103099, 40.72885380036076 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5389097045, "name": null, "label": "amenity:parking", "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 24.1117527, 40.732251500361144 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5395056573, "name": null, "label": "amenity:parking", "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 24.1113463, 40.732441700361179 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12772000003, "name": null, "label": "amenity:public_bath", "amenity": "public_bath" }, "geometry": { "type": "Point", "coordinates": [ 24.0918426, 40.736588200361673 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12772000002, "name": null, "label": "amenity:public_bath", "amenity": "public_bath" }, "geometry": { "type": "Point", "coordinates": [ 24.0913791, 40.736432300361642 ] } }
+]
+}

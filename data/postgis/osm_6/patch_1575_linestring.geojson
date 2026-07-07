@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_1575_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 550868503, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 21.647903, 38.732550200087104 ], [ 21.6482363, 38.73263270008713 ], [ 21.648504377389369, 38.732675562037258 ] ] } }
+]
+}

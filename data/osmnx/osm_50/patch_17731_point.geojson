@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_17731_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 9988834942, "amenity": "fuel", "brand": "α.π.", "name": "α.π.", "operator": "ΓΚΙΡΓΚΙΡΗΣ ΣΤΕΡΓΙΟΣ", "leaf_type": null, "natural": null, "source": null, "landuse": null, "leisure": null, "sport": null, "industrial": null, "substance": null, "building": null, "type": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 23.8282829, 41.0219522 ] } }
+]
+}

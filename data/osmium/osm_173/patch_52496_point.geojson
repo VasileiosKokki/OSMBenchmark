@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_52496_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 6018013068, "access": null, "admin_level": null, "air_conditioning": null, "amenity": null, "baby_feeding": null, "bicycle": null, "building": null, "cargo": null, "created_by": null, "duration": null, "ferry": null, "foot": null, "hgv": null, "highway": null, "int_name": null, "internet_access": null, "lit": null, "man_made": null, "motor_vehicle": null, "motorcar": null, "name": "Τάμελος", "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:it": null, "name:ru": null, "name:sr": null, "natural": "cape", "note": null, "operator": null, "public_transport": null, "ref": null, "route": null, "seamark:light:character": null, "seamark:light:colour": null, "seamark:light:group": null, "seamark:light:height": null, "seamark:light:period": null, "seamark:light:range": null, "seamark:light:reference": null, "seamark:light:sequence": null, "seamark:name": null, "seamark:type": null, "source": null, "toll": null, "website": null, "wheelchair": null, "wikidata": null, "label": "natural:cape" }, "geometry": { "type": "Point", "coordinates": [ 24.2760944, 37.5221631 ] } }
+]
+}

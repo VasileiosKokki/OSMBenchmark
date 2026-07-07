@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_1575_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 356735921, "name": null, "label": "natural:peak", "natural": "peak", "historic": null, "waterway": null }, "geometry": { "type": "Point", "coordinates": [ 21.6200763, 38.721379000085484 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8897233639, "name": "Μαύρη Σπηλιά Προυσού", "label": "historic:castle", "natural": null, "historic": "castle", "waterway": null }, "geometry": { "type": "Point", "coordinates": [ 21.6471457, 38.732749100087133 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5320191170, "name": "Καταρράκτης Μαύρης Σπηλιάς", "label": "waterway:waterfall", "natural": null, "historic": null, "waterway": "waterfall" }, "geometry": { "type": "Point", "coordinates": [ 21.6482363, 38.73263270008713 ] } }
+]
+}

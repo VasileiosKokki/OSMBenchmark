@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59466_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 6906532798, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 23.0230281, 40.769808000365629 ] } }
+]
+}

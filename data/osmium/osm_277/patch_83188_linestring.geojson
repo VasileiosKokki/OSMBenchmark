@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_83188_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 175762144, "amenity": null, "barrier": null, "embankment": null, "highway": null, "int_name": null, "int_ref": null, "landuse": null, "lanes": null, "layer": null, "lit": null, "maxspeed": null, "name": null, "name:el": null, "name:en": null, "name:prefix": null, "natural": "coastline", "note": null, "oneway": null, "operator": null, "operator:1995-2025": null, "ref": null, "smoothness": null, "source": "PGS", "source:ref": null, "surface": null, "survey:date": null, "toll": null, "traffic_sign": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.771867465193456, 40.762397947026216 ], [ 23.7723963, 40.7628407 ], [ 23.7740639, 40.7641213 ], [ 23.775051, 40.7649077 ], [ 23.7758039, 40.7655415 ], [ 23.7772908, 40.7666115 ], [ 23.7782395, 40.7672797 ], [ 23.779780079710779, 40.76818770242356 ] ] } }
+]
+}

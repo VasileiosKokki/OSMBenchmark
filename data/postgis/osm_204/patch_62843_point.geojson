@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "patch_62843_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 13481239124, "name": null, "label": "historic:city_gate", "historic": "city_gate", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.2603256, 38.145208100002527 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1888578930, "name": "Ακρόπολη των Στύρων", "label": "historic:castle", "historic": "castle", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.2617647, 38.14584290000262 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8740341251, "name": "Άγιος Νικόλαος", "label": "natural:peak", "historic": null, "natural": "peak", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.2620429, 38.146075900002657 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8084102917, "name": null, "label": "tourism:wilderness_hut", "historic": null, "natural": null, "tourism": "wilderness_hut" }, "geometry": { "type": "Point", "coordinates": [ 24.2664733, 38.148276300002962 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8740341248, "name": null, "label": "natural:peak", "historic": null, "natural": "peak", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.28322, 38.156100100004089 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13143959368, "name": "Δρακόσπιτα", "label": "historic:archaeological_site", "historic": "archaeological_site", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.2636081, 38.152893100003624 ] } }
+]
+}

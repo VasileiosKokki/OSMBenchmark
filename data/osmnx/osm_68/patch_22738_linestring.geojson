@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_22738_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 867171501, "military": null, "name": null, "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "water": null, "intermittent": "yes", "waterway": "stream", "building": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8640028, 41.2326604 ], [ 25.8642106, 41.2331156 ], [ 25.8645268, 41.2335708 ], [ 25.8647798, 41.2337542 ], [ 25.8649514, 41.23406 ], [ 25.865388534531437, 41.234211129733978 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 867171502, "military": null, "name": null, "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "water": null, "intermittent": "yes", "waterway": "stream", "building": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8638041, 41.2375045 ], [ 25.86431, 41.2371512 ], [ 25.8647256, 41.2370289 ], [ 25.8648855, 41.236998 ], [ 25.8650418, 41.2369678 ], [ 25.865388534531437, 41.236844230789437 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 867171503, "military": null, "name": null, "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "water": null, "intermittent": "yes", "waterway": "stream", "building": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8642648, 41.2435098 ], [ 25.8649966, 41.243931 ], [ 25.865388534531437, 41.24413833409011 ] ] } }
+]
+}

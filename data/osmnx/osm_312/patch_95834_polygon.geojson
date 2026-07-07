@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_95834_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 136734645, "leaf_type": "broadleaved", "natural": "wood", "source": "http://geodata.gov.gr", "landuse": null, "label": "natural:wood" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.430766, 40.61321 ], [ 23.430469, 40.613091 ], [ 23.430173, 40.612927 ], [ 23.429787, 40.612754 ], [ 23.429485, 40.612753 ], [ 23.429001, 40.612885 ], [ 23.428931, 40.613227 ], [ 23.429314, 40.613526 ], [ 23.42968, 40.614014 ], [ 23.430738, 40.614236 ], [ 23.430966387591766, 40.614294092774067 ], [ 23.430966387591766, 40.613229621285029 ], [ 23.430766, 40.61321 ] ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 1042041853, "leaf_type": null, "natural": null, "source": null, "landuse": "orchard", "label": "landuse:orchard" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.4280311, 40.618183 ], [ 23.4256496, 40.618171 ], [ 23.4256424, 40.6184709 ], [ 23.4280214, 40.6184909 ], [ 23.4280221, 40.6184553 ], [ 23.4280311, 40.618183 ] ] ] } }
+]
+}

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_22738_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 867171503, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8642648, 41.243509800418408 ], [ 25.8649966, 41.24393100041847 ], [ 25.865388534531437, 41.244138334589138 ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 867171502, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8638041, 41.237504500417799 ], [ 25.86431, 41.237151200417749 ], [ 25.8647256, 41.237028900417734 ], [ 25.8648855, 41.236998000417749 ], [ 25.8650418, 41.236967800417752 ], [ 25.865388534531437, 41.236844231263802 ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 867171501, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 25.8640028, 41.232660400417302 ], [ 25.8642106, 41.233115600417335 ], [ 25.8645268, 41.23357080041739 ], [ 25.8647798, 41.233754200417415 ], [ 25.8649514, 41.234060000417443 ], [ 25.865388534531437, 41.234211130157291 ] ] } }
+]
+}

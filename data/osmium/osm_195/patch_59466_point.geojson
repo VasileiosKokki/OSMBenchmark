@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59466_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 6906532798, "admin_level": null, "alt_name:ca": null, "amenity": "place_of_worship", "barrier": null, "boat": null, "boundary": null, "bridge": null, "cables": null, "construction": null, "denomination": "greek_orthodox", "design": null, "destination": null, "destination:int_ref": null, "destination:lang:el-Latn": null, "destination:ref": null, "direction": null, "distance": null, "embankment": null, "ford": null, "highway": null, "int_name": null, "int_ref": null, "intermittent": null, "landuse": null, "lanes": null, "lanes:backward": null, "lanes:forward": null, "layer": null, "line_attachment": null, "lit": null, "man_made": null, "maxspeed": null, "name": null, "name:bg": null, "name:ca": null, "name:el": null, "name:en": "Church", "name:fr": null, "name:mk": null, "name:prefix": null, "natural": null, "noexit": null, "note": null, "oneway": null, "operator": null, "operator:1995-2025": null, "placement": null, "placement:backward": null, "placement:forward": null, "plant:method": null, "plant:output:electricity": null, "plant:source": null, "power": null, "ref": null, "religion": "christian", "smoothness": null, "source": null, "source:ref": null, "surface": null, "toll": null, "tunnel": null, "turn:lanes": null, "turn:lanes:backward": null, "turn:lanes:forward": null, "voltage": null, "waterway": null, "wikidata": null, "wikipedia": null, "label": "amenity:place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 23.0230281, 40.769808 ] } }
+]
+}

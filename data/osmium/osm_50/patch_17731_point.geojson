@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_17731_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 9988834942, "abbr_name": null, "amenity": "fuel", "barrier": null, "brand": "α.π.", "bridge": null, "building": null, "cables": null, "change:lanes:backward": null, "change:lanes:forward": null, "date": null, "diameter": null, "direction": null, "distance": null, "highway": null, "industrial": null, "int_name": null, "landuse": null, "lanes": null, "lanes:backward": null, "lanes:forward": null, "layer": null, "leaf_type": null, "leisure": null, "line_attachment": null, "lit": null, "location": null, "man_made": null, "maxspeed": null, "maxspeed:backward": null, "maxspeed:forward": null, "maxspeed:type": null, "maxspeed:type:backward": null, "maxspeed:type:forward": null, "name": "α.π.", "name:bg": null, "name:ca": null, "name:el": null, "name:en": null, "name:fr": null, "name:mk": null, "name:tr": null, "natural": null, "note": null, "old_ref": null, "oneway": null, "operator": "ΓΚΙΡΓΚΙΡΗΣ ΣΤΕΡΓΙΟΣ", "operator:wikidata": null, "placement": null, "placement:forward": null, "power": null, "pressure": null, "ref": null, "service": null, "shoulder": null, "sidewalk": null, "smoothness": null, "source": null, "source:old_ref": null, "source:ref": null, "sport": null, "substance": null, "surface": null, "survey:date": null, "tracktype": null, "traffic_sign": null, "traffic_sign:backward": null, "traffic_sign:forward": null, "tunnel": null, "turn:lanes:backward": null, "turn:lanes:forward": null, "usage": null, "voltage": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 23.8282829, 41.0219522 ] } }
+]
+}

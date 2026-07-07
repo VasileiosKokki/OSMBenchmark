@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+"name": "patch_42882_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8603647997, "name": null, "label": "tourism:viewpoint", "tourism": "viewpoint", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8573569, 37.883538499965674 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8918491884, "name": "Καστέλι του Πεντεσκούφι", "label": "historic:castle", "tourism": null, "historic": "castle", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8574628, 37.883579999965683 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11940358269, "name": null, "label": "amenity:parking", "tourism": null, "historic": null, "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 22.8682783, 37.889266699966463 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4887559731, "name": null, "label": "amenity:toilets", "tourism": null, "historic": null, "amenity": "toilets" }, "geometry": { "type": "Point", "coordinates": [ 22.8682222, 37.88945669996648 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2334442832, "name": null, "label": "amenity:cafe", "tourism": null, "historic": null, "amenity": "cafe" }, "geometry": { "type": "Point", "coordinates": [ 22.8681029, 37.88953339996651 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1600877616, "name": null, "label": "historic:city_gate", "tourism": null, "historic": "city_gate", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8688584, 37.889991299966567 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8918491883, "name": "Ακροκόρινθος", "label": "historic:castle", "tourism": null, "historic": "castle", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8690521, 37.890076999966581 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5903955823, "name": null, "label": "tourism:viewpoint", "tourism": "viewpoint", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8712423, 37.889471699966506 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1600877961, "name": null, "label": "historic:city_gate", "tourism": null, "historic": "city_gate", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8705363, 37.891094399966718 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1600877815, "name": null, "label": "historic:city_gate", "tourism": null, "historic": "city_gate", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8697287, 37.89066929996666 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5405053627, "name": "Ακροκόρινθος", "label": "tourism:attraction", "tourism": "attraction", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8696499, 37.890684499966667 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10610413168, "name": "Αγιος Ιωάννης Θεολόγος", "label": "amenity:place_of_worship", "tourism": null, "historic": null, "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.8559818, 37.875173299964501 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2338904852, "name": "Άγιος Δημήτριος", "label": "historic:ruins", "tourism": null, "historic": "ruins", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8484151, 37.885708599965966 ] } }
+]
+}

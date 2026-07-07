@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_38806_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "relation", "id": 1842311, "amenity": null, "name": null, "healthcare": null, "phone": null, "website": null, "denomination": null, "religion": null, "leaf_type": "broadleaved", "natural": "wood", "source": "http://geodata.gov.gr", "landuse": null, "name:el": null, "name:mk": null, "boat": null, "waterway": null, "type": "multipolygon", "label": "natural:wood" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 21.430974, 40.451614 ], [ 21.4302633, 40.4518605 ], [ 21.43044, 40.45181 ], [ 21.430555, 40.451822 ], [ 21.430703, 40.451895 ], [ 21.431124949378173, 40.452123516404811 ], [ 21.431124949378173, 40.451617326460386 ], [ 21.430974, 40.451614 ] ] ], [ [ [ 21.430793, 40.47013 ], [ 21.42968, 40.470233 ], [ 21.42864, 40.470517 ], [ 21.429078, 40.470575 ], [ 21.429564, 40.470969 ], [ 21.429717, 40.471355 ], [ 21.429864, 40.471869 ], [ 21.430012, 40.472383 ], [ 21.430398, 40.472774 ], [ 21.431124949378173, 40.473543248191788 ], [ 21.431124949378173, 40.470165652037714 ], [ 21.430793, 40.47013 ] ] ] ] } }
+]
+}

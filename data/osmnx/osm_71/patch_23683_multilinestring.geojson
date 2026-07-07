@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_23683_multilinestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 504236572, "natural": "coastline", "ele": null, "source": null, "name": null, "name:el": null, "name:en": null, "surface": null, "amenity": null, "building": null, "denomination": null, "int_name": null, "religion": null, "cuisine": null, "label": "natural:coastline" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 25.1568219, 36.6851662 ], [ 25.1567788, 36.6851402 ], [ 25.1567865, 36.6851155 ], [ 25.156809219027227, 36.685096124898855 ] ], [ [ 25.156969197206177, 36.685096124898855 ], [ 25.1569744, 36.6851019 ], [ 25.1569729, 36.6851402 ], [ 25.1569513, 36.6851575 ], [ 25.1569143, 36.6851785 ], [ 25.1568727, 36.6851822 ], [ 25.1568219, 36.6851662 ] ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 504236588, "natural": "coastline", "ele": null, "source": null, "name": null, "name:el": null, "name:en": null, "surface": null, "amenity": null, "building": null, "denomination": null, "int_name": null, "religion": null, "cuisine": null, "label": "natural:coastline" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 25.1570314, 36.6851217 ], [ 25.1570114, 36.6851056 ], [ 25.1570114, 36.685096124898855 ] ], [ [ 25.157065848192669, 36.685096124898855 ], [ 25.1570668, 36.6851032 ], [ 25.1570561, 36.685118 ], [ 25.1570314, 36.6851217 ] ] ] } }
+]
+}

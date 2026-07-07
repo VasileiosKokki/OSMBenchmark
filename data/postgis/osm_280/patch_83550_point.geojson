@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_83550_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 5120019306, "name": null, "label": "natural:spring", "natural": "spring", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 24.8119999, 37.864540099963008 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5119970108, "name": null, "label": "natural:spring", "natural": "spring", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 24.8208606, 37.867476399963429 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1105558776, "name": null, "label": "amenity:place_of_worship", "natural": null, "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 24.827863, 37.85233889996131 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1105558746, "name": null, "label": "amenity:place_of_worship", "natural": null, "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 24.8263407, 37.850764299961106 ] } }
+]
+}

@@ -1,0 +1,21 @@
+{
+"type": "FeatureCollection",
+"name": "patch_32940_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8715156522, "name": "Παλάτι", "label": "natural:peak", "natural": "peak", "shop": null, "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8717199, 37.892370199966912 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7026356714, "name": "Μεταξάκης Επαγγελματικά Έπιπλα", "label": "shop:furniture", "natural": null, "shop": "furniture", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8736844, 37.881155999965337 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10823731697, "name": "Domogroup", "label": "shop:furniture", "natural": null, "shop": "furniture", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8731309, 37.881781199965424 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11074290349, "name": "American door", "label": "shop:doors", "natural": null, "shop": "doors", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8690957, 37.877745399964859 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13524772234, "name": "nrg - Shell 120", "label": "amenity:charging_station", "natural": null, "shop": null, "amenity": "charging_station", "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8674559, 37.877579299964843 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3738899792, "name": "Γρηγόρης", "label": "amenity:fast_food", "natural": null, "shop": null, "amenity": "fast_food", "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8659104, 37.876350199964662 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9008669200, "name": null, "label": "amenity:telephone", "natural": null, "shop": null, "amenity": "telephone", "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8658459, 37.875718599964578 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3995975257, "name": "CoffeEat", "label": "amenity:fast_food", "natural": null, "shop": null, "amenity": "fast_food", "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8657521, 37.87567229996457 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7788033366, "name": "Osmen", "label": "shop:garden_furniture", "natural": null, "shop": "garden_furniture", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.865403, 37.87588789996461 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4872851317, "name": "Θεολόγης", "label": "shop:kitchen", "natural": null, "shop": "kitchen", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8651643, 37.875253799964511 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10823741885, "name": "Τυροβολας", "label": "shop:electrical", "natural": null, "shop": "electrical", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8647564, 37.875500199964542 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11007144217, "name": "Hellenic Instruments", "label": "building:retail", "natural": null, "shop": null, "amenity": null, "building": "retail" }, "geometry": { "type": "Point", "coordinates": [ 23.8624039, 37.873812099964297 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3793360046, "name": null, "label": "shop:trade", "natural": null, "shop": "trade", "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.8612124, 37.873806299964308 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8715175823, "name": null, "label": "natural:peak", "natural": "peak", "shop": null, "amenity": null, "building": null }, "geometry": { "type": "Point", "coordinates": [ 23.84623, 37.88142999996537 ] } }
+]
+}

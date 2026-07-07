@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_43221_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "relation", "id": 1850517, "natural": null, "source": "http://geodata.gov.gr/", "type": "multipolygon", "boundary": "national_park", "information": "national_park", "name": "Εθνικό πάρκο λιμνοθαλασσών Μεσσολογγίου-Αιτωλικού", "protect_class": "6", "protection_title": "National Park", "tourism": "information", "wikidata": "Q112032638", "label": "tourism:information" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 21.023602, 38.363764 ], [ 21.023156, 38.377578 ], [ 21.032978, 38.369778 ], [ 21.033605969287922, 38.368740062154799 ], [ 21.033605969287922, 38.362487056086529 ], [ 21.025306163204007, 38.362487056086529 ], [ 21.023602, 38.363764 ] ] ] } }
+]
+}

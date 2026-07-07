@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_47811_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 1134617376, "ele": null, "natural": null, "amenity": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "boat": null, "intermittent": null, "source": "microsoft/BuildingFootprints", "waterway": null, "alt_name": null, "name:mk": null, "wikidata": null, "landuse": null, "building": "yes", "type": null, "leaf_type": null, "boundary": null, "information": null, "tourism": null, "wikipedia": null, "label": "building:yes" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 23.6609561, 40.5695411 ], [ 23.66095473059071, 40.569537909958434 ], [ 23.66095473059071, 40.569541438505667 ], [ 23.6609561, 40.5695411 ] ] ], [ [ [ 23.6609649, 40.5696306 ], [ 23.66095473059071, 40.569606852280842 ], [ 23.66095473059071, 40.56963311779932 ], [ 23.6609649, 40.5696306 ] ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_56133_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": -8404688, "name": "Μεσσηνιακός Κόλπος", "label": "natural:bay", "natural": "bay" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.204134428846999, 36.53864660809149 ], [ 22.204134428846999, 36.540024382539904 ], [ 22.233086169339781, 36.540024382539904 ], [ 22.233086169339781, 36.522742055448404 ], [ 22.204134428846999, 36.53864660809149 ] ] ] } }
+]
+}

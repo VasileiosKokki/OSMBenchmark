@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_33488_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 7503569793, "name": "Ταξιάρχης", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 27.4326642, 36.396593199777172 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7503784709, "name": "Ρούσικα Χώματα", "label": "natural:peak", "amenity": null, "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 27.4191744, 36.394690299776968 ] } }
+]
+}

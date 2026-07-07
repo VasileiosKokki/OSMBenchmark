@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_85428_multilinestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 318342371, "natural": null, "alt_name:bg": null, "alt_name:de": null, "alt_name:fr": null, "boat": null, "name": null, "name:bg": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:nl": null, "old_name": null, "waterway": "stream", "width": null, "est_width": null, "layer": null, "tunnel": null, "landuse": null, "building": null, "wetland": null, "type": null, "water": null, "label": "waterway:stream" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 23.787306243443453, 40.874525548644328 ], [ 23.7873369, 40.8746358 ], [ 23.787306243443453, 40.875057007528774 ] ], [ [ 23.787306243443453, 40.875669434677725 ], [ 23.7881902, 40.8762765 ], [ 23.7883362, 40.8763631 ], [ 23.7900025, 40.8773518 ], [ 23.7922861, 40.8782182 ], [ 23.7931451, 40.8784154 ] ] ] } }
+]
+}

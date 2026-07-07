@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59359_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 354563036, "name": "Mt. Didimo", "label": "tourism:viewpoint", "tourism": "viewpoint", "amenity": null, "natural": null }, "geometry": { "type": "Point", "coordinates": [ 23.2128021, 37.475900899909902 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9707433335, "name": "Profitis Illias", "label": "amenity:place_of_worship", "tourism": null, "amenity": "place_of_worship", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 23.207003, 37.475010799909796 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9707433334, "name": null, "label": "natural:peak", "tourism": null, "amenity": null, "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.2077272, 37.47539779990985 ] } },
+{ "type": "Feature", "properties": { "osm_id": 309349780, "name": null, "label": "tourism:viewpoint", "tourism": "viewpoint", "amenity": null, "natural": null }, "geometry": { "type": "Point", "coordinates": [ 23.2076777, 37.474886399909778 ] } }
+]
+}

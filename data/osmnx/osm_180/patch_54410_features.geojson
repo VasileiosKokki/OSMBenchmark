@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_54410_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 8673559, "natural": "coastline", "source": "PGS", "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.424163594276457, 36.576231315305137 ], [ 26.4243877, 36.5760298 ], [ 26.4250699, 36.5756331 ], [ 26.4258242, 36.5753466 ], [ 26.4265007, 36.5755414 ], [ 26.4272387, 36.5758076 ], [ 26.4285999, 36.5761336 ], [ 26.429053571289582, 36.576231315305137 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 8673632, "natural": "coastline", "source": "PGS", "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.44957851901016, 36.55494994790152 ], [ 26.4492489, 36.5548495 ], [ 26.4491821, 36.5546077 ], [ 26.4490114, 36.5545886 ], [ 26.4488686, 36.5547764 ], [ 26.4487176, 36.5548281 ], [ 26.4486282, 36.5547067 ], [ 26.4486209, 36.5540904 ], [ 26.448804, 36.5534471 ], [ 26.448882330987857, 36.553018317756106 ] ] } }
+]
+}

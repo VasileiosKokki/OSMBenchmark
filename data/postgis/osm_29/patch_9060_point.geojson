@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_9060_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 1338824344, "name": "REVOIL", "label": "amenity:fuel", "amenity": "fuel" }, "geometry": { "type": "Point", "coordinates": [ 26.0677331, 38.252089600017769 ] } }
+]
+}

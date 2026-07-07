@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "patch_57308_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 12190323622, "name": null, "label": "amenity:bench", "amenity": "bench", "tourism": null, "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.4652438, 37.11041459986221 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11182085001, "name": null, "label": "tourism:information", "amenity": null, "tourism": "information", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.4673396, 37.112378899862478 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10694481585, "name": "Αγία Γέννηση του Χριστού", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "tourism": null, "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.4456933, 37.118395299863224 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12190306827, "name": null, "label": "amenity:bench", "amenity": "bench", "tourism": null, "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.4506746, 37.112390799862467 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10815940677, "name": "Κορακιά", "label": "natural:peak", "amenity": null, "tourism": null, "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 25.4407216, 37.10915079986205 ] } }
+]
+}

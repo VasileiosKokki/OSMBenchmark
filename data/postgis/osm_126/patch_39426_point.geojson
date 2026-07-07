@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "patch_39426_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 7592186656, "name": null, "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.3181644, 35.110576899659335 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7591389675, "name": "Άγιος Κωνσταντίνος", "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.3400553, 35.109611499659266 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7995750039, "name": null, "label": "natural:peak", "amenity": null, "building": null, "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 25.340552, 35.102584899658765 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7591598879, "name": "Προφητης Ηλίας", "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.3406736, 35.102783299658789 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7591389404, "name": null, "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel", "natural": null }, "geometry": { "type": "Point", "coordinates": [ 25.3285906, 35.101141199658656 ] } }
+]
+}

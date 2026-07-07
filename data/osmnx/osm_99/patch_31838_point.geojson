@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_31838_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 1674668447, "waterway": "weir", "boat": null, "natural": null, "water": null, "historic": null, "historic:civilization": null, "name": null, "name:el": null, "name:en": null, "wikidata": null, "landuse": null, "wetland": null, "amenity": null, "layer": null, "tunnel": null, "type": null, "wikipedia": null, "label": "waterway:weir" }, "geometry": { "type": "Point", "coordinates": [ 22.7881713, 39.5341562 ] } }
+]
+}

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_39783_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 13239419909, "name": "DEI blue - Κτήμα Θυμέλη", "label": "amenity:charging_station", "amenity": "charging_station", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.4665286, 35.339798399676546 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5184156621, "name": null, "label": "tourism:attraction", "amenity": null, "tourism": "attraction" }, "geometry": { "type": "Point", "coordinates": [ 24.4631289, 35.317908499674822 ] } },
+{ "type": "Feature", "properties": { "osm_id": 293039153, "name": "Υστερομιυωικό Νεκροταφείο Αρμένωυ", "label": "amenity:parking", "amenity": "parking", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 24.4635666, 35.318136499674843 ] } }
+]
+}

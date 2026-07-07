@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "patch_98680_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 6422006770, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0191892, 37.416862399902037 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7194451220, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0191131, 37.413718399901633 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6422063347, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0197561, 37.405534999900546 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6422068517, "name": null, "label": "tourism:viewpoint", "amenity": null, "natural": null, "tourism": "viewpoint" }, "geometry": { "type": "Point", "coordinates": [ 22.0201772, 37.405239599900497 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6424422962, "name": "Άγιος Κωνσταντίνος", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0285011, 37.396589099899359 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6424426012, "name": "Άγιοι Θεόδωροι", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.022858, 37.402412699900133 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6422042969, "name": "Άγιος Αθανάσιος", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0244396, 37.415075799901807 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6383582152, "name": "Άγιος Ανδρέας", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0315995, 37.398620999899627 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6421997210, "name": "Αγία Παρασκευή", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0216106, 37.417471899902132 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6422005685, "name": "Άγιος Γεώργιος", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0208458, 37.417856299902176 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6422005686, "name": "Άγιος Σπυρίδων", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 22.0205427, 37.417445099902139 ] } }
+]
+}

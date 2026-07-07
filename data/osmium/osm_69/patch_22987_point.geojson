@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_22987_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 5422500938, "addr:postcode": null, "amenity": null, "area": null, "boat": null, "bridge": null, "building": null, "crossing:barrier": null, "date": null, "electrified": null, "ford": null, "gauge": null, "highway": null, "int_name": null, "int_ref": null, "intermittent": null, "landuse": null, "lanes": null, "layer": null, "leaf_cycle": null, "leaf_type": null, "leisure": "picnic_table", "lit": null, "maxspeed": null, "maxweight:signed": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:ru": null, "name:tr": null, "note": null, "old_ref": null, "oneway": null, "operator": null, "passenger_lines": null, "place": null, "population": null, "public_transport": null, "railway": null, "railway:etcs": null, "railway:gnt": null, "railway:lzb": null, "railway:pzb": null, "ref": null, "religion": null, "service": null, "source": null, "source:old_ref": null, "source:ref": null, "surface": null, "tactile_paving": null, "tracks": null, "train": null, "tunnel": null, "usage": null, "waterway": null, "wheelchair": null, "width": null, "wikidata": null, "wikipedia": null, "label": "leisure:picnic_table" }, "geometry": { "type": "Point", "coordinates": [ 26.5246816, 41.5383489 ] } }
+]
+}

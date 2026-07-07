@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_1575_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 356735921, "ele": "1580", "natural": "peak", "name": null, "waterway": null, "alt_name": null, "castle_type": null, "historic": null, "name:el": null, "name:en": null, "source": null, "wikidata": null, "leaf_type": null, "boundary": null, "leisure": null, "protect_class": null, "protection_title": null, "type": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 21.6200763, 38.721379 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 5320191170, "ele": null, "natural": null, "name": "Καταρράκτης Μαύρης Σπηλιάς", "waterway": "waterfall", "alt_name": null, "castle_type": null, "historic": null, "name:el": null, "name:en": null, "source": null, "wikidata": null, "leaf_type": null, "boundary": null, "leisure": null, "protect_class": null, "protection_title": null, "type": null, "label": "waterway:waterfall" }, "geometry": { "type": "Point", "coordinates": [ 21.6482363, 38.7326327 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 8897233639, "ele": null, "natural": null, "name": "Μαύρη Σπηλιά Προυσού", "waterway": null, "alt_name": "Πύργος Θολής", "castle_type": "fortress", "historic": "castle", "name:el": "Μαύρη Σπηλιά Προυσού", "name:en": "Black Cave of Prousos", "source": "https://www.kastra.eu/castlegr.php?kastro=blackcave", "wikidata": "Q108612419", "leaf_type": null, "boundary": null, "leisure": null, "protect_class": null, "protection_title": null, "type": null, "label": "historic:castle" }, "geometry": { "type": "Point", "coordinates": [ 21.6471457, 38.7327491 ] } }
+]
+}

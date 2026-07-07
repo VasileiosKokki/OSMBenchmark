@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_85428_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 318342371, "alt_name:bg": null, "alt_name:de": null, "alt_name:fr": null, "boat": null, "bridge": null, "building": null, "cables": null, "design": null, "est_width": null, "full_name": null, "highway": null, "landuse": null, "layer": null, "line_attachment": null, "lit": null, "material": null, "name": null, "name:bg": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:nl": null, "natural": null, "old_name": null, "operator": null, "plant:method": null, "plant:output:electricity": null, "plant:source": null, "power": null, "source": null, "tunnel": null, "voltage": null, "waterway": "stream", "wetland": null, "width": null, "wires": null, "label": "waterway:stream" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 23.787306243443453, 40.874525548644328 ], [ 23.7873369, 40.8746358 ], [ 23.787306243443453, 40.875057007528774 ] ], [ [ 23.787306243443453, 40.875669434677725 ], [ 23.7881902, 40.8762765 ], [ 23.7883362, 40.8763631 ], [ 23.7900025, 40.8773518 ], [ 23.7922861, 40.8782182 ], [ 23.7931451, 40.8784154 ] ] ] } }
+]
+}

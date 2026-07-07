@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_93697_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 137321314, "name": "Εθνικό Θαλάσσιο Πάρκο Β. Σποράδων", "label": "leisure:nature_reserve", "leisure": "nature_reserve" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 24.001331067265177, 39.18271039736036 ], [ 24.029951617558993, 39.18271039736036 ], [ 24.029951617558993, 39.158914755898707 ], [ 24.001331067265177, 39.158914755898707 ], [ 24.001331067265177, 39.18271039736036 ] ] ] } }
+]
+}

@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_66507_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 8880842, "natural": "coastline", "source": "Maxar Premium Imagery (2021-06-13)", "type": null, "alt_name:el": null, "alt_name:en": null, "int_name": null, "name": null, "name:el": null, "name:en": null, "place": null, "wikidata": null, "wikipedia": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.5918991, 39.1473094 ], [ 23.5920799, 39.1473945 ], [ 23.5921709, 39.147518 ], [ 23.5921868, 39.1476207 ], [ 23.5920898, 39.1478344 ], [ 23.5919396, 39.1479029 ], [ 23.5917894, 39.1479131 ], [ 23.5915319, 39.1478336 ], [ 23.5914195, 39.147709 ], [ 23.5913267, 39.1476189 ], [ 23.5912127, 39.147542 ], [ 23.5912154, 39.1474501 ], [ 23.5914486, 39.1473614 ], [ 23.5916792, 39.1473271 ], [ 23.5918991, 39.1473094 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 8880845, "natural": "coastline", "source": "PGS", "type": null, "alt_name:el": null, "alt_name:en": null, "int_name": null, "name": null, "name:el": null, "name:en": null, "place": null, "wikidata": null, "wikipedia": null, "label": "natural:coastline" }, "geometry": { "type": "LineString", "coordinates": [ [ 23.6141596, 39.1294909 ], [ 23.6142557, 39.1295838 ], [ 23.6142868, 39.1297146 ], [ 23.6145939, 39.1297851 ], [ 23.6147661, 39.1298557 ], [ 23.6149569, 39.1299477 ], [ 23.6150446, 39.1300093 ], [ 23.6150358, 39.1300521 ], [ 23.6149467, 39.1301153 ], [ 23.6148763, 39.1301236 ], [ 23.6140959, 39.1300199 ], [ 23.6139658, 39.1299503 ], [ 23.6139333, 39.1298743 ], [ 23.6139492, 39.1297291 ], [ 23.6140099, 39.129606 ], [ 23.6140908, 39.1295311 ], [ 23.6141596, 39.1294909 ] ] } }
+]
+}

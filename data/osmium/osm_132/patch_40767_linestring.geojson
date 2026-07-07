@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_40767_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 1441688758, "alt_name:bg": null, "alt_name:el": null, "building": null, "ele": null, "ford": null, "highway": null, "historic": null, "landuse": null, "leaf_type": null, "lit": null, "military": null, "name": "Κερασλίκ", "name:bg": null, "name:el": null, "name:en": null, "name:mk": null, "natural": null, "ruins": null, "source": null, "waterway": "stream", "wikidata": null, "wikipedia": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 24.1245411, 41.4943862 ], [ 24.1236969, 41.4944264 ], [ 24.1228553, 41.4943768 ], [ 24.121897, 41.4940432 ], [ 24.1205283, 41.4937541 ], [ 24.1189873, 41.4935728 ], [ 24.1182425, 41.4931877 ], [ 24.1170059, 41.4930947 ], [ 24.1159071, 41.493365 ], [ 24.1156621, 41.4934894 ], [ 24.1151005, 41.4933541 ], [ 24.1146417, 41.4932305 ], [ 24.1141138, 41.4933813 ], [ 24.1135729, 41.4934245 ], [ 24.1132996, 41.4933866 ], [ 24.1128713, 41.493465 ], [ 24.1112236, 41.4939009 ], [ 24.109935706264544, 41.494175691135297 ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_68540_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 8840928806, "direction": null, "ele": "558", "highway": null, "int_name": null, "lanes": null, "leaf_type": null, "man_made": "survey_point", "maxspeed": null, "maxspeed:backward": null, "maxspeed:forward": null, "name": "Δενδράκια", "name:el": null, "natural": "peak", "oneway": null, "power": null, "reg_ref": null, "smoothness": null, "source": null, "source:maxspeed": null, "source:maxspeed:backward": null, "source:maxspeed:forward": null, "surface": null, "voltage": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 23.2283199, 38.88897 ] } }
+]
+}

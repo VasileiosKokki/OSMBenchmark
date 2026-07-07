@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_72868_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 356719347, "name": "Γιδοβούνι", "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 22.1017582, 38.718030700085009 ] } }
+]
+}

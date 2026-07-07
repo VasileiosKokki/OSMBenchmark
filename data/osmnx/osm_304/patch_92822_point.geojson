@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_92822_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 5935809089, "amenity": "place_of_worship", "religion": "christian", "wikidata": null, "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "name": null, "name:el": null, "name:en": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "label": "amenity:place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2477758, 37.3998136 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 5935809109, "amenity": "place_of_worship", "religion": "christian", "wikidata": null, "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "name": null, "name:el": null, "name:en": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "label": "amenity:place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2455902, 37.4035329 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 5935813615, "amenity": "place_of_worship", "religion": "christian", "wikidata": "Q113905188", "leaf_type": null, "natural": null, "source": null, "boundary": null, "leisure": null, "name": null, "name:el": null, "name:en": null, "opening_hours": null, "protect_class": null, "protection_title": null, "landuse": null, "label": "amenity:place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2386604, 37.421215 ] } }
+]
+}

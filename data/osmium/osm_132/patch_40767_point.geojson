@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_40767_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 8579878105, "alt_name:bg": "Маврохори", "alt_name:el": "Τίσοβα", "building": null, "ele": null, "ford": null, "highway": null, "historic": "ruins", "landuse": null, "leaf_type": null, "lit": null, "military": null, "name": "Μαυροχώρι", "name:bg": "Тисово", "name:el": "Μαυροχώρι", "name:en": "Mavrochori (Tisovo)", "name:mk": "Тисово (урнатини)", "natural": null, "ruins": "village", "source": null, "waterway": null, "wikidata": "Q6794296", "wikipedia": "bg:Тисово", "label": "historic:ruins" }, "geometry": { "type": "Point", "coordinates": [ 24.1245119, 41.5073911 ] } },
+{ "type": "Feature", "properties": { "@type": "node", "@id": 13228368315, "alt_name:bg": null, "alt_name:el": null, "building": null, "ele": "1280", "ford": null, "highway": null, "historic": null, "landuse": null, "leaf_type": null, "lit": null, "military": null, "name": "Μαγκούλα Τέσοβου", "name:bg": null, "name:el": null, "name:en": null, "name:mk": null, "natural": "peak", "ruins": null, "source": null, "waterway": null, "wikidata": null, "wikipedia": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 24.1251021, 41.4881979 ] } }
+]
+}

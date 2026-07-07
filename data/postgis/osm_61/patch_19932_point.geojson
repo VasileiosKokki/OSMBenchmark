@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_19932_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 356504956, "name": "Maja Pelzës", "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7331304, 40.307195900308081 ] } },
+{ "type": "Feature", "properties": { "osm_id": 698044493, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7322116, 40.30176870030737 ] } },
+{ "type": "Feature", "properties": { "osm_id": 356504918, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 20.7462625, 40.313544600308902 ] } }
+]
+}

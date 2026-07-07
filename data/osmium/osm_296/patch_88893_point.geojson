@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_88893_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 8733492157, "access": null, "admin_level": null, "alt_name": "Kithairón Óros", "amenity": null, "barrier": null, "boundary": null, "building": null, "denomination": null, "ele": "1409", "foot": null, "ford": null, "free_flying:site": null, "generator:method": null, "generator:output:electricity": null, "generator:source": null, "generator:type": null, "height": null, "height:hub": null, "highway": null, "intermittent": null, "lanes": null, "leisure": null, "man_made": "survey_point", "manufacturer": null, "name": "Ελατιάς", "name:de": null, "name:el": null, "name:en": null, "name:es": null, "name:fr": null, "name:it": null, "name:la": null, "name:pt": null, "natural": "peak", "noname": null, "oneway": null, "operator": null, "power": null, "prominence": "827", "religion": null, "rotor:diameter": null, "site": null, "smoothness": null, "sport": null, "surface": null, "tourism": null, "tower:type": null, "tracktype": null, "waterway": null, "wheelchair": null, "wikidata": null, "wikipedia": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 23.2497497, 38.1842004 ] } }
+]
+}

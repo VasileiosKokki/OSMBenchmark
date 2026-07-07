@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_95889_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": -9135811, "name": "Σαρωνικός Κόλπος", "label": "natural:bay", "natural": "bay" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.267542272309633, 37.785978469580208 ], [ 23.297297673530753, 37.785978469580208 ], [ 23.297297673530753, 37.763485809173829 ], [ 23.267542272309633, 37.763485809173829 ], [ 23.267542272309633, 37.785978469580208 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_54424_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 145299195, "boundary": null, "highway": null, "leisure": null, "name": "Ξερόρεμα", "protect_class": null, "protection_title": null, "source": null, "waterway": "stream", "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 22.842770767141026, 39.635653022332292 ], [ 22.8429909, 39.63621 ], [ 22.8435587, 39.6368513 ], [ 22.8447321, 39.6373177 ], [ 22.846269291159068, 39.637783430776011 ] ] } }
+]
+}

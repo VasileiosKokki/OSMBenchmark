@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_96033_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 9156206114, "access": null, "addr:city": null, "addr:postcode": null, "admin_level": null, "amenity": "fuel", "boundary": null, "branch": null, "brand": "ΕΛΙΝΟΙΛ", "brand:wikidata": "Q12876543", "building": null, "building:levels": null, "bus": null, "cables": null, "crop": null, "denomination": null, "description": null, "design": null, "direction": null, "embankment": null, "ford": null, "height": null, "highway": null, "horse": null, "incline": null, "intermittent": null, "landuse": null, "lanes": null, "layer": null, "leaf_type": null, "leisure": null, "man_made": null, "material": null, "maxspeed": null, "motor_vehicle": null, "motorcar": null, "motorcycle": null, "name": "ΕΛΙΝΟΙΛ", "name:el": null, "name:en": null, "natural": null, "network": null, "noexit": null, "note": null, "old_name": null, "oneway": null, "operator": "ΒΑΣΙΛΕΙΟΥ ΣΠΥΡΙΔΩΝ", "operator:wikidata": null, "payment:cash": null, "payment:credit_cards": null, "place": null, "population": null, "power": null, "public_transport": null, "ref": null, "reg_ref": null, "religion": null, "service": null, "shop": null, "smoothness": null, "source": null, "source:population": null, "sport": null, "stop": null, "surface": null, "tracktype": null, "transformer": null, "trees": null, "tunnel": null, "voltage": null, "water": null, "waterway": null, "wetland": null, "width": null, "wikidata": null, "wikipedia": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 23.2402081, 38.2669312 ] } }
+]
+}

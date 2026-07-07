@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_52396_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 429838548, "ele": "650", "natural": "peak", "landuse": null, "type": null, "name": null, "name:bg": null, "name:cs": null, "name:de": null, "name:el": null, "name:en": null, "name:fr": null, "name:it": null, "name:ka": null, "name:mk": null, "name:pt": null, "name:ru": null, "name:sr": null, "old_name": null, "old_name:de": null, "old_name:el": null, "old_name:fr": null, "water": null, "wikidata": null, "wikipedia": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 21.8228788, 40.7083625 ] } }
+]
+}

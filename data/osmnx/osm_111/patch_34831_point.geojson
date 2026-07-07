@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_34831_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 9169113132, "amenity": "fuel", "brand": "CYCLON", "name": "CYCLON", "operator": "ΚΑΣΤΑΝΟΣ ΠΑΝΤΕΛΗΣ", "brand:wikidata": null, "brand:wikipedia": null, "landuse": null, "building": null, "denomination": null, "religion": null, "intermittent": null, "waterway": null, "leisure": null, "sport": null, "layer": null, "natural": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 20.9478194, 38.6985687 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 9169113145, "amenity": "fuel", "brand": "Aegean", "name": "AEGEAN", "operator": "ΣΙΔΕΡΑΣ ΧΑΡΑΛΑΜΠΟΣ", "brand:wikidata": "Q28146598", "brand:wikipedia": "el:Aegean Oil", "landuse": null, "building": null, "denomination": null, "religion": null, "intermittent": null, "waterway": null, "leisure": null, "sport": null, "layer": null, "natural": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 20.9471847, 38.7021279 ] } }
+]
+}

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_42693_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 4530284176, "ele": "607", "name": "Μπaχoύμι", "name:de": "Bachoumi", "name:el": "Μπaχoύμι", "name:en": "Bachoumi", "natural": "peak", "source": "OpenCycleMap", "tourism": null, "leaf_type": null, "admin_level": null, "amenity": null, "denomination": null, "religion": null, "wikidata": null, "parking": null, "building": null, "access": null, "intermittent": null, "waterway": null, "layer": null, "tunnel": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 24.8021781, 35.400323 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 4799944092, "ele": null, "name": null, "name:de": null, "name:el": null, "name:en": null, "natural": null, "source": null, "tourism": "viewpoint", "leaf_type": null, "admin_level": null, "amenity": null, "denomination": null, "religion": null, "wikidata": null, "parking": null, "building": null, "access": null, "intermittent": null, "waterway": null, "layer": null, "tunnel": null, "label": "tourism:viewpoint" }, "geometry": { "type": "Point", "coordinates": [ 24.8067867, 35.4094231 ] } },
+{ "type": "Feature", "properties": { "element": "node", "id": 12375995896, "ele": null, "name": "Παραλία Κατεβατή", "name:de": null, "name:el": null, "name:en": null, "natural": "beach", "source": null, "tourism": null, "leaf_type": null, "admin_level": null, "amenity": null, "denomination": null, "religion": null, "wikidata": null, "parking": null, "building": null, "access": null, "intermittent": null, "waterway": null, "layer": null, "tunnel": null, "label": "natural:beach" }, "geometry": { "type": "Point", "coordinates": [ 24.8278864, 35.4102492 ] } }
+]
+}

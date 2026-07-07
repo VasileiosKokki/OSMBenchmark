@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_49272_multipolygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 136245298, "ele": null, "man_made": null, "natural": "wood", "source": "http://geodata.gov.gr/", "leaf_type": "broadleaved", "landuse": null, "type": null, "label": "natural:wood" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 23.685362, 38.747628 ], [ 23.685365, 38.74699 ], [ 23.685162778824772, 38.74699780081685 ], [ 23.685162778824772, 38.747693027683304 ], [ 23.685362, 38.747628 ] ] ], [ [ [ 23.685553, 38.742131 ], [ 23.685452, 38.74179 ], [ 23.685162778824772, 38.741553977538352 ], [ 23.685162778824772, 38.742468803405423 ], [ 23.685553, 38.742131 ] ] ] ] } }
+]
+}

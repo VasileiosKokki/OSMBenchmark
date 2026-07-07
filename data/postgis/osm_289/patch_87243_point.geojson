@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+"name": "patch_87243_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 4246735333, "name": "Dafnoudi Hotel Apartments", "label": "tourism:hotel", "tourism": "hotel", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5518873, 38.460204300047685 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2925344569, "name": null, "label": "tourism:information", "tourism": "information", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5518254, 38.458349500047404 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6759013715, "name": "Fiscardo Stone Villas Gaia & Nemus", "label": "tourism:chalet", "tourism": "chalet", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5503499, 38.450647300046313 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2925344723, "name": null, "label": "tourism:information", "tourism": "information", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5462474, 38.458900100047487 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2926477557, "name": null, "label": "tourism:information", "tourism": "information", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5425206, 38.471245900049269 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2917303856, "name": "WW2 gun emplacement", "label": "historic:archaeological_site", "tourism": null, "historic": "archaeological_site", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.541081, 38.471126400049251 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9064282177, "name": "WW2 Gun Emplacement", "label": "historic:archaeological_site", "tourism": null, "historic": "archaeological_site", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5416143, 38.471023700049244 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2917303857, "name": "WW2 gun emplacement", "label": "historic:archaeological_site", "tourism": null, "historic": "archaeological_site", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5418238, 38.471380300049283 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2917306116, "name": null, "label": "tourism:viewpoint", "tourism": "viewpoint", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5409255, 38.470572700049175 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2917306117, "name": null, "label": "amenity:parking", "tourism": null, "historic": null, "amenity": "parking" }, "geometry": { "type": "Point", "coordinates": [ 20.5439334, 38.470584900049168 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2926477554, "name": null, "label": "tourism:information", "tourism": "information", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5468506, 38.466718300048619 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2921512464, "name": null, "label": "amenity:telephone", "tourism": null, "historic": null, "amenity": "telephone" }, "geometry": { "type": "Point", "coordinates": [ 20.5530245, 38.462483600048003 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2921511453, "name": "Fiscardo Walking Routes", "label": "tourism:information", "tourism": "information", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 20.5530116, 38.462452200048006 ] } }
+]
+}

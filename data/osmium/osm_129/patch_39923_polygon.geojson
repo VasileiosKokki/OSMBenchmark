@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_39923_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "way", "@id": 555998479, "amenity": "place_of_worship", "boat": null, "bridge": null, "building": "yes", "ford": null, "highway": null, "int_name": null, "lanes": null, "layer": null, "lit": null, "maxspeed": null, "name": null, "name:el": null, "name:mk": null, "oneway": null, "reg_ref": null, "religion": "christian", "smoothness": null, "source": null, "surface": null, "tracktype": null, "waterway": null, "label": "building:yes;amenity:place_of_worship" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.9495263, 41.1704288 ], [ 23.9495328, 41.1703706 ], [ 23.9494037, 41.170373 ], [ 23.9494005, 41.1704288 ], [ 23.9495263, 41.1704288 ] ] ] } }
+]
+}

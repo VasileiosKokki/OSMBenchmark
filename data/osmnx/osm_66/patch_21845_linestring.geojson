@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_21845_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "way", "id": 224242687, "landuse": null, "waterway": "stream", "building": null, "source": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 21.2808929, 40.2793866 ], [ 21.2810217, 40.2792966 ], [ 21.2812041, 40.2791656 ], [ 21.281213568203363, 40.279162951963009 ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 965582973, "landuse": null, "waterway": "stream", "building": null, "source": null, "label": "waterway:stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 21.276330912354627, 40.282809110278741 ], [ 21.2782613, 40.2809561 ], [ 21.2808929, 40.2793866 ] ] } }
+]
+}

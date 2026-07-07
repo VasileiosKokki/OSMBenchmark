@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_88130_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 1344970271, "name": "ΑΠ", "label": "amenity:fuel", "amenity": "fuel" }, "geometry": { "type": "Point", "coordinates": [ 21.3080842, 37.798599799953848 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9779182444, "name": null, "label": "amenity:fast_food", "amenity": "fast_food" }, "geometry": { "type": "Point", "coordinates": [ 21.3090552, 37.796745199953612 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9779182480, "name": null, "label": "amenity:cafe", "amenity": "cafe" }, "geometry": { "type": "Point", "coordinates": [ 21.3091552, 37.796622199953589 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9779182443, "name": null, "label": "amenity:cafe", "amenity": "cafe" }, "geometry": { "type": "Point", "coordinates": [ 21.3095917, 37.796792999953617 ] } }
+]
+}

@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_92822_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 5935809109, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2455902, 37.403532899900284 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5935809089, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2477758, 37.399813599899794 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5935813615, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship" }, "geometry": { "type": "Point", "coordinates": [ 22.2386604, 37.421214999902617 ] } }
+]
+}

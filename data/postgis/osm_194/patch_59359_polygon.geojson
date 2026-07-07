@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "patch_59359_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": -5913779, "name": "Πελοπόννησος", "label": "natural:peninsula", "natural": "peninsula", "landuse": null, "building": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.199359610826711, 37.47972185205343 ], [ 23.228968704177902, 37.47972185205343 ], [ 23.228968704177902, 37.457206340411069 ], [ 23.199359610826711, 37.457206340411069 ], [ 23.199359610826711, 37.47972185205343 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 750385268, "name": null, "label": "landuse:quarry", "natural": null, "landuse": "quarry", "building": null }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.2208335, 37.45740409990745 ], [ 23.2183413, 37.45879609990763 ], [ 23.2175651, 37.459442699907704 ], [ 23.218896, 37.460553299907858 ], [ 23.2215749, 37.461271199907962 ], [ 23.2266767, 37.462097299908073 ], [ 23.228968704177902, 37.46167397504118 ], [ 23.228968704177902, 37.458134997309223 ], [ 23.2267279, 37.457343299907429 ], [ 23.226218531500763, 37.457206340411069 ], [ 23.222020186026541, 37.457206340411069 ], [ 23.2208335, 37.45740409990745 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 416256029, "name": null, "label": "building:yes", "natural": null, "landuse": null, "building": "yes" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.2165238, 37.477276999910103 ], [ 23.2165833, 37.477249499910094 ], [ 23.2165163, 37.477157999910084 ], [ 23.2164567, 37.477185499910071 ], [ 23.2165238, 37.477276999910103 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 416256028, "name": null, "label": "building:yes", "natural": null, "landuse": null, "building": "yes" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.2163944, 37.477313299910108 ], [ 23.2164776, 37.47726859991009 ], [ 23.2164358, 37.477219699910094 ], [ 23.2163527, 37.477264399910105 ], [ 23.2163944, 37.477313299910108 ] ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 416256027, "name": null, "label": "building:yes", "natural": null, "landuse": null, "building": "yes" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 23.2162858, 37.477309799910103 ], [ 23.2162963, 37.477253799910095 ], [ 23.2161703, 37.477238899910098 ], [ 23.2161598, 37.477294899910106 ], [ 23.2162858, 37.477309799910103 ] ] ] } }
+]
+}

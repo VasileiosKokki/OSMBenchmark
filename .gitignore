@@ -3,7 +3,8 @@
 *.osm.pbf.idx
 
 # ── Generated outputs (GeoJSON) ─────────────────────────────────
-data/
+# data/
+# no need to since i removed the heavy files from data (osm 138 from osmium and osmnx)
 
 # ── Python ──────────────────────────────────────────────────────
 __pycache__/

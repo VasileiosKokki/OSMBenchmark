@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_56133_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "relation", "id": 8404688, "name": "Μεσσηνιακός Κόλπος", "name:el": "Μεσσηνιακός Κόλπος", "name:en": "Messenian Gulf", "name:ru": "Месиниакос", "natural": "bay", "wikidata": "Q1474634", "wikipedia": "el:Μεσσηνιακός κόλπος", "type": "multipolygon", "name:ar": "خليج ميسينيا", "name:ca": "Golf de Messènia", "name:cs": "Messenský záliv", "name:de": "Messenischer Golf", "name:es": "Golfo de Mesenia", "name:et": "Messeenia laht", "name:eu": "Meseniako golkoa", "name:fa": "خلیج مسینی", "name:fi": "Messenianlahti", "name:fr": "Golfe de Messénie", "name:nl": "Golf van Messenië", "name:nn": "Messiníabukta", "name:no": "Messeniabukten", "name:pl": "Zatoka Meseńska", "name:pt": "Golfo de Messênia", "name:sk": "Messénsky záliv", "name:sv": "Messeniska viken", "name:uk": "Мессенська затока", "label": "natural:bay" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.204134428846999, 36.538468908722983 ], [ 22.204134428846999, 36.540024382539904 ], [ 22.233086169339785, 36.540024382539904 ], [ 22.233086169339785, 36.522568700590369 ], [ 22.204134428846999, 36.538468908722983 ] ] ] } }
+]
+}

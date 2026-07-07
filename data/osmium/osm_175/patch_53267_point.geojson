@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_53267_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 6742373742, "board_type": null, "boat": null, "boundary": null, "ele": "1387", "highway": null, "information": null, "lanes": null, "leaf_type": null, "leisure": null, "lit": null, "name": "Μπρούστη", "name:el": null, "name:en": null, "name:fr": null, "name:prefix": null, "natural": "peak", "oneway": null, "ref": null, "source": null, "source:ref": null, "surface": null, "tourism": null, "tracktype": null, "waterway": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 22.2337481, 40.1805448 ] } }
+]
+}

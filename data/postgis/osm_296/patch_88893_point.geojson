@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_88893_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8733492157, "name": "Ελατιάς", "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.2497497, 38.184200400008095 ] } }
+]
+}

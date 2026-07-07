@@ -1,0 +1,16 @@
+{
+"type": "FeatureCollection",
+"name": "patch_76236_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 12338995149, "name": "Αγία Μαρίνα", "label": "amenity:place_of_worship;building:chapel", "amenity": "place_of_worship", "building": "chapel" }, "geometry": { "type": "Point", "coordinates": [ 21.6669277, 40.254335100301191 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12338119301, "name": null, "label": "amenity:watering_place", "amenity": "watering_place", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6634594, 40.247214500300267 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12338995165, "name": null, "label": "amenity:bench", "amenity": "bench", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6780477, 40.249793000300592 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12336867108, "name": null, "label": "amenity:water_point", "amenity": "water_point", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6780613, 40.249819000300597 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12336831596, "name": null, "label": "amenity:bench", "amenity": "bench", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6785421, 40.249581800300575 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12336831595, "name": null, "label": "amenity:bench", "amenity": "bench", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6785387, 40.249616100300571 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12337837852, "name": null, "label": "amenity:watering_place", "amenity": "watering_place", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.677829, 40.24508160029999 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12337837888, "name": null, "label": "amenity:bench", "amenity": "bench", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6772282, 40.24551940030004 ] } },
+{ "type": "Feature", "properties": { "osm_id": 12337837889, "name": null, "label": "amenity:bench", "amenity": "bench", "building": null }, "geometry": { "type": "Point", "coordinates": [ 21.6772187, 40.245541400300048 ] } }
+]
+}

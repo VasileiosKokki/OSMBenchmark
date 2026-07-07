@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "patch_66856_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 1109534408, "admin_level": null, "alt_name": null, "border_type": null, "boundary": "marker", "ele": "1064.2", "highway": null, "historic": "boundary_stone", "leaf_type": null, "lit": null, "man_made": null, "marker": "stone", "name": "156", "natural": null, "note": null, "ref": null, "source": null, "surface": null, "label": "historic:boundary_stone" }, "geometry": { "type": "Point", "coordinates": [ 25.9031324, 41.3065238 ] } },
+{ "type": "Feature", "properties": { "@type": "way", "@id": 136842408, "admin_level": null, "alt_name": null, "border_type": null, "boundary": null, "ele": null, "highway": null, "historic": null, "leaf_type": "mixed", "lit": null, "man_made": null, "marker": null, "name": null, "natural": "wood", "note": null, "ref": null, "source": "http://geodata.gov.gr/", "surface": null, "label": "natural:wood" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 25.923372, 41.303173 ], [ 25.924613, 41.303856 ], [ 25.925546, 41.303841 ], [ 25.927485, 41.303808 ], [ 25.928793646996315, 41.303265136019299 ], [ 25.928793646996315, 41.302965308258287 ], [ 25.923132080229401, 41.302965308258287 ], [ 25.923372, 41.303173 ] ] ] } },
+{ "type": "Feature", "properties": { "@type": "way", "@id": 257101246, "admin_level": null, "alt_name": null, "border_type": null, "boundary": null, "ele": null, "highway": null, "historic": null, "leaf_type": "broadleaved", "lit": null, "man_made": null, "marker": null, "name": null, "natural": "wood", "note": null, "ref": null, "source": "http://geodata.gov.gr/", "surface": null, "label": "natural:wood" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 25.9034579, 41.3061662 ], [ 25.907456, 41.3076829 ], [ 25.91122, 41.303965 ], [ 25.911559, 41.303464 ], [ 25.911871, 41.303044 ], [ 25.911904559713378, 41.302965308258287 ], [ 25.89859666258425, 41.302965308258287 ], [ 25.89859666258425, 41.306158878293843 ], [ 25.9034579, 41.3061662 ] ] ] } }
+]
+}

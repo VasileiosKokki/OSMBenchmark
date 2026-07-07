@@ -1,0 +1,29 @@
+{
+"type": "FeatureCollection",
+"name": "patch_21010_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 1443409845, "name": "BP", "label": "amenity:fuel", "amenity": "fuel", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3603412, 37.999246999981878 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13247263069, "name": "DΕΙ blue - Σκλαβενίτης Μέγαρα", "label": "amenity:charging_station", "amenity": "charging_station", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3535554, 37.999068999981866 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756651520, "name": "Κοιμητήριο Μεγάρων", "label": "landuse:cemetery", "amenity": null, "landuse": "cemetery", "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3517616, 37.99731669998161 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7951548546, "name": null, "label": "amenity:water_point", "amenity": "water_point", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3502767, 37.99773529998167 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756575094, "name": null, "label": "amenity:pharmacy", "amenity": "pharmacy", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3466366, 37.999267699981885 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756651543, "name": null, "label": "amenity:pharmacy", "amenity": "pharmacy", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3438371, 37.997630399981659 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756622104, "name": null, "label": "shop:florist", "amenity": null, "landuse": null, "shop": "florist" }, "geometry": { "type": "Point", "coordinates": [ 23.3379148, 37.996972999981566 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756616768, "name": null, "label": "shop:hairdresser", "amenity": null, "landuse": null, "shop": "hairdresser" }, "geometry": { "type": "Point", "coordinates": [ 23.3386041, 37.996920199981545 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1756616815, "name": null, "label": "shop:bakery", "amenity": null, "landuse": null, "shop": "bakery" }, "geometry": { "type": "Point", "coordinates": [ 23.3384378, 37.997848099981681 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13247243516, "name": "nrg - My Market Μέγαρα Αλεποχώρι", "label": "amenity:charging_station", "amenity": "charging_station", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3392122, 38.004887599982681 ] } },
+{ "type": "Feature", "properties": { "osm_id": 10311838583, "name": "Food Station", "label": "amenity:restaurant", "amenity": "restaurant", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3389217, 38.004900199982686 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727061558, "name": "All", "label": "amenity:cafe", "amenity": "cafe", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3388274, 38.004919799982687 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727049492, "name": "Α. Βαρναβας", "label": "amenity:pharmacy", "amenity": "pharmacy", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3383544, 38.005383499982742 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727049494, "name": "My market", "label": "shop:supermarket", "amenity": null, "landuse": null, "shop": "supermarket" }, "geometry": { "type": "Point", "coordinates": [ 23.3394236, 38.004688399982641 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9382319572, "name": "EKO", "label": "amenity:fuel", "amenity": "fuel", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.339441, 38.003322599982461 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3019066513, "name": "Σταματης", "label": "amenity:cafe", "amenity": "cafe", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3433192, 38.002212099982309 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727036454, "name": "Κοστερνης", "label": "shop:greengrocer", "amenity": null, "landuse": null, "shop": "greengrocer" }, "geometry": { "type": "Point", "coordinates": [ 23.3427928, 38.004027099982551 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727013574, "name": "Χατζης", "label": "shop:lighting", "amenity": null, "landuse": null, "shop": "lighting" }, "geometry": { "type": "Point", "coordinates": [ 23.3423796, 38.004079499982566 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727036458, "name": null, "label": "shop:trade", "amenity": null, "landuse": null, "shop": "trade" }, "geometry": { "type": "Point", "coordinates": [ 23.3438786, 38.00384189998254 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727036460, "name": "Nut Cap", "label": "amenity:cafe", "amenity": "cafe", "landuse": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 23.3431174, 38.00400699998255 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9727013573, "name": "Smart Key", "label": "shop:locksmith", "amenity": null, "landuse": null, "shop": "locksmith" }, "geometry": { "type": "Point", "coordinates": [ 23.3434122, 38.00398959998256 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4361816906, "name": "Lidl", "label": "shop:supermarket", "amenity": null, "landuse": null, "shop": "supermarket" }, "geometry": { "type": "Point", "coordinates": [ 23.3547079, 37.999425599981912 ] } }
+]
+}

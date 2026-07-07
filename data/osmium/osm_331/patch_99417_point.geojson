@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_99417_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 6561923499, "alt_name:el": null, "alt_name:en": null, "area": null, "ele": "20", "int_name": "Cape Gourouni", "man_made": null, "name": "Ακρωτήριο Γουρούνι", "name:de": "Kap Gourouni", "name:el": "Ακρωτήριο Γουρούνι", "name:en": "Cape Gourouni", "name:fr": "Cap de Gourouni", "name:it": "Capo di Gourouni", "natural": "cape", "place": null, "source": null, "wikidata": "Q25117290", "label": "natural:cape" }, "geometry": { "type": "Point", "coordinates": [ 20.2146178, 39.4453129 ] } }
+]
+}

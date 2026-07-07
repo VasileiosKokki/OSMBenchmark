@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_27928_polygon",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "relation", "id": 1842919, "natural": "wood", "ele": null, "name": null, "alt_name:bg": null, "alt_name:el": null, "historic": null, "name:bg": null, "name:el": null, "name:en": null, "ruins": null, "wikidata": null, "wikipedia": null, "boat": null, "waterway": null, "leaf_type": "broadleaved", "source": "http://geodata.gov.gr", "amenity": null, "bath:type": null, "name:mk": null, "type": "multipolygon", "label": "natural:wood" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 24.474696, 41.452807 ], [ 24.4745, 41.452125 ], [ 24.474488528951468, 41.452078768198348 ], [ 24.445100233358591, 41.452078768198348 ], [ 24.445100233358591, 41.475791961093996 ], [ 24.474825832221669, 41.475791961093996 ], [ 24.474825832221669, 41.45309617176644 ], [ 24.474696, 41.452807 ] ] ] } },
+{ "type": "Feature", "properties": { "element": "way", "id": 509767059, "natural": null, "ele": null, "name": "Θέρμια", "alt_name:bg": null, "alt_name:el": null, "historic": null, "name:bg": null, "name:el": "Θέρμια", "name:en": null, "ruins": null, "wikidata": null, "wikipedia": null, "boat": null, "waterway": null, "leaf_type": null, "source": null, "amenity": "public_bath", "bath:type": "hot_spring", "name:mk": "Топли бањи", "type": null, "label": "amenity:public_bath" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 24.4501925, 41.4665345 ], [ 24.4508264, 41.4663661 ], [ 24.4521012, 41.4656993 ], [ 24.4509234, 41.4651379 ], [ 24.4500747, 41.4655264 ], [ 24.4492958, 41.4660395 ], [ 24.4501925, 41.4665345 ] ] ] } }
+]
+}

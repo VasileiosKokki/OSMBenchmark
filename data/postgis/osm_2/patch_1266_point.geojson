@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "patch_1266_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 13528962980, "name": "Όρ. Αταλάντου", "label": "natural:bay", "natural": "bay", "amenity": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5750365, 38.781298300094186 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8783450116, "name": "Βράχος", "label": "natural:peak", "natural": "peak", "amenity": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5832399, 38.781170000094164 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13528962982, "name": "Όρ. Πηλίου", "label": "natural:bay", "natural": "bay", "amenity": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5931836, 38.768906500092378 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13423713801, "name": null, "label": "amenity:drinking_water", "natural": null, "amenity": "drinking_water", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5944621, 38.765122600091829 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9994319740, "name": "Blue Caffe", "label": "amenity:cafe", "natural": null, "amenity": "cafe", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5956857, 38.765101800091827 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9994319739, "name": "Xenia Residence", "label": "tourism:hotel", "natural": null, "amenity": null, "tourism": "hotel" }, "geometry": { "type": "Point", "coordinates": [ 23.5954067, 38.765047400091831 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13072284210, "name": null, "label": "amenity:drinking_water", "natural": null, "amenity": "drinking_water", "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5979885, 38.76535560009188 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13528962981, "name": "Ακ. Δάγρι", "label": "natural:cape", "natural": "cape", "amenity": null, "tourism": null }, "geometry": { "type": "Point", "coordinates": [ 23.5897269, 38.784124200094588 ] } }
+]
+}

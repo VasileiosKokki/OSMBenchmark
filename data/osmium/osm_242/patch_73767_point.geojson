@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_73767_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 8787976895, "cutline": null, "ele": "276", "ford": null, "highway": null, "leaf_type": null, "man_made": "survey_point", "name": "Τούρλες", "natural": "peak", "source": null, "label": "natural:peak" }, "geometry": { "type": "Point", "coordinates": [ 23.3837898, 38.7623901 ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_75203_features",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": -9331758, "name": "Λακωνικός Κόλπος", "label": "natural:bay", "natural": "bay" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 22.701680034026804, 36.602163623223333 ], [ 22.730797258744989, 36.602163623223333 ], [ 22.730797258744989, 36.579507490918211 ], [ 22.701680034026804, 36.579507490918211 ], [ 22.701680034026804, 36.602163623223333 ] ] ] } }
+]
+}

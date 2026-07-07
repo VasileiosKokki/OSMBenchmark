@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_23873_linestring",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 845118493, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.2140056, 41.209131700414829 ], [ 26.214289814816468, 41.209204794474473 ] ] } },
+{ "type": "Feature", "properties": { "osm_id": 845118494, "name": null, "label": "waterway:stream", "waterway": "stream" }, "geometry": { "type": "LineString", "coordinates": [ [ 26.2069096, 41.212534500415188 ], [ 26.2077046, 41.212847100415225 ], [ 26.2084635, 41.213091800415242 ], [ 26.2092547, 41.213182600415266 ], [ 26.2095295, 41.213214100415257 ], [ 26.2103788, 41.213431600415284 ], [ 26.2113725, 41.21383940041531 ], [ 26.2120049, 41.214342300415382 ], [ 26.2127277, 41.214790800415408 ], [ 26.213324, 41.215225800415467 ], [ 26.2140828, 41.21552480041548 ], [ 26.214289814816468, 41.215812868822169 ] ] } }
+]
+}

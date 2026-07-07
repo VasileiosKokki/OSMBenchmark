@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_38221_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "element": "node", "id": 9988795167, "amenity": "fuel", "brand": "CYCLON", "name": "CYCLON", "operator": "ΤΣΙΑΤΣΙΑΡΗ ΕΛΕΝΗ", "board_type": null, "boundary": null, "information": null, "leisure": null, "source": null, "tourism": null, "landuse": null, "building": null, "intermittent": null, "waterway": null, "layer": null, "tunnel": null, "natural": null, "type": null, "leaf_type": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 24.0601712, 40.9829673 ] } }
+]
+}

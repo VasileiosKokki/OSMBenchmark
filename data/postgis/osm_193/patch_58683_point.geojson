@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"name": "patch_58683_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 6348619343, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.970665, 37.307814499887677 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6348619344, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.971078, 37.307699299887659 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6348619376, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9687705, 37.300971499886785 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6348619377, "name": "Μεταμόρφωση του Σωτήρα", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9689545, 37.300805399886762 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6348632477, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.988686, 37.307358499887613 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5914962347, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9899687, 37.306979099887563 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5914962346, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9904501, 37.307756099887655 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5914949843, "name": null, "label": "waterway:waterfall", "amenity": null, "natural": null, "waterway": "waterfall", "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9888491, 37.307675599887666 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6334513661, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.99064, 37.319444899889199 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6334513663, "name": null, "label": "natural:spring", "amenity": null, "natural": "spring", "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9916025, 37.319284199889175 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6348619378, "name": "Άγιος Παντελεήμων", "label": "amenity:place_of_worship", "amenity": "place_of_worship", "natural": null, "waterway": null, "office": null }, "geometry": { "type": "Point", "coordinates": [ 21.9692323, 37.299148999886555 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11614902336, "name": "ΚΕΠ ΔΙΑΒΟΛΙΤΣΙΟΥ", "label": "office:government", "amenity": null, "natural": null, "waterway": null, "office": "government" }, "geometry": { "type": "Point", "coordinates": [ 21.967109, 37.300098699886661 ] } }
+]
+}

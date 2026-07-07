@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "patch_99868_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 11368512585, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.8686264, 35.347072399677131 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3811096649, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.8769618, 35.348475999677234 ] } },
+{ "type": "Feature", "properties": { "osm_id": 11368512583, "name": "Καϊμένη Κεφάλα", "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.8785657, 35.347530799677152 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3811096653, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.8800134, 35.352778499677576 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3811096656, "name": null, "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.8854371, 35.354456899677714 ] } }
+]
+}

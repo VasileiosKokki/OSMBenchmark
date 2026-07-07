@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "patch_53466_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8283231679, "name": null, "label": "natural:peak", "natural": "peak", "amenity": null, "building": null, "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0072308, 35.369120699678874 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8283231678, "name": null, "label": "natural:peak", "natural": "peak", "amenity": null, "building": null, "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0131277, 35.362466099678343 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5292221273, "name": null, "label": "amenity:place_of_worship;building:chapel", "natural": null, "amenity": "place_of_worship", "building": "chapel", "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0150119, 35.369389499678896 ] } },
+{ "type": "Feature", "properties": { "osm_id": 7013476277, "name": null, "label": "leisure:picnic_table", "natural": null, "amenity": null, "building": null, "leisure": "picnic_table", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0179934, 35.370537899678986 ] } },
+{ "type": "Feature", "properties": { "osm_id": 3741483481, "name": "Taverna Kegos", "label": "amenity:restaurant", "natural": null, "amenity": "restaurant", "building": null, "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0202587, 35.367002799678716 ] } },
+{ "type": "Feature", "properties": { "osm_id": 5292221340, "name": "Το μέγαρο των Μοδινών", "label": "historic:castle", "natural": null, "amenity": null, "building": null, "leisure": null, "historic": "castle" }, "geometry": { "type": "Point", "coordinates": [ 25.0205265, 35.365384099678586 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8283231677, "name": null, "label": "natural:peak", "natural": "peak", "amenity": null, "building": null, "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.012177, 35.355812499677825 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9826698027, "name": "ΑΠ", "label": "amenity:fuel", "natural": null, "amenity": "fuel", "building": null, "leisure": null, "historic": null }, "geometry": { "type": "Point", "coordinates": [ 25.0220683, 35.362970299678388 ] } }
+]
+}

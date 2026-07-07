@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "patch_68540_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 8840928806, "name": "Δενδράκια", "label": "natural:peak", "natural": "peak" }, "geometry": { "type": "Point", "coordinates": [ 23.2283199, 38.888970000109801 ] } }
+]
+}

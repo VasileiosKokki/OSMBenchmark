@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_44386_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 1386516315, "name": null, "label": "amenity:place_of_worship", "amenity": "place_of_worship", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 21.2342828, 38.552424000061016 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13146975466, "name": "Νηπιαγωγείο Παλαιομάνινας", "label": "amenity:kindergarten", "amenity": "kindergarten", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 21.2424262, 38.553191400061117 ] } },
+{ "type": "Feature", "properties": { "osm_id": 13146975467, "name": "Δημοτικό Σχολείο Παλαιομάνινας", "label": "amenity:school", "amenity": "school", "historic": null }, "geometry": { "type": "Point", "coordinates": [ 21.2424463, 38.553726200061206 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8202670325, "name": "Αυλόπορτα-Μεγάλη Πύλη-Λα Πόρτα, Παλαιομάνινας", "label": "historic:city_gate", "amenity": null, "historic": "city_gate" }, "geometry": { "type": "Point", "coordinates": [ 21.2477517, 38.553405700061141 ] } }
+]
+}

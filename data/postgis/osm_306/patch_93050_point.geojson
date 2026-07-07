@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "patch_93050_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 9368695233, "name": "Anassia Villas", "label": "tourism:hotel", "tourism": "hotel", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8491578, 37.612696399928353 ] } },
+{ "type": "Feature", "properties": { "osm_id": 4237989075, "name": "Μυκηναϊκό φράγμα της Τίρυνθας", "label": "historic:archaeological_site", "tourism": null, "historic": "archaeological_site", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8438334, 37.607968999927714 ] } },
+{ "type": "Feature", "properties": { "osm_id": 8921556785, "name": "Πύργος Αγίου Αδριανού", "label": "historic:castle", "tourism": null, "historic": "castle", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8450541, 37.59802589992637 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9970933817, "name": "Φαρμακειο Παπαιωαννου", "label": "amenity:pharmacy", "tourism": null, "historic": null, "amenity": "pharmacy" }, "geometry": { "type": "Point", "coordinates": [ 22.8444952, 37.599194899926523 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9368693658, "name": "Karayannis Villas", "label": "tourism:hotel", "tourism": "hotel", "historic": null, "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8515339, 37.615747799928776 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9368513304, "name": "Θεόδωρος Κολοκοτρώνης", "label": "historic:memorial", "tourism": null, "historic": "memorial", "amenity": null }, "geometry": { "type": "Point", "coordinates": [ 22.8588433, 37.616135199928827 ] } },
+{ "type": "Feature", "properties": { "osm_id": 9191299730, "name": "ΕΛΙΝΟΙΛ", "label": "amenity:fuel", "tourism": null, "historic": null, "amenity": "fuel" }, "geometry": { "type": "Point", "coordinates": [ 22.8546596, 37.6114708999282 ] } }
+]
+}

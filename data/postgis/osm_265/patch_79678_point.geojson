@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "patch_79678_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "osm_id": 2967935881, "name": null, "label": "historic:wayside_shrine", "historic": "wayside_shrine", "amenity": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 24.4698908, 35.286327699672377 ] } },
+{ "type": "Feature", "properties": { "osm_id": 1293746595, "name": "SHELL", "label": "amenity:fuel", "historic": null, "amenity": "fuel", "shop": null }, "geometry": { "type": "Point", "coordinates": [ 24.4700662, 35.287104599672446 ] } },
+{ "type": "Feature", "properties": { "osm_id": 6871564986, "name": "Brink’s Brewery", "label": "shop:beverages", "historic": null, "amenity": null, "shop": "beverages" }, "geometry": { "type": "Point", "coordinates": [ 24.4690281, 35.290249099672693 ] } },
+{ "type": "Feature", "properties": { "osm_id": 2967935880, "name": null, "label": "historic:wayside_shrine", "historic": "wayside_shrine", "amenity": null, "shop": null }, "geometry": { "type": "Point", "coordinates": [ 24.4640828, 35.299596599673407 ] } }
+]
+}

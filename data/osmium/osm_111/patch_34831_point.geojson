@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "patch_34831_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "@type": "node", "@id": 9169113132, "amenity": "fuel", "brand": "CYCLON", "brand:wikidata": null, "brand:wikipedia": null, "building": null, "denomination": null, "ford": null, "highway": null, "intermittent": null, "landuse": null, "lanes": null, "layer": null, "leisure": null, "name": "CYCLON", "natural": null, "oneway": null, "operator": "ΚΑΣΤΑΝΟΣ ΠΑΝΤΕΛΗΣ", "reg_ref": null, "religion": null, "service": null, "sport": null, "surface": null, "tracktype": null, "waterway": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 20.9478194, 38.6985687 ] } },
+{ "type": "Feature", "properties": { "@type": "node", "@id": 9169113145, "amenity": "fuel", "brand": "Aegean", "brand:wikidata": "Q28146598", "brand:wikipedia": "el:Aegean Oil", "building": null, "denomination": null, "ford": null, "highway": null, "intermittent": null, "landuse": null, "lanes": null, "layer": null, "leisure": null, "name": "AEGEAN", "natural": null, "oneway": null, "operator": "ΣΙΔΕΡΑΣ ΧΑΡΑΛΑΜΠΟΣ", "reg_ref": null, "religion": null, "service": null, "sport": null, "surface": null, "tracktype": null, "waterway": null, "label": "amenity:fuel" }, "geometry": { "type": "Point", "coordinates": [ 20.9471847, 38.7021279 ] } }
+]
+}
