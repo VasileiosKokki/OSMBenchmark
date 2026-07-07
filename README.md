@@ -23,11 +23,11 @@ An individual geospatial engineering project for generating **patch-aligned Open
 
 The short demo shows backend switching, map navigation, patch selection, OSM feature rendering, feature inspection, search, and the custom interaction flow.
 
-<video src="assets/OsmBenchmark.mp4" controls width="100%"></video>
-
-**[▶ Open the demo video](assets/OsmBenchmark.mp4)**
-
-> Some Markdown renderers do not display inline MP4 video. The direct link above is included as a fallback.
+<video
+  src="https://github.com/user-attachments/assets/f3c10da3-40f1-4bc6-b438-a3c579553ae2"
+  controls
+  width="100%">
+</video>
 
 ---
 
