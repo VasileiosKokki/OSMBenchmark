@@ -5,9 +5,6 @@
 # ── Generated outputs (GeoJSON) ─────────────────────────────────
 data/
 
-# ── Generated map ───────────────────────────────────────────────
-visualize_osm/patches_map.html
-
 # ── Python ──────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
@@ -33,6 +30,8 @@ Thumbs.db
 *.swp
 *.swo
 *~
+.agents
+.codex
 
 # ── Jupyter ──────────────────────────────────────────────────────
 .ipynb_checkpoints/

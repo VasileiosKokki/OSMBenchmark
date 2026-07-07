@@ -1,0 +1,3588 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OSM patches - MapLibre GL</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <style>
+    html, body, #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    body {
+      background: #111;
+    }
+    .maplibregl-map {
+      font-family: sans-serif;
+    }
+    .maplibregl-ctrl-bottom-right {
+      font-size: 11px;
+    }
+    .maplibre-popup-button {
+      appearance: none;
+      border: 0;
+      border-radius: 4px;
+      padding: 7px 10px;
+      background: #202632;
+      color: #fff;
+      cursor: pointer;
+      font: 600 13px sans-serif;
+    }
+    .maplibregl-popup-content {
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.32);
+    }
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    var BASE_OSM_TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var INITIAL_MAPLIBRE_CENTER = [24.313735, 38.170325000000005];
+    var INITIAL_MAPLIBRE_ZOOM = 6.3;
+    var INITIAL_MAPLIBRE_BOUNDS = [[18.97064, 34.59111], [29.65683, 41.74954]];
+    var INITIAL_MAPLIBRE_MAX_FIT_ZOOM = 6.3;
+    var map = new maplibregl.Map({
+      container: 'map',
+      center: INITIAL_MAPLIBRE_CENTER.slice(),
+      zoom: INITIAL_MAPLIBRE_ZOOM,
+      minZoom: 0,
+      maxZoom: 22,
+      doubleClickZoom: false,
+      dragPan: {
+        linearity: 0.3,
+        easing: function(t) { return t * (2 - t); },
+        maxSpeed: 1400,
+        deceleration: 2500
+      },
+      attributionControl: false,
+      style: {
+        version: 8,
+        sources: {
+          osm: {
+            type: 'raster',
+            tiles: [BASE_OSM_TILE_URL],
+            tileSize: 256,
+            maxzoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+          }
+        },
+        layers: [
+          {
+            id: 'osm-base',
+            type: 'raster',
+            source: 'osm'
+          }
+        ]
+      }
+    });
+
+    function applyInitialMapLibreCamera() {
+      map.resize();
+      if (map.fitBounds && INITIAL_MAPLIBRE_BOUNDS) {
+        map.fitBounds(INITIAL_MAPLIBRE_BOUNDS, {
+          padding: 48,
+          duration: 0,
+          maxZoom: INITIAL_MAPLIBRE_MAX_FIT_ZOOM
+        });
+        return;
+      }
+      map.jumpTo({
+        center: INITIAL_MAPLIBRE_CENTER.slice(),
+        zoom: INITIAL_MAPLIBRE_ZOOM
+      });
+    }
+
+    map.once('load', function() {
+      applyInitialMapLibreCamera();
+    });
+
+    function smoothZoomEasing(t) {
+      return t * t * (3 - 2 * t);
+    }
+
+    function smoothZoomBy(delta) {
+      map.easeTo({
+        zoom: Math.max(map.getMinZoom(), Math.min(map.getMaxZoom(), map.getZoom() + delta)),
+        duration: 260,
+        essential: true,
+        easing: smoothZoomEasing
+      });
+    }
+
+    function SmoothZoomControl() {}
+    SmoothZoomControl.prototype.onAdd = function(mapInstance) {
+      var container = document.createElement('div');
+      container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+      [
+        { label: '+', title: 'Zoom in', delta: 1 },
+        { label: '-', title: 'Zoom out', delta: -1 }
+      ].forEach(function(action) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = action.label;
+        button.title = action.title;
+        button.setAttribute('aria-label', action.title);
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          smoothZoomBy(action.delta);
+        });
+        container.appendChild(button);
+      });
+      this._map = mapInstance;
+      this._container = container;
+      return container;
+    };
+    SmoothZoomControl.prototype.onRemove = function() {
+      if (this._container && this._container.parentNode) {
+        this._container.parentNode.removeChild(this._container);
+      }
+      this._map = undefined;
+    };
+
+    map.addControl(new SmoothZoomControl(), 'top-left');
+    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+    if (map.doubleClickZoom && map.doubleClickZoom.disable) {
+      map.doubleClickZoom.disable();
+    }
+    if (map.scrollZoom && map.scrollZoom.disable) {
+      map.scrollZoom.disable();
+    }
+
+    var wheelZoomTarget = null;
+    var wheelZoomTimer = 0;
+    map.getContainer().addEventListener('wheel', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var rect = map.getContainer().getBoundingClientRect();
+      var point = [
+        e.clientX - rect.left,
+        e.clientY - rect.top
+      ];
+      var around = map.unproject(point);
+      var modeScale = e.deltaMode === 1 ? 45 : (e.deltaMode === 2 ? 450 : 1);
+      var delta = -e.deltaY * modeScale / 950;
+      if (!isFinite(delta) || Math.abs(delta) < 0.001) return;
+      delta = Math.max(-0.45, Math.min(0.45, delta));
+      if (wheelZoomTarget == null) wheelZoomTarget = map.getZoom();
+      wheelZoomTarget = Math.max(
+        map.getMinZoom(),
+        Math.min(map.getMaxZoom(), wheelZoomTarget + delta)
+      );
+      map.easeTo({
+        zoom: wheelZoomTarget,
+        around: around,
+        duration: 220,
+        essential: true,
+        easing: smoothZoomEasing
+      });
+      if (wheelZoomTimer) window.clearTimeout(wheelZoomTimer);
+      wheelZoomTimer = window.setTimeout(function() {
+        wheelZoomTarget = null;
+        wheelZoomTimer = 0;
+      }, 180);
+    }, { passive: false, capture: true });
+  </script>
+<style>
+  .osm-patch-marker {
+    width: 28px !important;
+    height: 36px !important;
+    pointer-events: auto;
+  }
+  .osm-patch-pin {
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 20px;
+    height: 20px;
+    background: var(--pin-color, #2979ff);
+    border: 2px solid #fff;
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.38);
+    transform: rotate(-45deg);
+    pointer-events: auto;
+  }
+  .osm-patch-pin::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .maplibregl-marker .osm-patch-marker {
+    width: 31px !important;
+    height: 40px !important;
+  }
+  .maplibregl-marker .osm-patch-pin-svg {
+    display: block;
+    width: 31px;
+    height: 40px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.38));
+  }
+/* ── UI Shell ── */
+  #osm-ui-shell {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    z-index: 1000;
+    pointer-events: none;
+    width: 360px;
+    max-height: calc(100vh - 88px);
+  }
+
+  /* ── Sidebar ── */
+  #osm-sidebar {
+    pointer-events: all;
+    width: 100%;
+    height: 120px;
+    min-height: 0;
+    background: rgba(255,255,255,0.97);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    display: none;
+    flex-direction: column;
+    order: 2;
+    position: relative;
+    overflow: hidden;
+  }
+  #osm-sidebar-header {
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #555;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f7f7f7;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
+  }
+  #osm-sidebar-list {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+  .osm-sidebar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    background: transparent;
+  }
+  .osm-sidebar-row.active {
+    background: #e8f4fd;
+  }
+  .osm-row-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    font-weight: 400;
+    color: #333;
+  }
+  .osm-sidebar-row.active .osm-row-label {
+    font-weight: 700;
+    color: #1565c0;
+  }
+  .osm-row-badge {
+    font-size: 10px;
+    color: #888;
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    flex-shrink: 0;
+  }
+  .osm-row-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    color: #aaa;
+    padding: 0 0 0 6px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  /* ── Detail panel ── */
+  #osm-detail {
+    pointer-events: all;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 360px;
+    min-height: 0;
+    max-height: calc(100vh - 88px);
+    background: rgba(255,255,255,0.97);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    display: none;
+    flex-direction: column;
+    order: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  #osm-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f7f7f7;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
+  }
+  #osm-detail-body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+  }
+  #osm-detail-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #888;
+    padding: 0 2px;
+    line-height: 1;
+  }
+  #osm-detail-close:hover { color: #333; }
+  .osm-panel-resize-handle {
+    position: absolute;
+    pointer-events: all;
+    z-index: 4;
+    background: transparent;
+  }
+  .osm-panel-resize-handle:hover {
+    background: rgba(41,121,255,0.12);
+  }
+  .osm-resize-n,
+  .osm-resize-s {
+    left: 16px;
+    right: 16px;
+    height: 8px;
+    cursor: ns-resize;
+  }
+  .osm-resize-n { top: -4px; }
+  .osm-resize-s { bottom: -4px; }
+  .osm-resize-w {
+    top: 16px;
+    bottom: 16px;
+    width: 8px;
+    cursor: ew-resize;
+  }
+  .osm-resize-w { left: -4px; }
+  .osm-resize-nw,
+  .osm-resize-sw {
+    width: 16px;
+    height: 16px;
+  }
+  .osm-resize-nw { top: 0; left: 0; cursor: nwse-resize; }
+  .osm-resize-sw { bottom: 0; left: 0; cursor: nesw-resize; }
+  .osm-resize-nw::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid rgba(80,80,80,0.55);
+    border-left: 2px solid rgba(80,80,80,0.55);
+  }
+  .osm-resize-sw::before {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid rgba(80,80,80,0.55);
+    border-left: 2px solid rgba(80,80,80,0.55);
+  }
+  body.osm-panel-resizing,
+  body.osm-panel-resizing * {
+    user-select: none !important;
+  }
+  /* ── Feature search bar ───────────────────────────────────────────────────── */
+  #osm-feat-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fafafa;
+    flex-shrink: 0;
+  }
+
+  #osm-feat-search-input {
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  #osm-feat-search-input:focus {
+    border-color: #4da6ff;
+    box-shadow: 0 0 0 2px rgba(77,166,255,0.2);
+  }
+
+  #osm-feat-search-clear {
+    padding: 3px 7px;
+    font-size: 11px;
+    cursor: pointer;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    line-height: 1;
+    color: #555;
+  }
+  #osm-feat-search-clear:hover { background: #ddd; }
+
+  /* ── Toggle-all button in detail header ───────────────────────────────────── */
+  #osm-toggle-all-btn {
+    margin-left: auto;
+    margin-right: 4px;
+    padding: 3px 9px;
+    font-size: 11px;
+    cursor: pointer;
+    background: #c8e6c9;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  #osm-toggle-all-btn:hover { filter: brightness(0.93); }
+
+  /* ── Feature ID column ────────────────────────────────────────────────────── */
+  .osm-feat-id-cell {
+    font-family: monospace;
+    font-size: 11px;
+    color: #444;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .osm-feat-id-cell mark {
+    background: #fff176;
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* ── Hidden-feature row styling ───────────────────────────────────────────── */
+  tr.osm-feat-row.osm-feat-hidden {
+    opacity: 0.38;
+    background: #f5f5f5;
+  }
+  tr.osm-feat-row.osm-feat-hidden td {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  tr.osm-feat-row.osm-feat-hidden .osm-tag {
+    filter: grayscale(1);
+  }
+
+  #osm-feat-search-count {
+    font-size: 11px;
+    color: #888;
+  }
+  
+  #patch-search {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: sans-serif;
+    font-size: 13px;
+  }
+  #patch-search-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    width: 220px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  #patch-search-input:focus { border-color: #2979ff; }
+  #patch-search-btn {
+    padding: 4px 12px;
+    min-width: 44px;
+    cursor: pointer;
+    background: #2979ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: background .2s;
+  }
+  #patch-search-btn:disabled {
+    cursor: default;
+    opacity: 0.85;
+  }
+  #patch-search-btn:hover { background: #1565c0; }
+  #patch-search-btn:disabled:hover { background: #2979ff; }
+  #patch-search-btn .patch-search-spinner {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(255,255,255,0.45);
+    border-top-color: #fff;
+    border-radius: 50%;
+    vertical-align: -2px;
+    animation: patch-search-spin .75s linear infinite;
+  }
+  @keyframes patch-search-spin {
+    to { transform: rotate(360deg); }
+  }
+  #patch-search-msg { color: #e53935; font-size: 12px; }
+
+  #fps-counter {
+    position: fixed;
+    left: 12px;
+    bottom: 12px;
+    z-index: 9999;
+    min-width: 82px;
+    padding: 4px 7px;
+    background: rgba(20,20,20,0.78);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  #fps-counter-rate {
+    color: #d7ffd7;
+    text-align: center;
+  }
+  /* ── Per-patch floating panels ── */
+  .osm-patch-panel {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 340px;
+    max-height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.18);
+    font-family: sans-serif;
+    font-size: 13px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: bottom .2s, right .2s;
+  }
+  .osm-patch-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    background: #f7f7f7;
+    border-radius: 8px 8px 0 0;
+    cursor: default;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .osm-patch-panel-header strong {
+    font-size: 12px;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+  }
+  .osm-panel-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    color: #888;
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+  .osm-panel-close-btn:hover { color: #333; }
+  .osm-patch-panel-body {
+    overflow-y: auto;
+    flex: 1;
+  }
+  .osm-summary {
+    padding: 7px 12px;
+    font-size: 12px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    line-height: 1.8;
+    flex-shrink: 0;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+  .osm-table-wrap {
+    overflow: hidden;
+    width: auto;
+    max-width: none;
+  }
+  .osm-virtual-table {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    width: auto;
+    max-width: none;
+  }
+  #osm-virtual-table-scroll {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    min-height: 0;
+    width: auto;
+    max-width: none;
+  }
+  #osm-virtual-feature-spacer {
+    width: 1px;
+  }
+  #osm-virtual-feature-rows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+  .osm-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .osm-table th, .osm-table td {
+    padding: 5px 6px; text-align: left;
+    font-size: 12px; border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .osm-table th {
+    background: #f7f7f7; font-weight: 600;
+    position: sticky; top: 0; z-index: 1;
+  }
+  .osm-virtual-table > .osm-table thead tr {
+    display: grid;
+    grid-template-columns: minmax(64px, .85fr) minmax(64px, 1.2fr) minmax(64px, .85fr) minmax(70px, 1fr);
+    column-gap: 0;
+    justify-content: stretch;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  .osm-feat-row { cursor: pointer; }
+  .osm-feat-row:hover td { background: #e8f4fd !important; }
+  .osm-feat-row.osm-feat-selected td,
+  .osm-feat-row.osm-feat-selected:hover td {
+    background: #e8f4fd !important;
+  }
+  .osm-badge {
+    background: #e0e0e0; border-radius: 4px;
+    padding: 1px 6px; font-size: 11px;
+    margin-right: 3px; margin-bottom: 3px; display: inline-block;
+    cursor: pointer;
+    user-select: none;
+  }
+  .osm-badge:hover { filter: brightness(0.94); }
+  .osm-badge-hidden {
+    opacity: 0.45;
+    text-decoration: line-through;
+  }
+  .osm-tag {
+    border-radius: 3px; padding: 1px 6px;
+    font-size: 11px; display: inline-block;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+    box-sizing: border-box;
+  }
+  .osm-tag-building  { background: #e0e0e0; color: #333; }
+  .osm-tag-highway   { background: #ffe0b2; color: #7a4500; }
+  .osm-tag-water     { background: #bbdefb; color: #0d47a1; }
+  .osm-tag-landuse   { background: #c8e6c9; color: #1b5e20; }
+  .osm-tag-amenity   { background: #e1bee7; color: #4a148c; }
+  .osm-tag-natural   { background: #dcedc8; color: #33691e; }
+  .osm-tag-leisure   { background: #b2dfdb; color: #004d40; }
+  .osm-tag-other     { background: #f5f5f5; color: #777; }
+  .non-interactive-marker,
+  .non-interactive-marker * {
+    pointer-events: none !important;
+  }
+  
+  #patch-search-type {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+    background: #fafafa;
+  }
+
+  /* ── Dark UI theme ───────────────────────────────────────────────────────── */
+  :root {
+    color-scheme: dark;
+    --osm-bg: rgba(8, 10, 14, 0.94);
+    --osm-bg-strong: rgba(5, 7, 10, 0.98);
+    --osm-bg-soft: #151821;
+    --osm-border: #2b303a;
+    --osm-border-soft: #20242d;
+    --osm-text: #eef2f7;
+    --osm-text-muted: #9aa3af;
+    --osm-accent: #4da3ff;
+    --osm-accent-strong: #1f7ae0;
+    --osm-green: #1f7a39;
+    --osm-danger: #ff6b6b;
+  }
+  .ol-popup,
+  #patch-search,
+  #osm-sidebar,
+  #osm-detail,
+  .osm-patch-panel {
+    background: var(--osm-bg);
+    border-color: var(--osm-border);
+    color: var(--osm-text);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.42);
+  }
+  .ol-popup:after {
+    background: var(--osm-bg);
+    border-color: var(--osm-border);
+  }
+  .ol-popup {
+    min-width: 0;
+    padding: 6px;
+    line-height: 0;
+  }
+  .osm-popup-toggle-btn {
+    display: block;
+    margin: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    background: #202632;
+    color: var(--osm-text);
+    border: 1px solid #3a4352;
+    border-radius: 4px;
+    white-space: nowrap;
+    font: 13px/1.2 sans-serif;
+  }
+  #osm-sidebar-header,
+  #osm-detail-header,
+  #osm-feat-search-bar,
+  .osm-patch-panel-header,
+  .osm-table th {
+    background: var(--osm-bg-strong);
+    border-color: var(--osm-border);
+    color: var(--osm-text);
+  }
+  #osm-sidebar-list,
+  #osm-detail-body,
+  .osm-patch-panel-body,
+  #osm-virtual-table-scroll {
+    scrollbar-color: #4b5565 #10131a;
+  }
+  .osm-sidebar-row,
+  .osm-table th,
+  .osm-table td,
+  .osm-summary {
+    border-color: var(--osm-border-soft);
+  }
+  .osm-sidebar-row.active {
+    background: rgba(77,163,255,0.16);
+  }
+  .osm-row-label,
+  .osm-patch-panel-header strong,
+  .osm-summary,
+  .osm-table td,
+  .osm-feat-id-cell {
+    color: var(--osm-text);
+  }
+  .osm-sidebar-row.active .osm-row-label {
+    color: #7cc0ff;
+  }
+  .osm-row-badge,
+  .osm-badge {
+    background: #242a35;
+    color: var(--osm-text-muted);
+  }
+  .osm-row-close,
+  #osm-detail-close,
+  .osm-panel-close-btn,
+  #osm-feat-search-count {
+    color: var(--osm-text-muted);
+  }
+  .osm-row-close:hover,
+  #osm-detail-close:hover,
+  .osm-panel-close-btn:hover {
+    color: var(--osm-text);
+  }
+  #patch-search-input,
+  #patch-search-type,
+  #osm-feat-search-input {
+    background: #171a23;
+    border-color: #363d4a;
+    color: var(--osm-text);
+  }
+  #patch-search-input::placeholder,
+  #osm-feat-search-input::placeholder {
+    color: #747d8c;
+  }
+  #patch-search-input:focus,
+  #patch-search-type:focus,
+  #osm-feat-search-input:focus {
+    border-color: var(--osm-accent);
+    box-shadow: 0 0 0 2px rgba(77,163,255,0.22);
+  }
+  #patch-search-btn {
+    background: var(--osm-accent-strong);
+  }
+  #patch-search-btn:hover,
+  #patch-search-btn:disabled:hover {
+    background: #1b66bc;
+  }
+  #patch-search-msg {
+    color: var(--osm-danger);
+  }
+  #osm-feat-search-clear,
+  #osm-toggle-all-btn {
+    background: #202632;
+    border-color: #3a4352;
+    color: var(--osm-text);
+  }
+  #osm-feat-search-clear:hover,
+  #osm-toggle-all-btn:hover {
+    background: #2b3443;
+  }
+  tr.osm-feat-row.osm-feat-hidden {
+    background: #12151b;
+  }
+  tr.osm-feat-row.osm-feat-hidden td {
+    color: #677080;
+  }
+  .osm-feat-row:hover td,
+  .osm-feat-row.osm-feat-hidden:hover td,
+  .osm-feat-row.osm-feat-selected td,
+  .osm-feat-row.osm-feat-selected:hover td,
+  .osm-feat-row.osm-feat-hidden.osm-feat-selected td {
+    background: rgba(77,163,255,0.12) !important;
+  }
+  .osm-badge-hidden {
+    opacity: 0.5;
+  }
+  .osm-tag-building  { background: #343b46; color: #d8dee7; }
+  .osm-tag-highway   { background: #533819; color: #ffd89a; }
+  .osm-tag-water     { background: #123856; color: #9ed5ff; }
+  .osm-tag-landuse   { background: #1d4228; color: #9ce6ad; }
+  .osm-tag-amenity   { background: #4a1e52; color: #efb8f5; }
+  .osm-tag-natural   { background: #26431c; color: #b8e58d; }
+  .osm-tag-leisure   { background: #143f39; color: #97e5d8; }
+  .osm-tag-other     { background: #252b35; color: #adb6c4; }
+  .osm-feat-id-cell mark {
+    background: #6d5d12;
+    color: #fff3a3;
+  }
+  .osm-resize-nw::before {
+    border-top-color: rgba(214,221,232,0.6);
+    border-left-color: rgba(214,221,232,0.6);
+  }
+  .osm-resize-sw::before {
+    border-bottom-color: rgba(214,221,232,0.6);
+    border-left-color: rgba(214,221,232,0.6);
+  }
+</style>
+
+<style id="toggle-css">
+  #backend-toggle {
+    position: fixed;
+    top: 16px;
+    right: 60px;
+    z-index: 9999;
+    display: flex;
+    border: 1px solid #2b303a;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,.42);
+    font-family: sans-serif;
+    font-size: 13px;
+  }
+  .bt-seg {
+    padding: 7px 14px;
+    cursor: pointer;
+    background: rgba(8, 10, 14, 0.94);
+    border: none;
+    border-right: 1px solid #2b303a;
+    color: #9aa3af;
+    font-size: 13px;
+    font-family: sans-serif;
+    transition: none;
+  }
+  .bt-seg:last-child { border-right: none; }
+  .bt-seg.bt-active {
+    color: #fff;
+    font-weight: 600;
+  }
+  #bt-osmnx.bt-active { background: #f60; }
+#bt-postgis.bt-active { background: #2e7d32; }
+#bt-osmium.bt-active { background: #2979ff; }
+
+</style>
+
+<div id="patch-search">
+  <select id="patch-search-type">
+    <option value="osm">osm id</option>
+    <option value="patch">patch id</option>
+    <option value="feature">feature id</option>
+  </select>
+  <input id="patch-search-input" type="text"
+    placeholder="e.g. 242" />
+  <button id="patch-search-btn">Go</button>
+  <span id="patch-search-msg"></span>
+</div>
+<div id="fps-counter">
+  <div id="fps-counter-rate">-- fps</div>
+</div>
+<div id="backend-toggle"><button id="bt-osmnx" class="bt-seg" data-backend="osmnx">osmnx</button><button id="bt-postgis" class="bt-seg" data-backend="postgis">postgis</button><button id="bt-osmium" class="bt-seg" data-backend="osmium">osmium</button></div>
+<script>
+// This file is concatenated by visualize_osm/app/main.py.
+function loadAppData() {
+  var req = new XMLHttpRequest();
+  req.open('GET', '/api/app-data', false);
+  req.send(null);
+  if (req.status < 200 || req.status >= 300) {
+    throw new Error('Failed to load /api/app-data: HTTP ' + req.status);
+  }
+  return JSON.parse(req.responseText);
+}
+
+var APP_DATA       = loadAppData();
+var ALL_META       = APP_DATA.all_meta || {};
+var LAZY_MARKERS   = APP_DATA.lazy_markers || {};
+var BACKEND_ORDER  = APP_DATA.backend_order || [];
+var BACKEND_COLORS = APP_DATA.backend_colors || {};
+var activeBackend  = APP_DATA.default_backend;
+
+var sharedActiveIds = new Set();
+var layers = {};
+var markerGroups = {};
+var activeMarkers = [];
+var maximizedPatchId = null;
+var detailPanelMinimized = false;
+var hiddenFeatureIds = {};
+var toggleAllButtonModes = {};
+var featureSearchByPatch = {};
+var featureTableState = null;
+var FEATURE_ROW_HEIGHT = 35;
+var FEATURE_ROW_BUFFER = 12;
+var FEATURE_PANEL_BATCH = 350;
+var FEATURE_WORKER_CHUNK_SIZE = 120;
+var PANEL_MIN_WIDTH = 360;
+var PANEL_MAX_WIDTH = 620;
+var PANEL_MIN_HEIGHT = 360;
+var PANEL_HARD_MIN_HEIGHT = 300;
+var PANEL_MIN_SIDEBAR_HEIGHT = 88;
+var PANEL_HARD_MIN_SIDEBAR_HEIGHT = 64;
+var PANEL_DEFAULT_SIDEBAR_HEIGHT = 120;
+var PANEL_GAP = 8;
+var PANEL_TOP_CLEARANCE = 64;
+var PANEL_BOTTOM_CLEARANCE = 24;
+var PANEL_DEFAULT_WIDTH = PANEL_MIN_WIDTH;
+var PANEL_DEFAULT_HEIGHT = PANEL_MIN_HEIGHT;
+var PANEL_SIZE_STORAGE_KEY = 'visualize-osm-maplibre-panel-size-v1';
+var FEATURE_TABLE_COLUMNS = 'minmax(64px, .85fr) minmax(64px, 1.2fr) minmax(64px, .85fr) minmax(70px, 1fr)';
+var fpsCounterStarted = false;
+var featureWorkerSeq = 0;
+var FEATURE_WORKER_VERSION = 3;
+var selectedFeaturePatchId = null;
+var selectedFeatureRawFeature = null;
+var selectedFeatureFlashTimer = 0;
+var selectedFeatureFlashRaf = 0;
+var selectedFeatureOverlay = null;
+var selectedFeatureFlashAlpha = 1;
+var featureNavigationTargetKey = null;
+var featureNavigationClearTimer = 0;
+var featureNavigationSuppressUntil = 0;
+var frozenFeatureOverlay = null;
+var frozenFeatureAnchorLngLat = null;
+var frozenFeatureAnchorPixel = null;
+var frozenFeatureLayerVisibility = [];
+var frozenFeatureDragging = false;
+var frozenFeatureBuildSeq = 0;
+var frozenFeatureBuildScheduled = false;
+var frozenFeatureRestoreTimer = 0;
+
+var MAPLIBRE_FEATURE_SOURCE_TOLERANCE = 1.0;
+var PATCH_FOCUS_MAX_ZOOM = 15;
+var FEATURE_FOCUS_MAX_ZOOM = 19;
+var DEFAULT_FOCUS_MAX_ZOOM = 16;
+var FEATURE_MIN_FOCUS_BBOX_M = 30;
+var ENABLE_FROZEN_FEATURE_DRAG = false;
+var SELECTED_FEATURE_STROKE_METERS = 4;
+var SELECTED_FEATURE_MAX_STROKE_PX = 6;
+var SELECTED_FEATURE_POINT_RADIUS_PX = ['interpolate', ['linear'], ['zoom'], 7, 5.5, 16, 8.5, 20, 13.5];
+var SELECTED_FEATURE_POINT_STROKE_PX = ['interpolate', ['linear'], ['zoom'], 7, 2, 16, 3, 20, 4.5];
+var SELECTED_FEATURE_MIN_RENDER_ZOOM = 16;
+var SELECTED_FEATURE_MAX_RENDER_ZOOM = 19;
+var initialMapLibreViewApplied = false;
+
+function clampNumber(value, minValue, maxValue) {
+  return Math.min(maxValue, Math.max(minValue, value));
+}
+
+function applyInitialMapLibreView() {
+  if (initialMapLibreViewApplied) return;
+  initialMapLibreViewApplied = true;
+  if (!map || !map.jumpTo) return;
+  var center = window.INITIAL_MAPLIBRE_CENTER || [22.0, 39.0];
+  var zoom = window.INITIAL_MAPLIBRE_ZOOM == null ? 7 : window.INITIAL_MAPLIBRE_ZOOM;
+  if (map.resize) map.resize();
+  if (window.INITIAL_MAPLIBRE_BOUNDS && map.fitBounds) {
+    map.fitBounds(window.INITIAL_MAPLIBRE_BOUNDS, {
+      padding: 48,
+      duration: 0,
+      maxZoom: window.INITIAL_MAPLIBRE_MAX_FIT_ZOOM || zoom
+    });
+    return;
+  }
+  map.jumpTo({
+    center: center.slice ? center.slice() : center,
+    zoom: zoom
+  });
+}
+
+function loadPanelSize() {
+  try {
+    var raw = localStorage.getItem(PANEL_SIZE_STORAGE_KEY);
+    if (!raw) return { width: PANEL_DEFAULT_WIDTH, height: PANEL_DEFAULT_HEIGHT, sidebarHeight: PANEL_DEFAULT_SIDEBAR_HEIGHT };
+    var parsed = JSON.parse(raw);
+    return {
+      width: clampNumber(Number(parsed.width) || PANEL_DEFAULT_WIDTH, PANEL_MIN_WIDTH, PANEL_MAX_WIDTH),
+      height: Math.max(PANEL_HARD_MIN_HEIGHT, Number(parsed.height) || PANEL_DEFAULT_HEIGHT),
+      sidebarHeight: Math.max(PANEL_HARD_MIN_SIDEBAR_HEIGHT, Number(parsed.sidebarHeight) || PANEL_DEFAULT_SIDEBAR_HEIGHT)
+    };
+  } catch (err) {
+    return { width: PANEL_DEFAULT_WIDTH, height: PANEL_DEFAULT_HEIGHT, sidebarHeight: PANEL_DEFAULT_SIDEBAR_HEIGHT };
+  }
+}
+
+var panelSize = loadPanelSize();
+
+function PL() { return layers[activeBackend] || {}; }
+
+function escapeHtml(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, function(c) {
+    return ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[c];
+  });
+}
+
+function startFpsCounter() {
+  if (fpsCounterStarted) return;
+  fpsCounterStarted = true;
+  var rateEl = document.getElementById('fps-counter-rate');
+  if (!rateEl || !window.requestAnimationFrame) return;
+  var frames = 0;
+  var last = performance.now ? performance.now() : Date.now();
+  function tick(now) {
+    frames += 1;
+    if (now - last >= 500) {
+      rateEl.textContent = Math.round(frames * 1000 / Math.max(1, now - last)) + ' fps';
+      frames = 0;
+      last = now;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function featureIdKey(backend) {
+  var name = backend || activeBackend;
+  return name === 'osmium' ? '@id' : (name === 'postgis' ? 'osm_id' : 'id');
+}
+
+function normalizeFeatureId(value) {
+  var text = String(value == null ? '' : value).toLowerCase().replace(/^osm_/, '').trim();
+  return /^[rwn]\d+$/.test(text) ? text.slice(1) : text;
+}
+
+function getFeatureId(feature, backend) {
+  var props = (feature && feature.properties) || {};
+  return normalizeFeatureId(props[featureIdKey(backend || activeBackend)] || props.osmid || props.osm_id || props.id || props['@id'] || '');
+}
+
+function featureNavigationKey(patchId, feature) {
+  if (!feature) return '';
+  var props = feature.properties || {};
+  var idx = feature._featureIdx != null ? feature._featureIdx : props._featureIdx;
+  if (idx != null && isFinite(Number(idx))) {
+    return activeBackend + '|' + String(patchId) + '|idx:' + Number(idx);
+  }
+  var id = getFeatureId(feature);
+  return id ? activeBackend + '|' + String(patchId) + '|id:' + id : '';
+}
+
+function clearFeatureNavigationTarget(key) {
+  if (key && featureNavigationTargetKey !== key) return;
+  featureNavigationTargetKey = null;
+  featureNavigationSuppressUntil = 0;
+  if (featureNavigationClearTimer) {
+    window.clearTimeout(featureNavigationClearTimer);
+    featureNavigationClearTimer = 0;
+  }
+}
+
+function beginFeatureNavigation(patchId, feature, duration) {
+  var key = featureNavigationKey(patchId, feature);
+  if (!key) return;
+  featureNavigationTargetKey = key;
+  featureNavigationSuppressUntil = (performance.now ? performance.now() : Date.now()) + Math.max(0, duration || 0) + 250;
+  if (featureNavigationClearTimer) window.clearTimeout(featureNavigationClearTimer);
+  featureNavigationClearTimer = window.setTimeout(function() {
+    clearFeatureNavigationTarget(key);
+  }, Math.max(0, duration || 0) + 250);
+}
+
+function isFeatureNavigationRepeatClick(patchId, feature) {
+  var key = featureNavigationKey(patchId, feature);
+  var now = performance.now ? performance.now() : Date.now();
+  return !!(key && key === featureNavigationTargetKey && now <= featureNavigationSuppressUntil);
+}
+
+function getOSMType(props) {
+  var first = String((props && props.label) || '').split(';')[0];
+  if (!first) return 'other';
+  var sep = first.indexOf(':') >= 0 ? ':' : (first.indexOf('=') >= 0 ? '=' : '');
+  if (!sep) return 'other';
+  return first.split(sep)[0].trim() || 'other';
+}
+
+function getOSMValue(props) {
+  var first = String((props && props.label) || '').split(';')[0];
+  if (!first) return 'other';
+  var sep = first.indexOf(':') >= 0 ? ':' : (first.indexOf('=') >= 0 ? '=' : '');
+  if (!sep) return 'other';
+  return first.split(sep).slice(1).join(sep).trim() || 'other';
+}
+
+function collectCoords(c, out) {
+  if (!Array.isArray(c)) return;
+  if (typeof c[0] === 'number' && typeof c[1] === 'number') {
+    out.push(c);
+    return;
+  }
+  c.forEach(function(child) { collectCoords(child, out); });
+}
+
+function geometryLonLatExtent(geometry) {
+  if (!geometry) return null;
+  var coords = [];
+  if (geometry.type === 'GeometryCollection') {
+    (geometry.geometries || []).forEach(function(child) { collectCoords(child.coordinates, coords); });
+  } else {
+    collectCoords(geometry.coordinates, coords);
+  }
+  if (!coords.length) return null;
+  var minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+  coords.forEach(function(c) {
+    var lon = Number(c[0]), lat = Number(c[1]);
+    if (!isFinite(lon) || !isFinite(lat)) return;
+    minLon = Math.min(minLon, lon);
+    minLat = Math.min(minLat, lat);
+    maxLon = Math.max(maxLon, lon);
+    maxLat = Math.max(maxLat, lat);
+  });
+  if (!isFinite(minLon)) return null;
+  return [minLon, minLat, maxLon, maxLat];
+}
+
+function extentToBounds(extent) {
+  return [[extent[0], extent[1]], [extent[2], extent[3]]];
+}
+
+function extentCenter(extent) {
+  return [(extent[0] + extent[2]) / 2, (extent[1] + extent[3]) / 2];
+}
+
+function expandExtentToMinMeters(extent, minMeters) {
+  if (!extent) return null;
+  var centerLat = (extent[1] + extent[3]) / 2;
+  var latPad = (minMeters / 111320) / 2;
+  var lonPad = latPad / Math.max(0.1, Math.cos(centerLat * Math.PI / 180));
+  var centerLon = (extent[0] + extent[2]) / 2;
+  return [
+    Math.min(extent[0], centerLon - lonPad),
+    Math.min(extent[1], centerLat - latPad),
+    Math.max(extent[2], centerLon + lonPad),
+    Math.max(extent[3], centerLat + latPad)
+  ];
+}
+
+function mercatorY(lat) {
+  var clamped = Math.max(-85.05112878, Math.min(85.05112878, lat));
+  return Math.log(Math.tan(Math.PI / 4 + clamped * Math.PI / 360)) * 6378137;
+}
+
+function projectedExtentSpan(extent) {
+  if (!extent) return 1;
+  var x1 = extent[0] * 20037508.342789244 / 180;
+  var x2 = extent[2] * 20037508.342789244 / 180;
+  var y1 = mercatorY(extent[1]);
+  var y2 = mercatorY(extent[3]);
+  return Math.max(1, Math.abs(x2 - x1), Math.abs(y2 - y1));
+}
+
+function smoothStep(value) {
+  value = Math.max(0, Math.min(1, value));
+  return value * value * (3 - 2 * value);
+}
+
+function blendExtents(fromExtent, toExtent, amount) {
+  return [
+    fromExtent[0] + (toExtent[0] - fromExtent[0]) * amount,
+    fromExtent[1] + (toExtent[1] - fromExtent[1]) * amount,
+    fromExtent[2] + (toExtent[2] - fromExtent[2]) * amount,
+    fromExtent[3] + (toExtent[3] - fromExtent[3]) * amount
+  ];
+}
+
+function featureFocusExtent(extent, patchExtent) {
+  if (!patchExtent || patchExtent.length !== 4) return extent;
+  var featureSpan = projectedExtentSpan(extent);
+  var patchSpan = Math.max(featureSpan, projectedExtentSpan(patchExtent));
+  var blendAmount = smoothStep(Math.sqrt(featureSpan / patchSpan));
+  return blendExtents(extent, patchExtent, blendAmount);
+}
+
+function fitZoomForExtent(extent, maxZoom) {
+  if (!extent || !map.cameraForBounds) return maxZoom || DEFAULT_FOCUS_MAX_ZOOM;
+  var camera = map.cameraForBounds(extentToBounds(extent), { padding: 80 });
+  var z = camera && isFinite(camera.zoom) ? camera.zoom : (maxZoom || DEFAULT_FOCUS_MAX_ZOOM);
+  return maxZoom == null ? z : Math.min(z, maxZoom);
+}
+
+function featureFocusZoom(extent, patchExtent, focusExtent) {
+  var targetZoom = fitZoomForExtent(focusExtent || extent, FEATURE_FOCUS_MAX_ZOOM);
+  if (!patchExtent || patchExtent.length !== 4) return targetZoom;
+  var patchZoom = fitZoomForExtent(patchExtent, 16);
+  return Math.max(patchZoom, targetZoom);
+}
+
+function featureExtent(feature) {
+  return geometryLonLatExtent(feature && feature.geometry);
+}
+
+function focusExtent(extent, maxZoom) {
+  if (!extent) return false;
+  var bounds = extentToBounds(extent);
+  map.fitBounds(bounds, {
+    padding: 80,
+    maxZoom: maxZoom || DEFAULT_FOCUS_MAX_ZOOM,
+    duration: 800,
+    essential: true,
+    easing: smoothStep
+  });
+  return true;
+}
+
+function focusPatchMeta(meta, maxZoom) {
+  if (!meta || !meta.bbox) return false;
+  return focusExtent(meta.bbox, maxZoom || PATCH_FOCUS_MAX_ZOOM);
+}
+
+function focusPatchMetaFromMarker(meta, maxZoom) {
+  if (!meta || !meta.bbox) return false;
+  var targetMaxZoom = maxZoom || PATCH_FOCUS_MAX_ZOOM;
+  var targetZoom = fitZoomForExtent(meta.bbox, targetMaxZoom);
+  var currentZoom = map && map.getZoom ? map.getZoom() : null;
+  if (isFinite(currentZoom) && isFinite(targetZoom) && currentZoom > targetZoom) return false;
+  return focusPatchMeta(meta, targetMaxZoom);
+}
+
+function focusRawFeature(feature, patchId) {
+  var extent = expandExtentToMinMeters(featureExtent(feature), FEATURE_MIN_FOCUS_BBOX_M);
+  if (!extent) return false;
+  var focusPatchId = patchId == null ? selectedFeaturePatchId : String(patchId);
+  var patchMeta = focusPatchId ? (ALL_META[activeBackend] || {})[focusPatchId] : null;
+  var patchExtent = patchMeta && patchMeta.bbox ? patchMeta.bbox : null;
+  var focus = featureFocusExtent(extent, patchExtent);
+  var center = extentCenter(extent);
+  var duration = 800;
+  beginFeatureNavigation(focusPatchId, feature, duration);
+  map.easeTo({
+    center: center,
+    zoom: featureFocusZoom(extent, patchExtent, focus),
+    duration: duration,
+    essential: true,
+    easing: smoothStep
+  });
+  return true;
+}
+
+// This file is concatenated by visualize_osm/app/main.py.
+function prepareFeatureCache(features, backend) {
+  var counts = {};
+  var groups = {};
+  (features || []).forEach(function(feature, idx) {
+    var type = getOSMType(feature.properties);
+    var value = getOSMValue(feature.properties);
+    var id = getFeatureId(feature, backend);
+    feature._featureIdx = idx;
+    feature.properties = feature.properties || {};
+    feature.properties._featureIdx = idx;
+    feature._featureId = id;
+    feature._bounds = featureExtent(feature);
+    feature.properties._styleType = type;
+    feature._row = {
+      id: id,
+      idLower: id.toLowerCase(),
+      value: value,
+      type: type,
+      geomType: feature.geometry && feature.geometry.type ? feature.geometry.type : ''
+    };
+    counts[type] = (counts[type] || 0) + 1;
+    if (!groups[type]) groups[type] = [];
+    groups[type].push(idx);
+  });
+  return {
+    features: features || [],
+    prepared: {
+      counts: counts,
+      groups: groups,
+      summaryHtml: Object.entries(counts).sort().map(function(e) {
+        var label = escapeHtml(e[0] + ' x' + e[1]);
+        return '<button type="button" class="osm-badge" data-type="' + escapeHtml(e[0]) +
+          '" title="Toggle ' + label + '">' + label + '</button>';
+      }).join('')
+    }
+  };
+}
+
+function loadFeatures(meta, backend) {
+  if (!meta || !meta.url) return Promise.resolve({ features: [], counts: {} });
+  if (!window.Worker) {
+    return fetch(meta.url, { cache: 'no-store' }).then(function(response) {
+      if (!response.ok) throw new Error('Feature load failed: ' + response.status);
+      return response.json();
+    }).then(function(data) {
+      var features = data.features || [];
+      features.sort(function(a, b) { return getOSMType(a.properties).localeCompare(getOSMType(b.properties)); });
+      return prepareFeatureCache(features, backend);
+    }).catch(function(err) {
+      console.warn('Could not load features', err);
+      return { features: [], prepared: { counts: {}, groups: {}, summaryHtml: '' } };
+    });
+  }
+
+  return new Promise(function(resolve, reject) {
+    var worker = new Worker('app/client/feature_worker.js?v=' + encodeURIComponent(FEATURE_WORKER_VERSION));
+    var requestId = ++featureWorkerSeq;
+    var features = [];
+    var prepared = null;
+    var expectedTotal = null;
+    var receivedTotal = 0;
+    var pendingChunks = [];
+    var chunkDrainScheduled = false;
+    var loadedMessage = null;
+    var settled = false;
+
+    function nowMs() {
+      return performance.now ? performance.now() : Date.now();
+    }
+
+    function acknowledgeFeatureChunk() {
+      if (settled) return;
+      worker.postMessage({ type: 'features-chunk-ack', requestId: requestId });
+    }
+
+    function finishLoadedFeatures() {
+      if (settled || !loadedMessage || pendingChunks.length) return;
+      settled = true;
+      worker.terminate();
+      if (expectedTotal === null) expectedTotal = receivedTotal;
+      if (features.length > expectedTotal) features.length = expectedTotal;
+      resolve({
+        features: features,
+        prepared: prepared || prepareFeatureCache(features, backend)
+      });
+    }
+
+    function processFeatureChunk(msg) {
+      var start = msg.start || 0;
+      var chunk = msg.features || [];
+      for (var i = 0; i < chunk.length; i += 1) {
+        features[start + i] = chunk[i];
+      }
+      receivedTotal += chunk.length;
+      acknowledgeFeatureChunk();
+    }
+
+    function scheduleFeatureChunkDrain(delay) {
+      if (settled || chunkDrainScheduled) return;
+      chunkDrainScheduled = true;
+      if (delay && delay > 0) {
+        window.setTimeout(drainFeatureChunks, delay);
+      } else {
+        window.requestAnimationFrame(function() { drainFeatureChunks(); });
+      }
+    }
+
+    function drainFeatureChunks() {
+      chunkDrainScheduled = false;
+      if (settled) return;
+      if (!pendingChunks.length) {
+        finishLoadedFeatures();
+        return;
+      }
+      var startedAt = nowMs();
+      do {
+        processFeatureChunk(pendingChunks.shift());
+      } while (pendingChunks.length && nowMs() - startedAt < 8);
+
+      if (pendingChunks.length) {
+        scheduleFeatureChunkDrain(0);
+      } else {
+        finishLoadedFeatures();
+      }
+    }
+
+    worker.onmessage = function(event) {
+      var msg = event.data || {};
+      if (msg.requestId !== requestId) return;
+      if (msg.type === 'features-summary') {
+        prepared = msg.prepared || null;
+        expectedTotal = msg.total || 0;
+        features.length = expectedTotal;
+        return;
+      }
+      if (msg.type === 'features-chunk') {
+        pendingChunks.push(msg);
+        scheduleFeatureChunkDrain(0);
+        return;
+      }
+      if (msg.type === 'features-loaded') {
+        loadedMessage = msg;
+        finishLoadedFeatures();
+      } else {
+        settled = true;
+        worker.terminate();
+        reject(new Error(msg.error || 'Feature worker failed'));
+      }
+    };
+
+    worker.onerror = function(err) {
+      settled = true;
+      worker.terminate();
+      reject(err);
+    };
+
+    worker.postMessage({
+      type: 'load-features',
+      requestId: requestId,
+      url: meta.url,
+      backend: backend,
+      chunkSize: FEATURE_WORKER_CHUNK_SIZE
+    });
+  }).catch(function(err) {
+    console.warn('Could not load features', err);
+    return { features: [], prepared: { counts: {}, groups: {}, summaryHtml: '' } };
+  });
+}
+
+function safeId(parts) {
+  return parts.map(function(part) {
+    return String(part).replace(/[^A-Za-z0-9_-]/g, '_');
+  }).join('-');
+}
+
+function patchIds(backend, patchId) {
+  var base = safeId(['ml', backend, patchId]);
+  return {
+    featureSource: base + '-feature-source',
+    fillLayer: base + '-fill-layer',
+    lineLayer: base + '-line-layer',
+    circleLayer: base + '-circle-layer',
+    bboxSource: base + '-bbox-source',
+    bboxLayer: base + '-bbox-layer'
+  };
+}
+
+function styleMatch(propertyName, fallback, pairs) {
+  var expr = ['match', ['get', propertyName]];
+  pairs.forEach(function(pair) {
+    expr.push(pair[0], pair[1]);
+  });
+  expr.push(fallback);
+  return expr;
+}
+
+function ensureMapLibreFeatureProperties(feature) {
+  if (!feature) return feature;
+  feature.properties = feature.properties || {};
+  if (feature.properties._styleType == null) {
+    feature.properties._styleType = feature._styleType || getOSMType(feature.properties);
+  }
+  if (feature.properties._featureIdx == null && feature._featureIdx != null) {
+    feature.properties._featureIdx = feature._featureIdx;
+  }
+  return feature;
+}
+
+function visibleFeatureCollection(state) {
+  var hidden = hiddenFeatureIds[String(state.patchId)];
+  var features = (state.features || []).filter(function(feature) {
+    return !hidden || !hidden.has(feature._featureIdx);
+  }).map(function(feature) {
+    return ensureMapLibreFeatureProperties(feature);
+  });
+  return { type: 'FeatureCollection', features: features };
+}
+
+function setPatchFeatureSourceData(state) {
+  if (!state || !state.ids || !map.getStyle()) return false;
+  var source = map.getSource(state.ids.featureSource);
+  if (!source || !source.setData) return false;
+  source.setData(visibleFeatureCollection(state));
+  if (map.triggerRepaint) map.triggerRepaint();
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+  return true;
+}
+
+function queuePatchFeatureSourceRefresh(state, attempts) {
+  if (!state || !state.ids) return;
+  state.featureSourceRefreshSeq = (state.featureSourceRefreshSeq || 0) + 1;
+  var seq = state.featureSourceRefreshSeq;
+  attempts = attempts == null ? 5 : attempts;
+  function refresh(remaining) {
+    if (seq !== state.featureSourceRefreshSeq) return;
+    if (!sharedActiveIds.has(String(state.patchId))) return;
+    var updated = setPatchFeatureSourceData(state);
+    if (updated && patchFeatureLayersReady(state)) return;
+    addPatchLayers(String(state.patchId), state);
+    if (patchFeatureLayersReady(state)) return;
+    if (remaining <= 0) return;
+    window.setTimeout(function() { refresh(remaining - 1); }, remaining === attempts ? 80 : 180);
+  }
+  window.requestAnimationFrame(function() { refresh(attempts); });
+  if (map.once) {
+    map.once('idle', function() { refresh(Math.max(0, attempts - 1)); });
+  }
+}
+
+function updatePatchFeatureSource(state, options) {
+  if (!state || !state.ids) return;
+  if (!map.getStyle()) {
+    if (options && options.retry) queuePatchFeatureSourceRefresh(state);
+    return;
+  }
+  var updated = setPatchFeatureSourceData(state);
+  if (!updated || !patchFeatureLayersReady(state)) {
+    addPatchLayers(String(state.patchId), state);
+    if (options && options.retry && !patchFeatureLayersReady(state)) queuePatchFeatureSourceRefresh(state);
+  }
+}
+
+function schedulePatchFeatureSourceUpdate(state, options) {
+  if (!state || !state.ids) return;
+  state.deferredFeatureSourceSeq = (state.deferredFeatureSourceSeq || 0) + 1;
+  var seq = state.deferredFeatureSourceSeq;
+  function apply() {
+    if (seq !== state.deferredFeatureSourceSeq) return;
+    if (!sharedActiveIds.has(String(state.patchId))) return;
+    state.deferredFeatureSourceTimer = 0;
+    updatePatchFeatureSource(state, options);
+  }
+  if (state.deferredFeatureSourceTimer) {
+    window.clearTimeout(state.deferredFeatureSourceTimer);
+  }
+  state.deferredFeatureSourceTimer = window.setTimeout(apply, 0);
+}
+
+function patchFeatureLayersReady(state) {
+  if (!state || !state.ids || !map.getStyle()) return false;
+  return !!(
+    map.getSource(state.ids.featureSource) &&
+    map.getLayer(state.ids.fillLayer) &&
+    map.getLayer(state.ids.lineLayer) &&
+    map.getLayer(state.ids.circleLayer) &&
+    map.getSource(state.ids.bboxSource) &&
+    map.getLayer(state.ids.bboxLayer)
+  );
+}
+
+function whenMapReady(cb) {
+  var attempts = 8;
+  var done = false;
+  function tryRun(remaining) {
+    if (done) return;
+    if (!map.getStyle || !map.getStyle()) {
+      schedule(remaining);
+      return;
+    }
+    try {
+      cb();
+      done = true;
+    } catch (err) {
+      if (remaining <= 0) {
+        console.warn('MapLibre style operation failed', err);
+        return;
+      }
+      schedule(remaining - 1);
+    }
+  }
+  function schedule(remaining) {
+    if (remaining < 0 || done) return;
+    if (map.once) {
+      map.once('load', function() { tryRun(remaining); });
+      map.once('styledata', function() { tryRun(remaining); });
+      map.once('idle', function() { tryRun(remaining); });
+    }
+    window.setTimeout(function() { tryRun(remaining); }, remaining === attempts ? 40 : 160);
+  }
+  if (map.loaded() || map.isStyleLoaded() || (map.getStyle && map.getStyle())) {
+    window.requestAnimationFrame(function() { tryRun(attempts); });
+  } else {
+    schedule(attempts);
+  }
+}
+
+function addPatchLayers(id, state) {
+  whenMapReady(function() {
+    var ids = state.ids;
+    var bbox = state.meta && state.meta.bbox;
+    if (!bbox) return;
+
+    var bboxPolygon = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[
+          [bbox[0], bbox[1]], [bbox[2], bbox[1]], [bbox[2], bbox[3]],
+          [bbox[0], bbox[3]], [bbox[0], bbox[1]]
+        ]]
+      },
+      properties: {}
+    };
+    if (!map.getSource(ids.bboxSource)) {
+      map.addSource(ids.bboxSource, { type: 'geojson', data: bboxPolygon });
+    }
+    if (map.getSource(ids.bboxSource) && !map.getLayer(ids.bboxLayer)) {
+      map.addLayer({
+        id: ids.bboxLayer,
+        type: 'line',
+        source: ids.bboxSource,
+        paint: {
+          'line-color': '#2979ff',
+          'line-width': 1.25,
+          'line-opacity': 0.85
+        }
+      });
+    }
+
+    if (state.loading) {
+      moveSelectedFeatureLayersToTop();
+      return;
+    }
+
+    if (!map.getSource(ids.featureSource)) {
+      map.addSource(ids.featureSource, {
+        type: 'geojson',
+        data: visibleFeatureCollection(state),
+        maxzoom: 22,
+        tolerance: MAPLIBRE_FEATURE_SOURCE_TOLERANCE,
+        buffer: 128
+      });
+    } else {
+      setPatchFeatureSourceData(state);
+    }
+
+    if (map.getSource(ids.featureSource) && !map.getLayer(ids.fillLayer)) {
+      map.addLayer({
+        id: ids.fillLayer,
+        type: 'fill',
+        source: ids.featureSource,
+        filter: ['==', '$type', 'Polygon'],
+        paint: {
+          'fill-color': styleMatch('_styleType', '#bbbbbb', [
+            ['building', '#888888'],
+            ['landuse', '#66cc66'],
+            ['natural', '#228833'],
+            ['water', '#4da6ff'],
+            ['amenity', '#cc44aa'],
+            ['leisure', '#00cc44'],
+            ['shop', '#ff9900'],
+            ['tourism', '#ff6688']
+          ]),
+          'fill-opacity': styleMatch('_styleType', 0.06, [
+            ['building', 0.15],
+            ['landuse', 0.14],
+            ['natural', 0.13],
+            ['water', 0.28],
+            ['amenity', 0.12],
+            ['leisure', 0.14],
+            ['shop', 0.12],
+            ['tourism', 0.12]
+          ])
+        }
+      });
+    }
+    if (map.getSource(ids.featureSource) && !map.getLayer(ids.lineLayer)) {
+      map.addLayer({
+        id: ids.lineLayer,
+        type: 'line',
+        source: ids.featureSource,
+        paint: {
+          'line-color': styleMatch('_styleType', '#bbbbbb', [
+            ['building', '#555555'],
+            ['highway', '#ff9900'],
+            ['landuse', '#66cc66'],
+            ['natural', '#228833'],
+            ['water', '#4da6ff'],
+            ['waterway', '#4da6ff'],
+            ['amenity', '#cc44aa'],
+            ['leisure', '#00cc44'],
+            ['shop', '#ff9900'],
+            ['tourism', '#ff6688']
+          ]),
+          'line-opacity': styleMatch('_styleType', 0.62, [
+            ['building', 0.48],
+            ['landuse', 0.62],
+            ['natural', 0.66],
+            ['water', 0.76],
+            ['waterway', 0.9],
+            ['highway', 0.9]
+          ]),
+          'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.65, 14, 1.35, 19, 2.6]
+        }
+      });
+    }
+    if (map.getSource(ids.featureSource) && !map.getLayer(ids.circleLayer)) {
+      map.addLayer({
+        id: ids.circleLayer,
+        type: 'circle',
+        source: ids.featureSource,
+        filter: ['==', '$type', 'Point'],
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 7, 3, 16, 6, 20, 10],
+          'circle-color': styleMatch('_styleType', '#bbbbbb', [
+            ['natural', '#228833'],
+            ['amenity', '#cc44aa'],
+            ['shop', '#ff9900'],
+            ['tourism', '#ff6688'],
+            ['water', '#4da6ff']
+          ]),
+          'circle-opacity': 0.92,
+          'circle-stroke-color': '#ffffff',
+          'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 7, 1, 16, 2, 20, 3]
+        }
+      });
+    }
+    invalidateFrozenFeatureOverlay();
+    scheduleFrozenFeatureOverlayBuild(260);
+    moveSelectedFeatureLayersToTop();
+  });
+}
+
+function removePatchLayers(state) {
+  if (!state || !state.ids || !map.getStyle()) return;
+  ['circleLayer', 'lineLayer', 'fillLayer', 'bboxLayer'].forEach(function(key) {
+    if (map.getLayer(state.ids[key])) map.removeLayer(state.ids[key]);
+  });
+  ['featureSource', 'bboxSource'].forEach(function(key) {
+    if (map.getSource(state.ids[key])) map.removeSource(state.ids[key]);
+  });
+  invalidateFrozenFeatureOverlay();
+}
+
+function refreshPatchFeatureSource(state) {
+  if (!state || !state.ids || !map.getStyle()) return;
+  if (map.getSource(state.ids.featureSource)) updatePatchFeatureSource(state);
+  else addPatchLayers(String(state.patchId), state);
+}
+
+function syncBtn(id) {
+  var isActive = sharedActiveIds.has(String(id));
+  document.querySelectorAll('button[data-patch="' + id + '"]').forEach(function(btn) {
+    btn.innerHTML = '';
+    btn.textContent = isActive ? 'Hide OSM Features' : 'Show OSM Features';
+    btn.style.background = isActive ? '#1f7a39' : '#202632';
+    btn.style.color = '#fff';
+    btn.disabled = false;
+  });
+  activeMarkers.forEach(function(marker) {
+    if (!marker || String(marker._patchId) !== String(id) || !marker.getPopup) return;
+    marker.getPopup().setHTML(markerPopupHtml(id));
+  });
+}
+
+// This file is concatenated by visualize_osm/app/main.py.
+function savePanelSize() {
+  try {
+    localStorage.setItem(PANEL_SIZE_STORAGE_KEY, JSON.stringify(panelSize));
+  } catch (err) {}
+}
+
+function isSidebarPanelVisible() {
+  return sharedActiveIds.size > 0;
+}
+
+function isDetailPanelVisible() {
+  return !detailPanelMinimized && !!maximizedPatchId && sharedActiveIds.has(maximizedPatchId);
+}
+
+function getMaxStackHeight(detailVisible, sidebarVisible) {
+  var visibleCount = (detailVisible ? 1 : 0) + (sidebarVisible ? 1 : 0);
+  var gapHeight = visibleCount > 1 ? PANEL_GAP : 0;
+  return Math.max(0, window.innerHeight - PANEL_TOP_CLEARANCE - PANEL_BOTTOM_CLEARANCE - gapHeight);
+}
+
+function getPanelMaxHeight(panel, detailVisible, sidebarVisible) {
+  var maxStackHeight = getMaxStackHeight(detailVisible, sidebarVisible);
+  if (panel === 'detail') {
+    var reservedSidebarHeight = sidebarVisible ? PANEL_HARD_MIN_SIDEBAR_HEIGHT : 0;
+    return Math.max(0, maxStackHeight - reservedSidebarHeight);
+  }
+  var reservedDetailHeight = detailVisible ? PANEL_HARD_MIN_HEIGHT : 0;
+  return Math.max(0, maxStackHeight - reservedDetailHeight);
+}
+
+function constrainPanelHeights(detailHeight, sidebarHeight, prefer, detailVisible, sidebarVisible) {
+  var maxStackHeight = getMaxStackHeight(detailVisible, sidebarVisible);
+  var minDetailHeight = detailVisible ? PANEL_HARD_MIN_HEIGHT : PANEL_MIN_HEIGHT;
+  var minSidebarHeight = sidebarVisible ? PANEL_HARD_MIN_SIDEBAR_HEIGHT : PANEL_MIN_SIDEBAR_HEIGHT;
+  if (detailVisible && sidebarVisible && minDetailHeight + minSidebarHeight > maxStackHeight) {
+    var minTotal = minDetailHeight + minSidebarHeight;
+    minDetailHeight = Math.floor(maxStackHeight * (minDetailHeight / minTotal));
+    minSidebarHeight = maxStackHeight - minDetailHeight;
+  }
+  detailHeight = clampNumber(detailHeight || PANEL_DEFAULT_HEIGHT, minDetailHeight, getPanelMaxHeight('detail', detailVisible, sidebarVisible));
+  sidebarHeight = clampNumber(sidebarHeight || PANEL_DEFAULT_SIDEBAR_HEIGHT, minSidebarHeight, getPanelMaxHeight('sidebar', detailVisible, sidebarVisible));
+  if (!detailVisible) detailHeight = Math.max(PANEL_MIN_HEIGHT, detailHeight);
+  if (!sidebarVisible) sidebarHeight = Math.max(PANEL_MIN_SIDEBAR_HEIGHT, sidebarHeight);
+  if (!detailVisible || !sidebarVisible) {
+    if (detailVisible) detailHeight = Math.min(detailHeight, maxStackHeight);
+    if (sidebarVisible) sidebarHeight = Math.min(sidebarHeight, maxStackHeight);
+    return { detailHeight: detailHeight, sidebarHeight: sidebarHeight };
+  }
+  var overflow = detailHeight + sidebarHeight - maxStackHeight;
+  if (overflow > 0) {
+    if (prefer === 'sidebar') {
+      var detailReduction = Math.min(overflow, detailHeight - minDetailHeight);
+      detailHeight -= detailReduction;
+      overflow -= detailReduction;
+      if (overflow > 0) sidebarHeight = Math.max(minSidebarHeight, sidebarHeight - overflow);
+    } else {
+      var sidebarReduction = Math.min(overflow, sidebarHeight - minSidebarHeight);
+      sidebarHeight -= sidebarReduction;
+      overflow -= sidebarReduction;
+      if (overflow > 0) detailHeight = Math.max(minDetailHeight, detailHeight - overflow);
+    }
+  }
+  return { detailHeight: detailHeight, sidebarHeight: sidebarHeight };
+}
+
+function setPanelHeights(detailHeight, sidebarHeight, prefer) {
+  var constrained = constrainPanelHeights(detailHeight, sidebarHeight, prefer, isDetailPanelVisible(), isSidebarPanelVisible());
+  panelSize.height = constrained.detailHeight;
+  panelSize.sidebarHeight = constrained.sidebarHeight;
+}
+
+function resizeDetailFromBottom(drag, dy) {
+  var sidebarHeight = Math.max(PANEL_HARD_MIN_SIDEBAR_HEIGHT, drag.sidebarHeight - dy);
+  setPanelHeights(drag.height + dy, sidebarHeight, 'detail');
+}
+
+function applyPanelSize() {
+  var shell = document.getElementById('osm-ui-shell');
+  var detail = document.getElementById('osm-detail');
+  var sidebar = document.getElementById('osm-sidebar');
+  var maxWidth = Math.max(PANEL_MIN_WIDTH, Math.min(PANEL_MAX_WIDTH, window.innerWidth - 48));
+  var detailVisible = isDetailPanelVisible();
+  var sidebarVisible = isSidebarPanelVisible();
+  panelSize.width = clampNumber(panelSize.width, PANEL_MIN_WIDTH, maxWidth);
+  var constrained = constrainPanelHeights(panelSize.height, panelSize.sidebarHeight || PANEL_DEFAULT_SIDEBAR_HEIGHT, 'detail', detailVisible, sidebarVisible);
+  panelSize.height = constrained.detailHeight;
+  panelSize.sidebarHeight = constrained.sidebarHeight;
+  if (shell) shell.style.width = panelSize.width + 'px';
+  if (detail) {
+    detail.style.height = panelSize.height + 'px';
+    detail.style.maxHeight = getPanelMaxHeight('detail', detailVisible, sidebarVisible) + 'px';
+  }
+  if (sidebar) sidebar.style.height = panelSize.sidebarHeight + 'px';
+  renderVirtualFeatureRows();
+}
+
+function attachPanelResize(handle, panelName) {
+  var drag = null;
+  function cursorForDirection(dir) {
+    if (dir === 'n' || dir === 's') return 'ns-resize';
+    if (dir === 'e' || dir === 'w') return 'ew-resize';
+    if (dir === 'ne' || dir === 'sw') return 'nesw-resize';
+    return 'nwse-resize';
+  }
+  handle.addEventListener('pointerdown', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    drag = {
+      x: e.clientX,
+      y: e.clientY,
+      width: panelSize.width,
+      height: panelSize.height,
+      sidebarHeight: panelSize.sidebarHeight,
+      panel: panelName || 'detail',
+      dir: handle.dataset.resizeDir || 'nw'
+    };
+    if (handle.setPointerCapture) handle.setPointerCapture(e.pointerId);
+    document.body.classList.add('osm-panel-resizing');
+    document.body.style.cursor = cursorForDirection(drag.dir);
+  });
+  window.addEventListener('pointermove', function(e) {
+    if (!drag) return;
+    var maxWidth = Math.max(PANEL_MIN_WIDTH, Math.min(PANEL_MAX_WIDTH, window.innerWidth - 48));
+    var dx = e.clientX - drag.x;
+    var dy = e.clientY - drag.y;
+    if (drag.dir.indexOf('w') !== -1) panelSize.width = clampNumber(drag.width - dx, PANEL_MIN_WIDTH, maxWidth);
+    if (drag.dir.indexOf('e') !== -1) panelSize.width = clampNumber(drag.width + dx, PANEL_MIN_WIDTH, maxWidth);
+    if (drag.panel === 'detail' && drag.dir.indexOf('n') !== -1) setPanelHeights(drag.height - dy, drag.sidebarHeight, 'detail');
+    if (drag.panel === 'detail' && drag.dir.indexOf('s') !== -1) resizeDetailFromBottom(drag, dy);
+    if (drag.panel === 'sidebar' && drag.dir.indexOf('n') !== -1) setPanelHeights(drag.height, drag.sidebarHeight - dy, 'sidebar');
+    applyPanelSize();
+  });
+  window.addEventListener('pointerup', function() {
+    if (!drag) return;
+    drag = null;
+    document.body.classList.remove('osm-panel-resizing');
+    document.body.style.cursor = '';
+    savePanelSize();
+  });
+}
+
+window.addEventListener('resize', applyPanelSize);
+
+function ensureUIShell() {
+  if (document.getElementById('osm-ui-shell')) return;
+  var shell = document.createElement('div');
+  shell.id = 'osm-ui-shell';
+  function makeResizeHandle(dir, panelName) {
+    var resizeHandle = document.createElement('div');
+    resizeHandle.className = 'osm-panel-resize-handle osm-resize-' + dir;
+    resizeHandle.dataset.resizeDir = dir;
+    resizeHandle.title = 'Resize panel';
+    attachPanelResize(resizeHandle, panelName);
+    return resizeHandle;
+  }
+
+  var detail = document.createElement('div');
+  detail.id = 'osm-detail';
+  ['n', 'w', 'nw', 's', 'sw'].forEach(function(dir) { detail.appendChild(makeResizeHandle(dir, 'detail')); });
+  var detailHeader = document.createElement('div');
+  detailHeader.id = 'osm-detail-header';
+  var detailTitle = document.createElement('span');
+  detailTitle.id = 'osm-detail-title';
+  var toggleAllBtn = document.createElement('button');
+  toggleAllBtn.id = 'osm-toggle-all-btn';
+  toggleAllBtn.title = 'Show / hide all features';
+  toggleAllBtn.textContent = 'Hide all';
+  toggleAllBtn.addEventListener('click', function() {
+    if (!maximizedPatchId) return;
+    updateToggleAllBtn();
+    var shouldShow = toggleAllButtonModes[String(maximizedPatchId)] === 'show';
+    toggleAllFeatures(maximizedPatchId, shouldShow);
+    updateToggleAllBtn();
+  });
+  var detailClose = document.createElement('button');
+  detailClose.id = 'osm-detail-close';
+  detailClose.title = 'Close detail';
+  detailClose.textContent = 'x';
+  detailClose.addEventListener('click', function() {
+    detailPanelMinimized = true;
+    featureTableState = null;
+    renderUI();
+  });
+  detailHeader.appendChild(detailTitle);
+  detailHeader.appendChild(toggleAllBtn);
+  detailHeader.appendChild(detailClose);
+  var searchBar = document.createElement('div');
+  searchBar.id = 'osm-feat-search-bar';
+  var searchInput = document.createElement('input');
+  searchInput.id = 'osm-feat-search-input';
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Search feature ID...';
+  searchInput.addEventListener('input', function() { filterDetailRows(this.value.trim()); });
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      this.value = '';
+      filterDetailRows('');
+    }
+  });
+  var searchClear = document.createElement('button');
+  searchClear.id = 'osm-feat-search-clear';
+  searchClear.textContent = 'x';
+  searchClear.title = 'Clear search';
+  searchClear.addEventListener('click', function() {
+    searchInput.value = '';
+    filterDetailRows('');
+  });
+  searchBar.appendChild(searchInput);
+  searchBar.appendChild(searchClear);
+  var detailBody = document.createElement('div');
+  detailBody.id = 'osm-detail-body';
+  detail.appendChild(detailHeader);
+  detail.appendChild(searchBar);
+  detail.appendChild(detailBody);
+
+  var sidebar = document.createElement('div');
+  sidebar.id = 'osm-sidebar';
+  ['n', 'w', 'nw'].forEach(function(dir) { sidebar.appendChild(makeResizeHandle(dir, 'sidebar')); });
+  var sidebarHeader = document.createElement('div');
+  sidebarHeader.id = 'osm-sidebar-header';
+  sidebarHeader.textContent = 'Active patches';
+  var sidebarList = document.createElement('div');
+  sidebarList.id = 'osm-sidebar-list';
+  sidebar.appendChild(sidebarHeader);
+  sidebar.appendChild(sidebarList);
+
+  shell.appendChild(detail);
+  shell.appendChild(sidebar);
+  document.body.appendChild(shell);
+  applyPanelSize();
+}
+
+function countVisibleFeatures(patchId) {
+  var state = PL()[patchId];
+  if (!state) return { visible: 0, total: 0 };
+  var total = state.features.length;
+  var hidden = hiddenFeatureIds[patchId];
+  if (!hidden) return { visible: total, total: total };
+  return { visible: Math.max(0, total - hidden.size), total: total };
+}
+
+function isFeatureHidden(patchId, featIdx) {
+  return hiddenFeatureIds[patchId] && hiddenFeatureIds[patchId].has(featIdx);
+}
+
+function schedulePatchFeatureSourceRefreshAfterPaint(state) {
+  if (!state) return;
+  if (state.featureVisibilityRefreshTimer) {
+    window.clearTimeout(state.featureVisibilityRefreshTimer);
+    state.featureVisibilityRefreshTimer = 0;
+  }
+  function refresh() {
+    state.featureVisibilityRefreshTimer = 0;
+    refreshPatchFeatureSource(state);
+    renderSelectedFeatureOverlay();
+  }
+  if (window.requestAnimationFrame) {
+    window.requestAnimationFrame(function() {
+      state.featureVisibilityRefreshTimer = window.setTimeout(refresh, 0);
+    });
+  } else {
+    state.featureVisibilityRefreshTimer = window.setTimeout(refresh, 0);
+  }
+}
+
+function refreshFeatureVisibility(state, patchId) {
+  var selectedInPatch = selectedFeatureRawFeature && String(selectedFeaturePatchId) === String(patchId);
+  if (selectedInPatch) {
+    renderSelectedFeatureOverlay();
+    schedulePatchFeatureSourceRefreshAfterPaint(state);
+  } else {
+    refreshPatchFeatureSource(state);
+  }
+}
+
+function toggleAllFeatures(patchId, showAll) {
+  var state = PL()[patchId];
+  if (!state) return;
+  if (!hiddenFeatureIds[patchId]) hiddenFeatureIds[patchId] = new Set();
+  if (showAll) hiddenFeatureIds[patchId].clear();
+  else state.features.forEach(function(feature) { hiddenFeatureIds[patchId].add(feature._featureIdx); });
+  toggleAllButtonModes[String(patchId)] = showAll ? 'hide' : 'show';
+  refreshFeatureVisibility(state, patchId);
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+  refreshDetailVisibilityUI(patchId);
+}
+
+function countHiddenInGroup(patchId, state, type) {
+  var hidden = hiddenFeatureIds[patchId];
+  var indices = (state.featureGroups || {})[type] || [];
+  if (!hidden || !indices.length) return 0;
+  var count = 0;
+  indices.forEach(function(featIdx) {
+    if (hidden.has(featIdx)) count++;
+  });
+  return count;
+}
+
+function renderTypeSummary(patchId, state) {
+  var counts = state.typeCounts || {};
+  return Object.entries(counts).map(function(entry) {
+    var type = entry[0];
+    var total = entry[1];
+    var hidden = countHiddenInGroup(patchId, state, type);
+    var allHidden = total > 0 && hidden >= total;
+    var label = escapeHtml(type + ' x' + total);
+    var title = label + (allHidden ? ' - click to show group' : ' - click to hide group');
+    return '<span class="osm-badge' + (allHidden ? ' osm-badge-hidden' : '') + '" ' +
+      'data-patch="' + escapeHtml(patchId) + '" data-group-type="' + escapeHtml(type) + '" ' +
+      'title="' + title + '">' + label + '</span>';
+  }).join('');
+}
+
+function detailSummaryHtml(id, state, meta) {
+  return (
+    '<div class="osm-summary">' +
+      (meta.fn ? '<strong>' + escapeHtml(meta.fn) + '</strong>' : '<strong>patch ' + escapeHtml(id) + '</strong>') +
+      '<br><span id="osm-feat-search-count" style="color:#888;font-size:11px;">' + state.features.length + ' features</span>' +
+      '<br>' + renderTypeSummary(id, state) +
+    '</div>'
+  );
+}
+
+function refreshDetailVisibilityUI(patchId) {
+  patchId = String(patchId);
+  var state = PL()[patchId];
+  if (!state || String(maximizedPatchId) !== patchId ||
+      !featureTableState || String(featureTableState.patchId) !== patchId) {
+    renderUI();
+    return;
+  }
+  var summary = document.querySelector('#osm-detail-body .osm-summary');
+  if (summary) {
+    var meta = (ALL_META[activeBackend] || {})[patchId] || {};
+    summary.outerHTML = detailSummaryHtml(patchId, state, meta);
+  }
+  updateToggleAllBtn();
+  renderVirtualFeatureRows();
+}
+
+function toggleFeatureGroup(patchId, type) {
+  var state = PL()[patchId];
+  if (!state) return;
+  var indices = state.featureGroups[type] || [];
+  if (!hiddenFeatureIds[patchId]) hiddenFeatureIds[patchId] = new Set();
+  var allHidden = indices.length && indices.every(function(idx) { return hiddenFeatureIds[patchId].has(idx); });
+  indices.forEach(function(idx) {
+    if (allHidden) hiddenFeatureIds[patchId].delete(idx);
+    else hiddenFeatureIds[patchId].add(idx);
+  });
+  refreshFeatureVisibility(state, patchId);
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+  refreshDetailVisibilityUI(patchId);
+}
+
+function filterDetailRows(needle) {
+  if (!featureTableState) return;
+  var lc = (needle || '').toLowerCase();
+  setFeatureSearchValue(featureTableState.patchId, needle || '');
+  featureTableState.filter = lc;
+  featureTableState.indices = [];
+  for (var i = 0; i < featureTableState.features.length; i++) {
+    var feature = featureTableState.features[i];
+    if (!feature) continue;
+    var row = feature._row;
+    var fid = row ? row.idLower : getFeatureId(feature).toLowerCase();
+    var type = row && row.type ? row.type.toLowerCase() : '';
+    var value = row && row.value ? row.value.toLowerCase() : '';
+    if (!lc || fid.includes(lc) || type.includes(lc) || value.includes(lc)) featureTableState.indices.push(i);
+  }
+  var scroller = document.getElementById('osm-virtual-table-scroll');
+  if (scroller) scroller.scrollTop = 0;
+  featureTableState.loaded = Math.min(FEATURE_PANEL_BATCH, featureTableState.indices.length);
+  renderVirtualFeatureRows();
+}
+
+function featureSearchKey(patchId) {
+  return activeBackend + '|' + String(patchId);
+}
+
+function getFeatureSearchValue(patchId) {
+  return featureSearchByPatch[featureSearchKey(patchId)] || '';
+}
+
+function setFeatureSearchValue(patchId, value) {
+  if (patchId == null) return;
+  var key = featureSearchKey(patchId);
+  var normalized = (value || '').trim();
+  if (normalized) featureSearchByPatch[key] = normalized;
+  else delete featureSearchByPatch[key];
+}
+
+function saveCurrentFeatureSearch() {
+  if (!maximizedPatchId) return;
+  var searchInput = document.getElementById('osm-feat-search-input');
+  if (searchInput) {
+    setFeatureSearchValue(maximizedPatchId, searchInput.value);
+  } else if (featureTableState && featureTableState.patchId === maximizedPatchId) {
+    setFeatureSearchValue(maximizedPatchId, featureTableState.filter || '');
+  }
+}
+
+function clearDetailFeatureSearch() {
+  var searchInput = document.getElementById('osm-feat-search-input');
+  if (searchInput) searchInput.value = '';
+  if (maximizedPatchId) setFeatureSearchValue(maximizedPatchId, '');
+  filterDetailRows('');
+}
+
+function maybeLoadMoreFeatureRows(viewport) {
+  if (!featureTableState || !viewport) return;
+  var loaded = featureTableState.loaded || 0;
+  if (loaded >= featureTableState.indices.length) return;
+  var loadedHeight = loaded * FEATURE_ROW_HEIGHT;
+  var remainingPx = loadedHeight - viewport.scrollTop - viewport.clientHeight;
+  if (remainingPx > FEATURE_ROW_HEIGHT * 12) return;
+  featureTableState.loaded = Math.min(loaded + FEATURE_PANEL_BATCH, featureTableState.indices.length);
+}
+
+function updateToggleAllBtn() {
+  var btn = document.getElementById('osm-toggle-all-btn');
+  if (!btn || !maximizedPatchId) return;
+  var counts = countVisibleFeatures(maximizedPatchId);
+  var patchId = String(maximizedPatchId);
+  if (counts.total > 0 && counts.visible === 0) {
+    toggleAllButtonModes[patchId] = 'show';
+  } else if (counts.visible >= counts.total) {
+    toggleAllButtonModes[patchId] = 'hide';
+  } else if (!toggleAllButtonModes[patchId]) {
+    toggleAllButtonModes[patchId] = 'hide';
+  }
+  if (toggleAllButtonModes[patchId] === 'show') {
+    btn.textContent = 'Show all';
+    btn.style.background = '#202632';
+  } else {
+    btn.textContent = 'Hide all';
+    btn.style.background = '#1f7a39';
+  }
+}
+
+function isSelectedFeatureRow(patchId, featIdx, feature) {
+  if (!selectedFeatureRawFeature || String(selectedFeaturePatchId) !== String(patchId)) return false;
+  if (selectedFeatureRawFeature._featureIdx != null) {
+    return Number(selectedFeatureRawFeature._featureIdx) === Number(featIdx);
+  }
+  return !!feature && getFeatureId(selectedFeatureRawFeature) === getFeatureId(feature);
+}
+
+function renderFeatureRow(patchId, featIdx, topPx) {
+  var f = featureTableState.features[featIdx];
+  if (!f) return '';
+  var rowData = f._row || {
+    id: getFeatureId(f),
+    value: getOSMValue(f.properties),
+    type: getOSMType(f.properties),
+    geomType: f.geometry && f.geometry.type ? f.geometry.type : ''
+  };
+  var t = rowData.type;
+  var typeText = escapeHtml(t);
+  var valueText = escapeHtml(rowData.value);
+  var geomText = escapeHtml(rowData.geomType);
+  var fid = rowData.id;
+  var fidText = escapeHtml(fid);
+  var hidden = isFeatureHidden(patchId, featIdx);
+  var selected = isSelectedFeatureRow(patchId, featIdx, f);
+  return '<tr class="osm-feat-row' + (hidden ? ' osm-feat-hidden' : '') + (selected ? ' osm-feat-selected' : '') + '" ' +
+    'style="position:absolute;top:' + topPx + 'px;height:' + FEATURE_ROW_HEIGHT + 'px;left:0;right:0;display:grid;grid-template-columns:' + FEATURE_TABLE_COLUMNS + ';column-gap:0;align-items:center;justify-content:stretch;padding:0 8px;box-sizing:border-box;" ' +
+    'data-patch="' + escapeHtml(patchId) + '" data-idx="' + featIdx + '" ' +
+    'data-feature-id="' + fidText + '" title="Feature ID: ' + fidText + '">' +
+    '<td class="osm-feat-id-cell" title="' + fidText + '">' + fidText + '</td>' +
+    '<td title="' + valueText + '">' + valueText + '</td>' +
+    '<td title="' + typeText + '"><span class="osm-tag osm-tag-' + escapeHtml(t) + '">' + typeText + '</span></td>' +
+    '<td title="' + geomText + '">' + geomText + '</td>' +
+  '</tr>';
+}
+
+function renderVirtualFeatureRows() {
+  if (!featureTableState) return;
+  var viewport = document.getElementById('osm-virtual-table-scroll');
+  var body = document.getElementById('osm-virtual-feature-rows');
+  var spacer = document.getElementById('osm-virtual-feature-spacer');
+  if (!viewport || !body || !spacer) return;
+  maybeLoadMoreFeatureRows(viewport);
+  var indices = featureTableState.indices;
+  var loaded = Math.min(featureTableState.loaded || FEATURE_PANEL_BATCH, indices.length);
+  var viewportH = viewport.clientHeight || 360;
+  var first = Math.max(0, Math.floor(viewport.scrollTop / FEATURE_ROW_HEIGHT) - FEATURE_ROW_BUFFER);
+  var count = Math.ceil(viewportH / FEATURE_ROW_HEIGHT) + FEATURE_ROW_BUFFER * 2;
+  var last = Math.min(loaded, first + count);
+  var rows = [];
+  for (var i = first; i < last; i++) rows.push(renderFeatureRow(featureTableState.patchId, indices[i], i * FEATURE_ROW_HEIGHT));
+  spacer.style.height = (loaded * FEATURE_ROW_HEIGHT) + 'px';
+  body.innerHTML = rows.join('');
+  var countEl = document.getElementById('osm-feat-search-count');
+  if (countEl) countEl.textContent = indices.length + ' features';
+}
+
+function refreshSelectedFeatureRows() {
+  if (!featureTableState) return;
+  renderVirtualFeatureRows();
+}
+
+function renderSidebarList() {
+  ensureUIShell();
+  var sidebar = document.getElementById('osm-sidebar');
+  var list = document.getElementById('osm-sidebar-list');
+  if (!sidebar || !list) return;
+  if (sharedActiveIds.size === 0) {
+    sidebar.style.display = 'none';
+    return;
+  }
+  sidebar.style.display = 'flex';
+  var ids = Array.from(sharedActiveIds).reverse();
+  Array.from(list.querySelectorAll('[data-sidebar-id]')).forEach(function(row) {
+    if (!sharedActiveIds.has(row.dataset.sidebarId)) list.removeChild(row);
+  });
+  ids.forEach(function(id, i) {
+    var state = PL()[id];
+    var meta = (ALL_META[activeBackend] || {})[id] || {};
+    var count = state ? (state.loading ? '?' : state.features.length) : '?';
+    var isActive = id === maximizedPatchId;
+    var existing = list.querySelector('[data-sidebar-id="' + id + '"]');
+    if (existing) {
+      existing.dataset.active = isActive ? '1' : '0';
+      existing.classList.toggle('active', isActive);
+      var bdg = existing.querySelector('.osm-row-badge');
+      if (bdg) bdg.textContent = count;
+    } else {
+      var row = document.createElement('div');
+      row.dataset.sidebarId = id;
+      row.dataset.active = isActive ? '1' : '0';
+      row.className = 'osm-sidebar-row' + (isActive ? ' active' : '');
+      var label = document.createElement('span');
+      label.className = 'osm-row-label';
+      label.textContent = 'osm_' + id;
+      label.title = meta.fn || ('osm_' + id);
+      var badge = document.createElement('span');
+      badge.className = 'osm-row-badge';
+      badge.textContent = count;
+      var closeBtn = document.createElement('button');
+      closeBtn.className = 'osm-row-close';
+      closeBtn.title = 'Remove';
+      closeBtn.textContent = 'x';
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        removePatch(id);
+      });
+      row.appendChild(label);
+      row.appendChild(badge);
+      row.appendChild(closeBtn);
+      row.addEventListener('click', function() {
+        saveCurrentFeatureSearch();
+        maximizedPatchId = id;
+        detailPanelMinimized = false;
+        renderUI();
+      });
+      list.appendChild(row);
+      existing = row;
+    }
+    if (list.children[i] !== existing) list.insertBefore(existing, list.children[i] || null);
+  });
+}
+
+function renderDetailPanel() {
+  ensureUIShell();
+  var detail = document.getElementById('osm-detail');
+  var body = document.getElementById('osm-detail-body');
+  var title = document.getElementById('osm-detail-title');
+  var searchBar = document.getElementById('osm-feat-search-bar');
+  var search = document.getElementById('osm-feat-search-input');
+  if (!detail || !body) return;
+  if (detailPanelMinimized) {
+    detail.style.display = 'none';
+    if (searchBar) searchBar.style.display = 'none';
+    featureTableState = null;
+    return;
+  }
+  if (!maximizedPatchId || !sharedActiveIds.has(maximizedPatchId)) {
+    detail.style.display = 'none';
+    if (searchBar) searchBar.style.display = 'none';
+    featureTableState = null;
+    return;
+  }
+  detail.style.display = 'flex';
+  if (searchBar) searchBar.style.display = 'flex';
+  var id = maximizedPatchId;
+  var state = PL()[id];
+  var meta = (ALL_META[activeBackend] || {})[id] || {};
+  var savedSearch = getFeatureSearchValue(id);
+  var savedFilter = savedSearch.trim().toLowerCase();
+  if (search) search.value = savedSearch;
+  title.textContent = 'osm_' + id;
+  updateToggleAllBtn();
+  if (!state || state.loading) {
+    body.innerHTML = '<div style="padding:16px;color:#888;font-size:12px;">Loading panel...</div>';
+    featureTableState = null;
+    return;
+  }
+  body.innerHTML =
+    detailSummaryHtml(id, state, meta) +
+    '<div class="osm-table-wrap osm-virtual-table">' +
+      '<table class="osm-table"><thead><tr>' +
+        '<th>ID</th><th>Value</th><th>Type</th><th>Geom</th>' +
+      '</tr></thead></table>' +
+      '<div id="osm-virtual-table-scroll">' +
+        '<div id="osm-virtual-feature-spacer"></div>' +
+        '<table class="osm-table"><tbody id="osm-virtual-feature-rows"></tbody></table>' +
+      '</div>' +
+    '</div>';
+  featureTableState = {
+    patchId: id,
+    features: state.features,
+    indices: [],
+    filter: savedFilter,
+    loaded: 0
+  };
+  for (var i = 0; i < state.features.length; i++) {
+    var feature = state.features[i];
+    if (!feature) continue;
+    var row = feature._row;
+    var fid = row ? row.idLower : getFeatureId(feature).toLowerCase();
+    var type = row && row.type ? row.type.toLowerCase() : '';
+    var value = row && row.value ? row.value.toLowerCase() : '';
+    if (!featureTableState.filter ||
+        fid.includes(featureTableState.filter) ||
+        type.includes(featureTableState.filter) ||
+        value.includes(featureTableState.filter)) {
+      featureTableState.indices.push(i);
+    }
+  }
+  featureTableState.loaded = Math.min(FEATURE_PANEL_BATCH, featureTableState.indices.length);
+  var scroller = document.getElementById('osm-virtual-table-scroll');
+  if (scroller) scroller.addEventListener('scroll', renderVirtualFeatureRows);
+  renderVirtualFeatureRows();
+}
+
+function renderUI() {
+  ensureUIShell();
+  if (maximizedPatchId && !sharedActiveIds.has(maximizedPatchId)) maximizedPatchId = null;
+  if (sharedActiveIds.size === 0) detailPanelMinimized = false;
+  if (!maximizedPatchId && sharedActiveIds.size && !detailPanelMinimized) {
+    maximizedPatchId = Array.from(sharedActiveIds).slice(-1)[0];
+  }
+  renderSidebarList();
+  renderDetailPanel();
+  applyPanelSize();
+}
+
+// This file is concatenated by visualize_osm/app/main.py.
+function scheduleLoadedPatchUiRefresh(id) {
+  id = String(id);
+  var state = PL()[id];
+  if (!state) return;
+  state.loadedUiRefreshSeq = (state.loadedUiRefreshSeq || 0) + 1;
+  var seq = state.loadedUiRefreshSeq;
+  function apply() {
+    if (seq !== state.loadedUiRefreshSeq) return;
+    if (!sharedActiveIds.has(id)) return;
+    renderUI();
+  }
+  window.setTimeout(apply, 0);
+}
+
+function loadPatch(id, onDone) {
+  id = String(id);
+  layers[activeBackend] = layers[activeBackend] || {};
+  var meta = (ALL_META[activeBackend] || {})[id];
+  if (!meta) { if (onDone) onDone(null); return; }
+
+  var existing = layers[activeBackend][id];
+  if (existing && existing.features && !existing.loading) {
+    existing.active = true;
+    sharedActiveIds.add(id);
+    detailPanelMinimized = false;
+    if (String(maximizedPatchId) !== id) saveCurrentFeatureSearch();
+    maximizedPatchId = id;
+    addPatchLayers(id, existing);
+    syncBtn(id);
+    renderUI();
+    if (onDone) onDone(existing);
+    return;
+  }
+  var state = existing || {
+    patchId: id,
+    backend: activeBackend,
+    meta: meta,
+    ids: patchIds(activeBackend, id),
+    features: [],
+    active: true,
+    loading: true
+  };
+  layers[activeBackend][id] = state;
+
+  sharedActiveIds.add(id);
+  detailPanelMinimized = false;
+  if (String(maximizedPatchId) !== id) saveCurrentFeatureSearch();
+  maximizedPatchId = id;
+  addPatchLayers(id, state);
+  syncBtn(id);
+  renderUI();
+  loadFeatures(meta, activeBackend).then(function(result) {
+    state.features = result.features || [];
+    state.featureGroups = (result.prepared && result.prepared.groups) || {};
+    state.typeCounts = (result.prepared && result.prepared.counts) || {};
+    state.summaryHtml = (result.prepared && result.prepared.summaryHtml) || '';
+    state.loading = false;
+    schedulePatchFeatureSourceUpdate(state, { retry: true, initialRender: true });
+    if (onDone) onDone(state);
+    scheduleLoadedPatchUiRefresh(id);
+  }).catch(function(err) {
+    console.warn('Could not load features for patch', id, err);
+    state.loading = false;
+    if (onDone) onDone(null);
+    renderUI();
+  });
+}
+
+function removePatch(id) {
+  id = String(id);
+  var state = PL()[id];
+  if (state) removePatchLayers(state);
+  sharedActiveIds.delete(id);
+  if (selectedFeaturePatchId === id) clearSelectedFeatureFlash();
+  if (maximizedPatchId === id) maximizedPatchId = null;
+  if (featureTableState && featureTableState.patchId === id) featureTableState = null;
+  delete hiddenFeatureIds[id];
+  delete toggleAllButtonModes[id];
+  delete featureSearchByPatch[featureSearchKey(id)];
+  syncBtn(id);
+  renderUI();
+}
+
+function ensurePatchFeaturesVisible(id, onReady) {
+  id = String(id);
+  var state = PL()[id];
+  if (state && sharedActiveIds.has(id)) {
+    detailPanelMinimized = false;
+    if (String(maximizedPatchId) !== id) saveCurrentFeatureSearch();
+    maximizedPatchId = id;
+    if (!patchFeatureLayersReady(state)) addPatchLayers(id, state);
+    syncBtn(id);
+    renderUI();
+    if (onReady) onReady(state);
+    return;
+  }
+  loadPatch(id, onReady);
+}
+
+function toggleGeoJSON(id) {
+  id = String(id);
+  if (sharedActiveIds.has(id)) removePatch(id);
+  else ensurePatchFeaturesVisible(id);
+}
+
+function markerPopupHtml(patchId) {
+  return '<button class="maplibre-popup-button" data-patch="' + escapeHtml(patchId) + '">' +
+    (sharedActiveIds.has(String(patchId)) ? 'Hide OSM Features' : 'Show OSM Features') +
+    '</button>';
+}
+
+function patchMarkerElement(color) {
+  var fill = color || '#2979ff';
+  var el = document.createElement('div');
+  el.className = 'osm-patch-marker';
+  el.style.width = '31px';
+  el.style.height = '40px';
+  el.innerHTML =
+    '<svg class="osm-patch-pin-svg" xmlns="http://www.w3.org/2000/svg" width="31" height="40" viewBox="0 0 34 44" aria-hidden="true">' +
+      '<path d="M17 2C8.72 2 2 8.72 2 17c0 10.6 15 25 15 25s15-14.4 15-25C32 8.72 25.28 2 17 2z" fill="' + escapeHtml(fill) + '" stroke="#fff" stroke-width="3"/>' +
+      '<circle cx="17" cy="17" r="5.5" fill="#fff" fill-opacity=".95"/>' +
+    '</svg>';
+  return el;
+}
+
+function isPatchMarkerPointerEvent(e) {
+  var target = e && e.originalEvent && e.originalEvent.target;
+  return !!(
+    target &&
+    target.closest &&
+    (
+      target.closest('.osm-patch-marker') ||
+      target.closest('.maplibregl-popup') ||
+      target.closest('.maplibre-popup-button')
+    )
+  );
+}
+
+function clearMarkers() {
+  activeMarkers.forEach(function(marker) { marker.remove(); });
+  activeMarkers = [];
+}
+
+function buildMarkerGroup(backend) {
+  clearMarkers();
+  var markers = LAZY_MARKERS[backend] || [];
+  if (!Array.isArray(markers)) {
+    markers = Object.keys(markers).map(function(id) {
+      var marker = markers[id] || {};
+      if (marker.patch_id == null) marker.patch_id = id;
+      return marker;
+    });
+  }
+  markers.forEach(function(m) {
+    var id = String(m && m.patch_id != null ? m.patch_id : '');
+    if (!m || !isFinite(m.lat) || !isFinite(m.lon)) return;
+    if (!id || !(ALL_META[backend] || {})[id]) return;
+    var popup = new maplibregl.Popup({ offset: 28 }).setHTML(markerPopupHtml(id));
+    var marker = new maplibregl.Marker({
+      element: patchMarkerElement(BACKEND_COLORS[backend] || '#2979ff'),
+      anchor: 'bottom'
+    }).setLngLat([m.lon, m.lat]).setPopup(popup).addTo(map);
+    marker._patchId = id;
+    popup.on('open', function() {
+      popup.setHTML(markerPopupHtml(id));
+    });
+    marker.getElement().addEventListener('click', function() {
+      focusPatchMetaFromMarker((ALL_META[backend] || {})[id], PATCH_FOCUS_MAX_ZOOM);
+    });
+    activeMarkers.push(marker);
+  });
+  markerGroups[backend] = activeMarkers;
+}
+
+document.addEventListener('click', function(e) {
+  var groupBadge = e.target.closest('.osm-badge[data-group-type]');
+  if (groupBadge) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFeatureGroup(groupBadge.dataset.patch, groupBadge.dataset.groupType);
+    return;
+  }
+  var row = e.target.closest('tr.osm-feat-row');
+  if (row && !e.target.closest('button')) {
+    e.preventDefault();
+    e.stopPropagation();
+    var patchId = row.dataset.patch;
+    var state = PL()[patchId];
+    var idx = Number(row.dataset.idx);
+    var feature = state && state.features ? state.features[idx] : null;
+    if (feature) selectRawFeatureInDetail(patchId, feature, getFeatureId(feature), { updateSearch: false });
+    return;
+  }
+  var btn = e.target.closest('button[data-patch]');
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  toggleGeoJSON(btn.dataset.patch);
+});
+
+// This file is concatenated by visualize_osm/app/main.py.
+function rawFeatureGeometry(rawFeature) {
+  return rawFeature && rawFeature.type === 'Feature' ? rawFeature.geometry : rawFeature;
+}
+
+function moveSelectedFeatureLayersToTop() {
+  if (!map.getStyle()) return;
+  [
+    'selected-feature-fill',
+    'selected-feature-line',
+    'selected-feature-circle'
+  ].forEach(function(id) {
+    if (!map.getLayer(id)) return;
+    try {
+      map.moveLayer(id);
+    } catch (_err) {}
+  });
+}
+
+function clearSelectedFeatureFlash() {
+  if (selectedFeatureFlashTimer) window.clearInterval(selectedFeatureFlashTimer);
+  selectedFeatureFlashTimer = 0;
+  if (selectedFeatureFlashRaf) window.cancelAnimationFrame(selectedFeatureFlashRaf);
+  selectedFeatureFlashRaf = 0;
+  selectedFeatureFlashAlpha = 1;
+  if (selectedFeatureOverlay && selectedFeatureOverlay.parentNode) {
+    selectedFeatureOverlay.parentNode.removeChild(selectedFeatureOverlay);
+  }
+  selectedFeatureOverlay = null;
+  selectedFeaturePatchId = null;
+  selectedFeatureRawFeature = null;
+  refreshSelectedFeatureRows();
+  if (!map.getStyle()) return;
+  [
+    'selected-feature-fill',
+    'selected-feature-line',
+    'selected-feature-circle'
+  ].forEach(function(id) {
+    if (map.getLayer(id)) map.removeLayer(id);
+  });
+  if (map.getSource('selected-feature')) map.removeSource('selected-feature');
+}
+
+function selectedFeatureGeoJson(rawFeature) {
+  if (!rawFeature) return null;
+  if (rawFeature.type === 'Feature') {
+    return {
+      type: 'Feature',
+      geometry: rawFeature.geometry || null,
+      properties: rawFeature.properties || {}
+    };
+  }
+  return {
+    type: 'Feature',
+    geometry: rawFeature,
+    properties: {}
+  };
+}
+
+function emptySelectedFeatureGeoJson() {
+  return { type: 'FeatureCollection', features: [] };
+}
+
+function isSelectedFeatureHidden() {
+  if (!selectedFeatureRawFeature || selectedFeaturePatchId == null) return false;
+  var idx = selectedFeatureRawFeature._featureIdx;
+  if (idx == null && selectedFeatureRawFeature.properties) idx = selectedFeatureRawFeature.properties._featureIdx;
+  return idx != null && isFeatureHidden(String(selectedFeaturePatchId), Number(idx));
+}
+
+function resolutionForZoomValue(z) {
+  return 156543.03392804097 / Math.pow(2, z);
+}
+
+function selectedFeaturePixelsForMetersAtZoom(meters, maxPx, z) {
+  var resolution = resolutionForZoomValue(z);
+  var renderZoom = Math.max(
+    SELECTED_FEATURE_MIN_RENDER_ZOOM,
+    Math.min(SELECTED_FEATURE_MAX_RENDER_ZOOM, z)
+  );
+  var renderResolution = resolutionForZoomValue(renderZoom);
+  if (!isFinite(resolution)) resolution = renderResolution;
+  if (!isFinite(renderResolution)) renderResolution = resolution;
+  var overzoomScale = renderResolution / Math.max(0.0000001, resolution);
+  return Math.max(0.1, Math.min(maxPx, meters / renderResolution) * overzoomScale);
+}
+
+function selectedFeaturePixelsForMetersExpression(meters, maxPx) {
+  var stops = ['interpolate', ['exponential', 2], ['zoom']];
+  [0, 7, 12, 14, 16, 17, 18, 19, 20, 21, 22].forEach(function(z) {
+    stops.push(z, selectedFeaturePixelsForMetersAtZoom(meters, maxPx, z));
+  });
+  return stops;
+}
+
+function setSelectedFeaturePaintAlpha(alpha) {
+  if (!map.getStyle()) return;
+  if (map.getLayer('selected-feature-fill')) {
+    map.setPaintProperty('selected-feature-fill', 'fill-opacity', alpha * 0.24);
+  }
+  if (map.getLayer('selected-feature-line')) {
+    map.setPaintProperty('selected-feature-line', 'line-opacity', alpha);
+  }
+  if (map.getLayer('selected-feature-circle')) {
+    map.setPaintProperty('selected-feature-circle', 'circle-opacity', alpha * 0.24);
+    map.setPaintProperty('selected-feature-circle', 'circle-stroke-opacity', alpha);
+  }
+  if (map.triggerRepaint) map.triggerRepaint();
+}
+
+function ensureSelectedFeatureLayers(rawFeature) {
+  if (!rawFeature || !map.getStyle()) return false;
+  var hidden = isSelectedFeatureHidden();
+  var data = hidden ? emptySelectedFeatureGeoJson() : selectedFeatureGeoJson(rawFeature);
+  if (!data || (!hidden && !data.geometry)) return false;
+  if (map.getSource('selected-feature')) {
+    map.getSource('selected-feature').setData(data);
+  } else {
+    map.addSource('selected-feature', {
+      type: 'geojson',
+      data: data,
+      maxzoom: 22,
+      tolerance: 0,
+      buffer: 128
+    });
+  }
+  if (!map.getLayer('selected-feature-fill')) {
+    map.addLayer({
+      id: 'selected-feature-fill',
+      type: 'fill',
+      source: 'selected-feature',
+      filter: ['==', '$type', 'Polygon'],
+      paint: {
+        'fill-color': '#ffeb3b',
+        'fill-opacity': selectedFeatureFlashAlpha * 0.24,
+        'fill-opacity-transition': { duration: 0, delay: 0 }
+      }
+    });
+  }
+  if (!map.getLayer('selected-feature-line')) {
+    map.addLayer({
+      id: 'selected-feature-line',
+      type: 'line',
+      source: 'selected-feature',
+      layout: {
+        'line-cap': 'round',
+        'line-join': 'round'
+      },
+      paint: {
+        'line-color': '#ffd400',
+        'line-opacity': selectedFeatureFlashAlpha,
+        'line-opacity-transition': { duration: 0, delay: 0 },
+        'line-width': selectedFeaturePixelsForMetersExpression(
+          SELECTED_FEATURE_STROKE_METERS,
+          SELECTED_FEATURE_MAX_STROKE_PX
+        )
+      }
+    });
+  }
+  if (!map.getLayer('selected-feature-circle')) {
+    map.addLayer({
+      id: 'selected-feature-circle',
+      type: 'circle',
+      source: 'selected-feature',
+      filter: ['==', '$type', 'Point'],
+      paint: {
+        'circle-radius': SELECTED_FEATURE_POINT_RADIUS_PX,
+        'circle-color': '#ffeb3b',
+        'circle-opacity': selectedFeatureFlashAlpha * 0.24,
+        'circle-opacity-transition': { duration: 0, delay: 0 },
+        'circle-stroke-color': '#ffd400',
+        'circle-stroke-opacity': selectedFeatureFlashAlpha,
+        'circle-stroke-opacity-transition': { duration: 0, delay: 0 },
+        'circle-stroke-width': SELECTED_FEATURE_POINT_STROKE_PX
+      }
+    });
+  }
+  setSelectedFeaturePaintAlpha(selectedFeatureFlashAlpha);
+  moveSelectedFeatureLayersToTop();
+  return true;
+}
+
+function renderSelectedFeatureOverlay() {
+  if (!selectedFeatureRawFeature) return;
+  ensureSelectedFeatureLayers(selectedFeatureRawFeature);
+}
+
+function flashFeatureOnMap(patchId, rawFeature) {
+  selectedFeaturePatchId = String(patchId);
+  selectedFeatureRawFeature = rawFeature;
+  whenMapReady(function() {
+    clearSelectedFeatureFlash();
+    selectedFeaturePatchId = String(patchId);
+    selectedFeatureRawFeature = rawFeature;
+    selectedFeatureFlashAlpha = 0;
+    refreshSelectedFeatureRows();
+    ensureSelectedFeatureLayers(rawFeature);
+    var start = performance.now ? performance.now() : Date.now();
+    var duration = 1600;
+    function animate(now) {
+      var elapsed = now - start;
+      if (elapsed >= duration) {
+        selectedFeatureFlashAlpha = 1;
+        setSelectedFeaturePaintAlpha(selectedFeatureFlashAlpha);
+        selectedFeatureFlashRaf = 0;
+        return;
+      }
+      selectedFeatureFlashAlpha = Math.abs(Math.sin(elapsed / 115));
+      setSelectedFeaturePaintAlpha(selectedFeatureFlashAlpha);
+      selectedFeatureFlashRaf = requestAnimationFrame(animate);
+    }
+    selectedFeatureFlashRaf = requestAnimationFrame(animate);
+  });
+}
+
+function selectRawFeature(patchId, raw, options) {
+  options = options || {};
+  patchId = String(patchId);
+  var state = PL()[patchId];
+  if (state && sharedActiveIds.has(patchId) && patchFeatureLayersReady(state)) {
+    if (!options.skipFocus) focusRawFeature(raw, patchId);
+    if (!options.skipFlash) flashFeatureOnMap(patchId, raw);
+    return;
+  }
+  ensurePatchFeaturesVisible(patchId, function() {
+    if (!options.skipFocus) focusRawFeature(raw, patchId);
+    if (!options.skipFlash) flashFeatureOnMap(patchId, raw);
+  });
+}
+
+function selectRawFeatureInDetail(patchId, raw, featureId, options) {
+  options = options || {};
+  if (!raw) return;
+  patchId = String(patchId);
+  featureId = featureId || getFeatureId(raw);
+  if (!options.skipFocus && isFeatureNavigationRepeatClick(patchId, raw)) return false;
+  if (String(maximizedPatchId) !== patchId) saveCurrentFeatureSearch();
+  if (options.updateSearch !== false && featureId) setFeatureSearchValue(patchId, featureId);
+  var reuseCurrentDetailPanel = (
+    String(maximizedPatchId) === patchId &&
+    !detailPanelMinimized &&
+    featureTableState &&
+    String(featureTableState.patchId) === patchId
+  );
+  maximizedPatchId = patchId;
+  detailPanelMinimized = false;
+  if (!reuseCurrentDetailPanel) renderUI();
+  var searchInput = document.getElementById('osm-feat-search-input');
+  if (options.updateSearch !== false && searchInput && featureId) {
+    searchInput.value = featureId;
+    if (reuseCurrentDetailPanel) filterDetailRows(featureId);
+  }
+  selectRawFeature(patchId, raw, options);
+  applyPanelSize();
+  return true;
+}
+
+function frozenFeatureStyle(type) {
+  var styles = {
+    building: { fill: '#888888', fillOpacity: 0.15, stroke: '#555555', strokeOpacity: 0.48 },
+    highway: { stroke: '#ff9900', strokeOpacity: 0.9 },
+    landuse: { fill: '#66cc66', fillOpacity: 0.14, stroke: '#66cc66', strokeOpacity: 0.62 },
+    natural: { fill: '#228833', fillOpacity: 0.13, stroke: '#228833', strokeOpacity: 0.66, circle: '#228833' },
+    water: { fill: '#4da6ff', fillOpacity: 0.28, stroke: '#4da6ff', strokeOpacity: 0.76, circle: '#4da6ff' },
+    waterway: { stroke: '#4da6ff', strokeOpacity: 0.9 },
+    amenity: { fill: '#cc44aa', fillOpacity: 0.12, stroke: '#cc44aa', strokeOpacity: 0.62, circle: '#cc44aa' },
+    leisure: { fill: '#00cc44', fillOpacity: 0.14, stroke: '#00cc44', strokeOpacity: 0.62 },
+    shop: { fill: '#ff9900', fillOpacity: 0.12, stroke: '#ff9900', strokeOpacity: 0.62, circle: '#ff9900' },
+    tourism: { fill: '#ff6688', fillOpacity: 0.12, stroke: '#ff6688', strokeOpacity: 0.62, circle: '#ff6688' }
+  };
+  return styles[type] || { fill: '#bbbbbb', fillOpacity: 0.06, stroke: '#bbbbbb', strokeOpacity: 0.62, circle: '#bbbbbb' };
+}
+
+function featureBoundsForFreeze(feature) {
+  return feature && (feature._bounds || featureExtent(feature));
+}
+
+function extentsIntersect(a, b) {
+  return !!(a && b && a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1]);
+}
+
+function paddedMapBoundsExtent() {
+  var bounds = map.getBounds && map.getBounds();
+  if (!bounds) return null;
+  var west = bounds.getWest();
+  var south = bounds.getSouth();
+  var east = bounds.getEast();
+  var north = bounds.getNorth();
+  var lonPad = Math.max(0.00001, (east - west) * 0.15);
+  var latPad = Math.max(0.00001, (north - south) * 0.15);
+  return [west - lonPad, south - latPad, east + lonPad, north + latPad];
+}
+
+function frozenSvgPathForCoords(coords, close) {
+  var parts = [];
+  (coords || []).forEach(function(coord, idx) {
+    if (!coord || coord.length < 2) return;
+    var p = map.project([Number(coord[0]), Number(coord[1])]);
+    if (!p || !isFinite(p.x) || !isFinite(p.y)) return;
+    parts.push((idx === 0 ? 'M' : 'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1));
+  });
+  if (close && parts.length) parts.push('Z');
+  return parts.join(' ');
+}
+
+function appendFrozenGeometry(geometry, style, parts) {
+  if (!geometry) return;
+  var coords = geometry.coordinates || [];
+  if (geometry.type === 'Point') {
+    if (coords.length >= 2) appendFrozenPoint(coords, style, parts);
+  } else if (geometry.type === 'MultiPoint') {
+    (coords || []).forEach(function(point) { appendFrozenPoint(point, style, parts); });
+  } else if (geometry.type === 'LineString') {
+    appendFrozenLine(coords, style, parts);
+  } else if (geometry.type === 'MultiLineString') {
+    (coords || []).forEach(function(line) { appendFrozenLine(line, style, parts); });
+  } else if (geometry.type === 'Polygon') {
+    appendFrozenPolygon(coords, style, parts);
+  } else if (geometry.type === 'MultiPolygon') {
+    (coords || []).forEach(function(poly) { appendFrozenPolygon(poly, style, parts); });
+  } else if (geometry.type === 'GeometryCollection') {
+    (geometry.geometries || []).forEach(function(child) { appendFrozenGeometry(child, style, parts); });
+  }
+}
+
+function appendFrozenLine(coords, style, parts) {
+  var path = frozenSvgPathForCoords(coords, false);
+  if (!path) return;
+  parts.push('<path d="' + path + '" fill="none" stroke="' + style.stroke + '" stroke-opacity="' +
+    style.strokeOpacity + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>');
+}
+
+function appendFrozenPolygon(rings, style, parts) {
+  var path = (rings || []).map(function(ring) {
+    return frozenSvgPathForCoords(ring, true);
+  }).filter(Boolean).join(' ');
+  if (!path) return;
+  parts.push('<path d="' + path + '" fill="' + style.fill + '" fill-opacity="' + style.fillOpacity +
+    '" fill-rule="evenodd" stroke="' + style.stroke + '" stroke-opacity="' + style.strokeOpacity +
+    '" stroke-width="1.6" stroke-linejoin="round"/>');
+}
+
+function appendFrozenPoint(coord, style, parts) {
+  if (!coord || coord.length < 2) return;
+  var p = map.project([Number(coord[0]), Number(coord[1])]);
+  if (!p || !isFinite(p.x) || !isFinite(p.y)) return;
+  parts.push('<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) +
+    '" r="5" fill="' + (style.circle || style.stroke) + '" fill-opacity="0.92" stroke="#fff" stroke-width="1.5"/>');
+}
+
+function activeFrozenFeatureLayerIds() {
+  var ids = [];
+  sharedActiveIds.forEach(function(patchId) {
+    var state = PL()[patchId];
+    if (!state || !state.ids) return;
+    ['fillLayer', 'lineLayer', 'circleLayer'].forEach(function(key) {
+      if (map.getLayer(state.ids[key])) ids.push(state.ids[key]);
+    });
+  });
+  return ids;
+}
+
+function setFeatureLayersVisibility(visible) {
+  frozenFeatureLayerVisibility = [];
+  activeFrozenFeatureLayerIds().forEach(function(layerId) {
+    var current = map.getLayoutProperty(layerId, 'visibility') || 'visible';
+    frozenFeatureLayerVisibility.push({ id: layerId, visibility: current });
+    map.setLayoutProperty(layerId, 'visibility', visible ? current : 'none');
+  });
+}
+
+function restoreFeatureLayersVisibility() {
+  frozenFeatureLayerVisibility.forEach(function(entry) {
+    if (map.getLayer(entry.id)) {
+      map.setLayoutProperty(entry.id, 'visibility', entry.visibility || 'visible');
+    }
+  });
+  frozenFeatureLayerVisibility = [];
+}
+
+function clearFrozenFeatureOverlay() {
+  if (frozenFeatureOverlay && frozenFeatureOverlay.parentNode) {
+    frozenFeatureOverlay.parentNode.removeChild(frozenFeatureOverlay);
+  }
+  frozenFeatureOverlay = null;
+  frozenFeatureAnchorLngLat = null;
+  frozenFeatureAnchorPixel = null;
+}
+
+function invalidateFrozenFeatureOverlay() {
+  if (!ENABLE_FROZEN_FEATURE_DRAG) return;
+  frozenFeatureBuildSeq += 1;
+  frozenFeatureBuildScheduled = false;
+  if (!frozenFeatureDragging) clearFrozenFeatureOverlay();
+}
+
+function scheduleFrozenFeatureOverlayBuild(delay) {
+  if (!ENABLE_FROZEN_FEATURE_DRAG) return;
+  if (frozenFeatureDragging || frozenFeatureBuildScheduled) return;
+  if (!sharedActiveIds.size) {
+    invalidateFrozenFeatureOverlay();
+    return;
+  }
+  frozenFeatureBuildScheduled = true;
+  var seq = frozenFeatureBuildSeq;
+  var schedule = window.requestIdleCallback || function(fn) {
+    return window.setTimeout(fn, delay == null ? 180 : delay);
+  };
+  schedule(function() {
+    frozenFeatureBuildScheduled = false;
+    if (frozenFeatureDragging || seq !== frozenFeatureBuildSeq) return;
+    buildFrozenFeatureOverlay(false);
+  }, { timeout: delay == null ? 400 : Math.max(80, delay) });
+}
+
+function buildFrozenFeatureOverlay() {
+  clearFrozenFeatureOverlay();
+  var extent = paddedMapBoundsExtent();
+  if (!extent) return false;
+  var rect = map.getContainer().getBoundingClientRect();
+  var svgParts = [];
+  sharedActiveIds.forEach(function(patchId) {
+    var state = PL()[patchId];
+    if (!state || !state.features || !patchFeatureLayersReady(state)) return;
+    (state.features || []).forEach(function(feature) {
+      if (!feature || isFeatureHidden(patchId, feature._featureIdx)) return;
+      if (!extentsIntersect(featureBoundsForFreeze(feature), extent)) return;
+      var type = feature.properties && feature.properties._styleType
+        ? feature.properties._styleType
+        : (feature._styleType || getOSMType(feature.properties || {}));
+      appendFrozenGeometry(feature.geometry, frozenFeatureStyle(type), svgParts);
+    });
+  });
+  if (!svgParts.length) return false;
+  frozenFeatureOverlay = document.createElement('div');
+  frozenFeatureOverlay.id = 'maplibre-frozen-feature-overlay';
+  frozenFeatureOverlay.style.position = 'absolute';
+  frozenFeatureOverlay.style.left = '0';
+  frozenFeatureOverlay.style.top = '0';
+  frozenFeatureOverlay.style.right = '0';
+  frozenFeatureOverlay.style.bottom = '0';
+  frozenFeatureOverlay.style.zIndex = '5';
+  frozenFeatureOverlay.style.pointerEvents = 'none';
+  frozenFeatureOverlay.style.willChange = 'transform';
+  frozenFeatureOverlay.style.display = frozenFeatureDragging ? 'block' : 'none';
+  frozenFeatureOverlay.innerHTML = '<svg width="' + Math.max(1, rect.width).toFixed(0) +
+    '" height="' + Math.max(1, rect.height).toFixed(0) +
+    '" viewBox="0 0 ' + Math.max(1, rect.width).toFixed(0) + ' ' + Math.max(1, rect.height).toFixed(0) +
+    '" style="position:absolute;inset:0;overflow:visible;pointer-events:none;">' + svgParts.join('') + '</svg>';
+  map.getContainer().appendChild(frozenFeatureOverlay);
+  frozenFeatureAnchorLngLat = map.getCenter();
+  frozenFeatureAnchorPixel = map.project(frozenFeatureAnchorLngLat);
+  return true;
+}
+
+function updateFrozenFeatureOverlayTransform() {
+  if (!frozenFeatureOverlay || !frozenFeatureAnchorLngLat || !frozenFeatureAnchorPixel) return;
+  var p = map.project(frozenFeatureAnchorLngLat);
+  var dx = p.x - frozenFeatureAnchorPixel.x;
+  var dy = p.y - frozenFeatureAnchorPixel.y;
+  frozenFeatureOverlay.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+}
+
+function beginFrozenFeatureDrag() {
+  if (!ENABLE_FROZEN_FEATURE_DRAG) return;
+  frozenFeatureDragging = true;
+  if (frozenFeatureRestoreTimer) {
+    window.clearTimeout(frozenFeatureRestoreTimer);
+    frozenFeatureRestoreTimer = 0;
+  }
+  if (!frozenFeatureOverlay) return;
+  frozenFeatureOverlay.style.display = 'block';
+  updateFrozenFeatureOverlayTransform();
+  setFeatureLayersVisibility(false);
+}
+
+function endFrozenFeatureDrag() {
+  if (!ENABLE_FROZEN_FEATURE_DRAG) return;
+  frozenFeatureDragging = false;
+  if (frozenFeatureRestoreTimer) window.clearTimeout(frozenFeatureRestoreTimer);
+  frozenFeatureRestoreTimer = window.setTimeout(function() {
+    frozenFeatureRestoreTimer = 0;
+    restoreFeatureLayersVisibility();
+    if (map.triggerRepaint) map.triggerRepaint();
+    window.requestAnimationFrame(function() {
+      clearFrozenFeatureOverlay();
+      invalidateFrozenFeatureOverlay();
+      scheduleFrozenFeatureOverlayBuild(220);
+    });
+  }, 40);
+}
+
+function pointToFeatureScore(lngLat, feature) {
+  var extent = feature && feature._bounds;
+  if (!extent) return Infinity;
+  var pad = 0.00008;
+  if (lngLat.lng < extent[0] - pad || lngLat.lng > extent[2] + pad ||
+      lngLat.lat < extent[1] - pad || lngLat.lat > extent[3] + pad) return Infinity;
+  if (window.turf && feature.geometry) {
+    var pt = turf.point([lngLat.lng, lngLat.lat]);
+    var geomType = feature.geometry.type;
+    try {
+      if (geomType.indexOf('Polygon') !== -1 && turf.booleanPointInPolygon(pt, feature)) return 0;
+      if (geomType.indexOf('LineString') !== -1) return turf.pointToLineDistance(pt, feature, { units: 'meters' });
+    } catch (_err) {}
+  }
+  var center = extentCenter(extent);
+  var dLat = (lngLat.lat - center[1]) * 111320;
+  var dLng = (lngLat.lng - center[0]) * 111320 * Math.cos(lngLat.lat * Math.PI / 180);
+  return Math.sqrt(dLat * dLat + dLng * dLng);
+}
+
+function findFeatureAtLngLat(lngLat) {
+  var best = null;
+  sharedActiveIds.forEach(function(patchId) {
+    var state = PL()[patchId];
+    if (!state || !state.features) return;
+    for (var i = 0; i < state.features.length; i += 1) {
+      var feature = state.features[i];
+      var score = pointToFeatureScore(lngLat, feature);
+      if (isFinite(score) && (!best || score < best.score)) {
+        best = { patchId: patchId, feature: feature, score: score };
+      }
+    }
+  });
+  return best && best.score < 20 ? best : null;
+}
+
+function featureRenderSize(feature) {
+  var extent = feature && feature._bounds;
+  if (!extent) return Infinity;
+  var geomType = feature.geometry && feature.geometry.type ? feature.geometry.type : '';
+  if (geomType === 'Point' || geomType === 'MultiPoint') return -1;
+  var span = projectedExtentSpan(extent);
+  if (geomType === 'LineString' || geomType === 'MultiLineString') return span;
+  return span * span;
+}
+
+function activeFeatureLayerIds() {
+  var ids = [];
+  sharedActiveIds.forEach(function(patchId) {
+    var state = PL()[patchId];
+    if (!state || !state.ids) return;
+    ['circleLayer', 'lineLayer', 'fillLayer'].forEach(function(key) {
+      if (map.getLayer(state.ids[key])) ids.push(state.ids[key]);
+    });
+  });
+  return ids;
+}
+
+function findRenderedFeatureAtPoint(point) {
+  if (!map.queryRenderedFeatures) return null;
+  var layerIds = activeFeatureLayerIds();
+  if (!layerIds.length) return null;
+  var tolerance = 10;
+  var rendered = map.queryRenderedFeatures(
+    [[point.x - tolerance, point.y - tolerance], [point.x + tolerance, point.y + tolerance]],
+    { layers: layerIds }
+  );
+  var best = null;
+  rendered.forEach(function(renderedFeature) {
+    var props = renderedFeature.properties || {};
+    var idx = Number(props._featureIdx);
+    if (!isFinite(idx)) return;
+    var patchId = null;
+    Object.keys(PL()).some(function(id) {
+      var state = PL()[id];
+      if (!state || !state.ids) return false;
+      if (renderedFeature.layer &&
+          (renderedFeature.layer.id === state.ids.circleLayer ||
+           renderedFeature.layer.id === state.ids.lineLayer ||
+           renderedFeature.layer.id === state.ids.fillLayer)) {
+        patchId = id;
+        return true;
+      }
+      return false;
+    });
+    var state = patchId ? PL()[patchId] : null;
+    var raw = state && state.features ? state.features[idx] : null;
+    if (!raw || isFeatureHidden(patchId, idx)) return;
+    var size = featureRenderSize(raw);
+    if (!best || size < best.size) best = { patchId: patchId, feature: raw, size: size };
+  });
+  return best;
+}
+
+function isPatchMarkerDomEvent(event) {
+  var target = event && event.target;
+  return !!(
+    target &&
+    target.closest &&
+    (
+      target.closest('.osm-patch-marker') ||
+      target.closest('.maplibregl-popup') ||
+      target.closest('.maplibre-popup-button')
+    )
+  );
+}
+
+function mapPointFromDomEvent(event) {
+  var source = event && event.touches && event.touches.length ? event.touches[0] : event;
+  if (!source || source.clientX == null || source.clientY == null || !map.getContainer) return null;
+  var rect = map.getContainer().getBoundingClientRect();
+  return {
+    x: source.clientX - rect.left,
+    y: source.clientY - rect.top
+  };
+}
+
+function suppressFeatureNavigationDomEvent(event) {
+  if (!featureNavigationTargetKey || isPatchMarkerDomEvent(event)) return false;
+  var now = performance.now ? performance.now() : Date.now();
+  if (now > featureNavigationSuppressUntil) return false;
+  var point = mapPointFromDomEvent(event);
+  if (!point) return false;
+  var hit = findRenderedFeatureAtPoint(point);
+  if (!hit && map.unproject) {
+    hit = findFeatureAtLngLat(map.unproject([point.x, point.y]));
+  }
+  if (!hit || !isFeatureNavigationRepeatClick(hit.patchId, hit.feature)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+  return true;
+}
+
+function installFeatureNavigationClickSuppressor() {
+  var container = map && map.getContainer ? map.getContainer() : null;
+  if (!container || container._featureNavigationSuppressorInstalled) return;
+  container._featureNavigationSuppressorInstalled = true;
+  ['pointerdown', 'mousedown', 'touchstart', 'click', 'dblclick'].forEach(function(type) {
+    container.addEventListener(type, suppressFeatureNavigationDomEvent, { capture: true, passive: false });
+  });
+}
+
+map.on('click', function(e) {
+  if (isPatchMarkerPointerEvent(e)) return;
+  var hit = findRenderedFeatureAtPoint(e.point) || findFeatureAtLngLat(e.lngLat);
+  if (!hit) {
+    clearSelectedFeatureFlash();
+    clearDetailFeatureSearch();
+    return;
+  }
+  selectRawFeatureInDetail(hit.patchId, hit.feature, getFeatureId(hit.feature), { updateSearch: true });
+});
+map.on('dragstart', function() {
+  beginFrozenFeatureDrag();
+});
+map.on('drag', function() {
+  updateFrozenFeatureOverlayTransform();
+});
+map.on('dragend', function() {
+  endFrozenFeatureDrag();
+});
+map.on('move', function() {
+  renderSelectedFeatureOverlay();
+});
+map.on('zoom', function() {
+  renderSelectedFeatureOverlay();
+});
+map.on('moveend', function() {
+  if (frozenFeatureDragging || frozenFeatureRestoreTimer) return;
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+});
+map.on('resize', function() {
+  renderSelectedFeatureOverlay();
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+});
+
+// This file is concatenated by visualize_osm/app/main.py.
+var PATCH_LOOKUP = {};
+Object.keys(ALL_META).forEach(function(backend) {
+  Object.entries(ALL_META[backend] || {}).forEach(function(entry) {
+    var id = entry[0], m = entry[1];
+    PATCH_LOOKUP[id] = id;
+    if (m && m.fn) {
+      var stem = m.fn.replace(/\.[^/.]+$/, '');
+      PATCH_LOOKUP[stem] = id;
+      PATCH_LOOKUP[m.fn] = id;
+    }
+  });
+});
+
+function setPatchSearchLoading(loading) {
+  var btn = document.getElementById('patch-search-btn');
+  if (!btn) return;
+  btn.disabled = !!loading;
+  btn.innerHTML = loading ? '<span class="patch-search-spinner" aria-label="Loading"></span>' : 'Go';
+}
+
+function findLoadedFeatureById(featureId) {
+  var normalizedId = normalizeFeatureId(featureId);
+  var orderedPatchIds = Array.from(sharedActiveIds);
+  Object.keys(PL()).forEach(function(patchId) {
+    if (!orderedPatchIds.includes(patchId)) orderedPatchIds.push(patchId);
+  });
+  for (var p = 0; p < orderedPatchIds.length; p += 1) {
+    var patchId = orderedPatchIds[p];
+    var state = PL()[patchId];
+    if (!state || !state.features) continue;
+    for (var i = 0; i < state.features.length; i += 1) {
+      var feature = state.features[i];
+      if (getFeatureId(feature) === normalizedId) {
+        return { patchId: patchId, feature: feature };
+      }
+    }
+  }
+  return null;
+}
+
+function searchPatch() {
+  var input = document.getElementById('patch-search-input');
+  var q = input ? input.value.trim() : '';
+  var type = document.getElementById('patch-search-type').value;
+  var msg = document.getElementById('patch-search-msg');
+  if (msg) msg.textContent = '';
+  if (!q) return;
+
+  if (type === 'patch') {
+    var stem = q.replace(/\.tif$/i, '');
+    if (!stem.startsWith('patch_')) stem = 'patch_' + stem;
+    var hit = PATCH_LOOKUP[stem] || PATCH_LOOKUP[stem + '.tif'];
+    if (!hit) {
+      if (msg) msg.textContent = stem + ' not found.';
+      return;
+    }
+    var meta = (ALL_META[activeBackend] || {})[hit];
+    if (meta) focusPatchMeta(meta, PATCH_FOCUS_MAX_ZOOM);
+    ensurePatchFeaturesVisible(hit);
+    return;
+  }
+
+  if (type === 'osm') {
+    var osmId = q.replace(/^osm_/i, '');
+    var osmMeta = (ALL_META[activeBackend] || {})[osmId];
+    if (!osmMeta) {
+      if (msg) msg.textContent = 'OSM patch not found';
+      return;
+    }
+    focusPatchMeta(osmMeta, PATCH_FOCUS_MAX_ZOOM);
+    ensurePatchFeaturesVisible(osmId);
+    return;
+  }
+
+  if (type === 'feature') {
+    var featureQuery = normalizeFeatureId(q);
+    var loadedHit = findLoadedFeatureById(featureQuery);
+    if (loadedHit) {
+      selectRawFeatureInDetail(loadedHit.patchId, loadedHit.feature, getFeatureId(loadedHit.feature));
+      return;
+    }
+
+    setPatchSearchLoading(true);
+    fetch('/api/backends/' + encodeURIComponent(activeBackend) + '/features/search?id=' + encodeURIComponent(featureQuery), {
+      cache: 'no-store'
+    }).then(function(response) {
+      if (!response.ok) throw new Error('Feature not found');
+      return response.json();
+    }).then(function(result) {
+      if (!result || !result.patch_id) throw new Error('Feature not found');
+      var patchId = String(result.patch_id);
+      var raw = result.feature || null;
+      if (raw) {
+        focusRawFeature(raw, patchId);
+        flashFeatureOnMap(patchId, raw);
+        ensurePatchFeaturesVisible(patchId, function(state) {
+          var rawId = normalizeFeatureId(result.feature_id || featureQuery);
+          var loaded = state && (state.features || []).find(function(feature) { return getFeatureId(feature) === rawId; });
+          selectRawFeatureInDetail(patchId, loaded || raw, getFeatureId(loaded || raw), {
+            skipFocus: true,
+            skipFlash: true
+          });
+        });
+      } else {
+        ensurePatchFeaturesVisible(patchId, function(state) {
+          var rawId = normalizeFeatureId(result.feature_id || featureQuery);
+          var found = (state.features || []).find(function(feature) { return getFeatureId(feature) === rawId; });
+          if (found) selectRawFeatureInDetail(patchId, found, getFeatureId(found));
+        });
+      }
+    }).catch(function(err) {
+      if (msg) msg.textContent = err.message || 'Feature not found';
+    }).finally(function() {
+      setPatchSearchLoading(false);
+    });
+  }
+}
+
+function selectBackend(newBackend) {
+  if (!newBackend || newBackend === activeBackend) return;
+  saveCurrentFeatureSearch();
+  var openIds = Array.from(sharedActiveIds);
+  openIds.forEach(function(id) {
+    var oldState = layers[activeBackend] && layers[activeBackend][id];
+    removePatchLayers(oldState);
+  });
+  sharedActiveIds.clear();
+  clearSelectedFeatureFlash();
+  activeBackend = newBackend;
+  buildMarkerGroup(activeBackend);
+  layers[activeBackend] = layers[activeBackend] || {};
+  openIds.forEach(function(id) {
+    if ((ALL_META[activeBackend] || {})[id]) ensurePatchFeaturesVisible(id);
+  });
+  renderUI();
+}
+
+function initSearchControls() {
+  var searchType = document.getElementById('patch-search-type');
+  if (searchType) {
+    searchType.addEventListener('change', function() {
+      var placeholders = {
+        osm: 'e.g. 138',
+        patch: 'e.g. patch_42219',
+        feature: 'e.g. 518522718'
+      };
+      document.getElementById('patch-search-input').placeholder = placeholders[this.value] || placeholders.osm;
+    });
+  }
+  var btn = document.getElementById('patch-search-btn');
+  var input = document.getElementById('patch-search-input');
+  if (btn) btn.addEventListener('click', searchPatch);
+  if (input) {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') searchPatch();
+    });
+  }
+}
+
+map.on('zoomend', function() {
+  invalidateFrozenFeatureOverlay();
+  scheduleFrozenFeatureOverlayBuild(260);
+});
+
+whenMapReady(function() {
+  applyInitialMapLibreView();
+  ensureUIShell();
+  renderUI();
+  buildMarkerGroup(activeBackend);
+  initSearchControls();
+  installFeatureNavigationClickSuppressor();
+  startFpsCounter();
+});
+</script>
+
+<script id="toggle-js">
+(function() {
+  var toggle = document.getElementById('backend-toggle');
+  var locked = false;
+
+  var initBtn = document.getElementById('bt-' + activeBackend);
+  if (initBtn) initBtn.classList.add('bt-active');
+
+  toggle.addEventListener('click', function(e) {
+    if (locked) return;
+    var btn = e.target.closest('[data-backend]');
+    if (!btn) return;
+    e.stopPropagation();
+    var newBackend = btn.dataset.backend;
+    if (newBackend === activeBackend) return;
+    locked = true;
+    toggle.style.pointerEvents = 'none';
+    var prev = toggle.querySelector('.bt-active');
+    if (prev) prev.classList.remove('bt-active');
+    btn.classList.add('bt-active');
+    selectBackend(newBackend);
+    locked = false;
+    toggle.style.pointerEvents = '';
+  });
+})();
+</script>
+
+</body>
+</html>

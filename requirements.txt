@@ -1,38 +1,31 @@
-# ── Core geo stack ───────────────────────────────────────────────
+# ── Core data / geospatial stack ────────────────────────────────
+
+pandas>=2.1
 geopandas>=0.14
 shapely>=2.0
 pyproj>=3.6
+pyogrio
+
+# ── OSMnx / Overpass backend ────────────────────────────────────
+
 osmnx>=1.9
 
-# ── Osmium backend ───────────────────────────────────────────────
-# osmium-tool must also be installed as a system package:
-#   Ubuntu/Debian: sudo apt install osmium-tool
-#   macOS:         brew install osmium-tool
+# ── PostGIS backend ─────────────────────────────────────────────
 
-# ── PostGIS backend ──────────────────────────────────────────────
 psycopg2-binary>=2.9
-# Also requires: PostgreSQL + PostGIS + osm2pgsql (system packages)
 
-# ── Visualization ────────────────────────────────────────────────
-folium>=0.16
+# ── System dependencies ─────────────────────────────────────────
 
-# ── ML / embedding dependencies (used in osm.py) ─────────────────
-torch>=2.0
-torch-geometric>=2.4
-scipy>=1.11
-scikit-learn>=1.3
-transformers>=4.38
-numpy>=1.26
-pandas>=2.1
+# Osmium backend:
 
-# ── Remote sensing / dataset (for filter_csv_for_greece.py) ──────
-# These are optional; only needed if building index_greece.csv from scratch
-# timm
-# torchgeo
-# rasterio
-# rioxarray
-# stackstac
-# planetary_computer
-# jsonargparse
-# pytorch-lightning
-# albumentations
+# Requires osmium-tool
+
+# Ubuntu/Debian: sudo apt install osmium-tool
+
+# macOS:         brew install osmium-tool
+
+# PostGIS backend:
+
+# Requires PostgreSQL, PostGIS, osm2pgsql, and PostgreSQL CLI tools
+
+# (createdb, dropdb, psql)

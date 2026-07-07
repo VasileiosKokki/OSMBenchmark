@@ -23,7 +23,7 @@ DEFAULT_BACKEND = BACKEND_LIST[0]
 # Colors — single source of truth, shared by markers AND buttons
 ICON_COLORS = ["orange", "green", "blue", "red", "purple", "cadetblue", "gray"]
 
-FOLIUM_COLOR_HEX = {
+MARKER_COLOR_HEX = {
     "orange":    "#f60",
     "green":     "#2e7d32",
     "blue":      "#2979ff",
@@ -34,6 +34,6 @@ FOLIUM_COLOR_HEX = {
 }
 
 BACKEND_COLORS = {
-    name: FOLIUM_COLOR_HEX[ICON_COLORS[bi % len(ICON_COLORS)]]
+    name: MARKER_COLOR_HEX[ICON_COLORS[bi % len(ICON_COLORS)]]
     for bi, name in enumerate(BACKEND_LIST)
 }
