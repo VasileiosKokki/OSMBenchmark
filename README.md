@@ -51,7 +51,7 @@ A major part of the project was deciding **what should count as a relevant OSM f
 
 ### 1. Selecting meaningful OSM features
 
-I researched related repositories and reused a reference vocabulary stored in `w2v_columns.csv`. The pipeline converts entries from that CSV into exact OSM `(key, value)` pairs and uses the same vocabulary across the three backends.
+I researched related repositories and reused a reference vocabulary stored in `w2v_columns.csv`: https://github.com/srai-lab/hex2vec. The pipeline converts entries from that CSV into exact OSM `(key, value)` pairs and uses the same vocabulary across the three backends.
 
 For example, the system does not merely keep every object with a `building` or `natural` key. It can restrict features to exact combinations represented by the reference vocabulary. This gave me a common filtering target for comparing otherwise very different extraction systems.
 
@@ -59,7 +59,7 @@ For example, the system does not merely keep every object with a `building` or `
 
 OSM geometry is not always semantically obvious from topology alone. A closed way can represent an area in one context and a linear feature in another.
 
-To avoid inventing backend-specific heuristics, I researched and incorporated the `polygon-features.json` ruleset used by **osm-polygon-features**. The rules distinguish:
+To avoid inventing backend-specific heuristics, I researched and incorporated the `polygon-features.json`: https://github.com/tyrasd/osm-polygon-features ruleset used by **osm-polygon-features**. The rules distinguish:
 
 - keys that are treated as polygons for **all** values,
 - keys that use a **whitelist** of polygon values,
@@ -288,24 +288,6 @@ Loading thousands of features into both a map and a detailed table can easily ma
 **What I did:** I added lazy loading, Web Worker preparation, chunked transfer, virtualized rows, selective source refreshes, server-side prepared caches, and explicit interaction tuning.
 
 **What I learned:** high-performance interactive media requires coordinating data architecture, rendering, UI state, and animation—not just optimizing one loop.
-
----
-
-## Relevance to XR, AI, and Interactive Media
-
-Although this is a 2D geospatial application rather than an XR application, the project is directly relevant to the kind of engineering I want to bring into XR and interactive systems:
-
-- **spatial data processing** and coordinate systems;
-- **large world-referenced datasets**;
-- **interactive exploration of dense scene information**;
-- **camera navigation and smooth animated transitions**;
-- **selection, filtering, and contextual information panels**;
-- **performance-sensitive rendering and interaction**;
-- **AI-adjacent geospatial data preparation**, motivated by my work around geographic representation-learning pipelines.
-
-For me, the most transferable outcome was learning how to turn a research/data problem into an interactive system where differences can be explored, tested, and understood visually.
-
----
 
 ## Architecture
 
